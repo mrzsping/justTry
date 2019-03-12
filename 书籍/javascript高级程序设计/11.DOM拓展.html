@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>dom拓展</title>
+</head>
+<body>
+  1.matchesSelector
+  
+  2.childElementCount
+
+  3.firstElementChild
+
+  4.lastElementChild
+
+  5.previousElementSibling
+
+  6.nextElementSibling
+
+  7.getElementsByClassName：性能问题
+
+  8.classList：add、remove、toggle、contains
+
+  9.焦点管理：activeElement，hasFocus()
+
+  10.HTMLDocument：
+  readyState：loading/complete
+
+  11.document.compatMode：
+  CSS1Compat：标准模式
+  BackCompat：混杂模式
+
+  12.关系
+  aNode.contains(bNode)
+  aNode.compareDocumentPosition(bNode)
+  <p id="as"></p>
+  <script>
+  //readyState
+    console.log(document.readyState)
+    window.onload = function(){
+      console.log(document.readyState)
+    }
+  // test
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.src = "./test.js";
+    document.body.appendChild(s)
+  </script>
+</body>
+</html>

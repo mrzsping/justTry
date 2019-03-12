@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>zepto demo</title>
+  <script src="./zepto.js"></script>
+</head>
+<body>
+  <div class="b">
+    <div class="a" style="color: #f00">123</div>
+  </div>
+  <form action="" id="s">
+  <input type="text" name="as">
+  <input type="radio" name="p"></form>
+  <script>
+    //zepto是精简版jquery库
+    // 1.zepto方法概览，流程梳理 $() => zepto => zepto.init() => 返回Z对象 => Z对象原型指向fn
+    // 2.ajax学习
+    // 3.应用类型、原型、实例、constructor、原型链、作用域、this学习
+    //$('#s').submit() => 事件对象
+    
+  // 整体架构
+  (function(t, w){ // 匿名自执行
+    w(t)
+  }(this, function(q){
+    var obj = {name: 123}
+    q.obj = obj
+    ;(function(i){
+      i.age = 123
+    })(obj)
+    return obj
+  }))
+  console.log(obj)
+ </script>
+</body>
+</html>

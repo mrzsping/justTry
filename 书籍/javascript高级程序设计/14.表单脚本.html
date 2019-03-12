@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>表单脚本</title>
+</head>
+<body>
+
+  1.获取表单：
+  documnet.f.elements：表单合集
+  documnet.formName.elements[name]
+
+  2.表单元素属性：
+  form：指向当前表单
+  readOnly/name/value/disabled/type/tabIndex
+
+  3.获取选择数据：
+  select()
+  e.target.selectionStart/e.target.selectionEnd
+
+  foceus()
+  createTextRange()
+
+  4.剪切板：
+  beforecopy/copy、beforepaste/paste、beforecut/cut
+  clipboardData：
+  getData、setData、clearData：第一个参数类型，第二个为数值
+
+  5.表单约束验证：
+  required：必填
+  pattern="\d"：匹配
+  checkValidity()：验证有效
+  validity
+  novalidate
+
+  6.选择框：
+  移除：removeChild/remove/=null
+
+<div id="d">
+  <p></p>
+</div>
+  <form action="" id="a" name="f">
+    <input type="text" name="4" id="c" value="">
+    <button type="button" id="b">123</button>
+    <button type="reset">123</button>
+    <input type="reset" id="c" value="reset">
+    <input type="submit" name="sub">
+  </form>
+  <script>
+    //
+    document.querySelector('#b').onclick = function(){
+      document.querySelector('#a').reset()
+      // document.querySelector('#c').focus()
+    }
+    // 获取表单
+    document.forms['f']
+    document.f
+    document.forms[0]
+    document.documentElement.onkeydown = function(e){
+      if(e.keyCode === 123) e.preventDefault();
+    }
+  </script>
+</body>
+</html>

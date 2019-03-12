@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>DOM</title>
+</head>
+<body>
+  1.文档元素：
+   document.querySelector('html')：不包括<!DOCTYPE html>
+   document：包括<!DOCTYPE html>
+
+  2.childNodes：
+  NodeList：是基于DOM结构动态执行查询的结果
+  someNode.childNodes[0]，someNode.childNodes.length，someNode.childNodes.item(0)
+  转换为数组：Array.prototype.call(arr, 0)
+
+  3.操作节点：appendChild、insertBefore、replaceChild、removeChild
+  cloneNode：true，深复制，复制节点及其整个子节点树
+
+  4.#documnet = new Document()
+
+  5.Document内置属性：documentElement === html、childNodes
+
+  6.document.URL
+  document.domain：松散、可设置
+  其他子域的框架或内嵌框架时，例如：www.wrox.com与p2p.wrox.com，document.domain设置为wrox.com，之间可以通信
+  document.referre
+
+  7.document.getElementByTagName()：
+  .namedItem('b')：返回第一项
+  ['b']
+  可传入*
+  document.getElementByTagName('form') === document.forms
+
+  8.getElementsByName：所有name有关
+
+  9.快捷访问：document.images/document.links/document.anchors：带name的a标签
+
+  10.写入：
+  write、writeln、open、close
+
+  11.属性：
+  dom.attributes['id'].nodeValue = 'str'
+  removeAttribute === removeNamedItem()：被删除特性的Attr
+
+  12.CDATASection：表示的是CDATA区域
+  <div id="a"></div>
+  <img src="" id="b" alt="" name="b">
+  <script>
+  // 序列化长字符串
+  function str(a){
+    let arr = []
+    for(let i = 0; i < a.length; i++){
+      arr.push(a[i].name + "=\"" + a[i].value + "\"");
+    }
+    return arr.join(' ')
+  }
+  // 创建动态脚本
+
+  var s = document.createElement('script');
+  s.type = 'text/javascript';
+  s.src = "1.js";
+  document.body.appendChild(s)
+  </script>
+</body>
+</html>

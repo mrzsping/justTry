@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JSON</title>
+</head>
+<body>
+  1.语法：
+  简单值
+  对象
+  数组
+
+  指定选项：JSON.stringify(book, ["title", "edition"]);
+  改变返回项：JSON.stringify(book,function(key, value){return value})
+  格式优化：JSON.stringify(j, null, 4) 大于10换行
+  JSON.stringify(book, null, " - -");
+  toJSON()
+  JSON.parse(jsonText, function(key, value){})
+</body>
+</html>

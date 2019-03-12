@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>作用域</title>
+</head>
+<body>
+  1.赋值变量值：
+  基本类型（固定大小，存储在栈内存）复制，复制副本
+  引用类型复制，指针复制
+
+  2.传递参数：
+  访问变量：访问值与引用
+  参数：只能通过值传递
+
+  3.类型检测：typeof instanceof(假定只有一个执行环境)
+
+  4.执行环境（确定回收时机）与作用域：
+  增加作用域链：with/try catch
+  if 中创建的变量会添加到当前执行环境
+  for 中创建的变量会添加到当前执行环境
+
+  5.垃圾收集机制：
+  自动收集
+  行数执行时，为局部变量分配为空间，对没有使用的局部变量打上无用标签
+  具体策略：
+  1、清除标记
+  给所有变量打上标记，去除环境中的与环境中变量引用的变量，其他的标记为应删除变量，垃圾收集器完成清除工作，销毁带标记的变量并回收内存空间
+  2、引用计数
+  a.b = c; c.d = a
+  循环引用，无法清除，内存泄漏，赋值为null
+
+  6.管理内存：
+  全局变量赋值为null，解除引用，脱离执行环境，方便下一次回收
+</body>
+<script>
+// 参数传递，按值传递
+  function a(obj){
+    obj.name = '值';
+    obj = new Object();
+    obj.name = '引用';
+  }
+  var b = {};
+  a(b);
+  console.log(b.name)
+</script>
+</html>

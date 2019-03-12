@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>面向对象</title>
+</head>
+<body>
+    1.理解对象：
+    无序属性的集合，其属性可以包含基本值、对象或者函数
+    2.属性类型：
+    存在javascript不能访问的，描述属性的特性，例如：[[Enumerable]]
+    数据属性：
+    访问器属性：get、set
+    Object.defineProperty() 方法的浏览器中不能修改[[Configurable]]和[[Enumerable]]
+
+    3.获取属性描述：
+     Object.getOwnPropertyDescriptor(obj, key)：实例与原型对象各自获取
+
+     4.创建对象：
+     工厂模式：不清楚类型
+     创建对象 => 添加属性 => 返回对象
+
+     构造函数：创建不同实例，导致多个相同方法重复创建
+     创建对象（new） => 构造函数作用域赋予新对象（this） => 添加属性 => 返回对象
+
+     原型模式：属性共享，造成全局破坏
+     原型：函数的原型属性，是一个指针，指向一个对象，该对象包括特定类型的所有实例共享的属性和方法
+     isPrototypeOf
+     getPrototypeOf
+     hasOwnProperty
+     in
+     hasPrototypeProperty
+     for in
+     Object.keys：返回可枚举
+     Object.getOwnPropertyNames
+
+     5.构造函数结合原型模式
+
+     6继承：
+
+     原型链
+
+      改变prototype指向
+
+      借用构造函数
+  <script>
+  let obj = {
+    age: 12
+  }
+  Object.defineProperty(obj, 'name', {
+    get: function () {
+      return this.age
+    },
+    set: function (n) {
+      this.age = n
+    }
+  })
+  obj.age =123
+  console.log(obj.age, Object.getOwnPropertyDescriptor(obj, 'name'))
+  //工厂模式：
+  function Person(name, age, getName){
+    var o = new Object();
+    o.name = name;
+    o.age = age;
+    o.getName = function(){
+      return o.name
+    }
+    return o
+  }
+  //构造函数：
+  function People(name, age){
+    this.name = name;
+    this.age = age;
+    this.getName = getName;
+  }
+  // 创建全局作用域下的函数，无封装性，只能被某个对象调用
+  function getName(){
+    return this.name
+  }
+  var p = Person('xiaoming', 12);
+  var p2 = new People('xiaohong', 12)
+
+  //原型：
+  function Peo(){
+  }
+  Peo.prototype.name = 'qeq'
+
+  var p3 = new Peo()
+  var p4 = new Peo()
+  p3.name = 'asd'
+  var de = {name: 123}
+
+  function getProerty(obj, s){
+    return (obj.hasOwnProperty(s)) || (s in obj)
+  }
+  var n2 = {}
+  // 借用构造函数
+  function Super(){
+    this.color = ['blue']
+  }
+  function Sub(){
+    Super.call(this)
+  }
+  var sub = new Sub()
+  sub.color.push('red')
+  var sub2 = new Sub()
+  console.log(p.getName(), p2.getName())
+  console.log(Peo.prototype, p3.__proto__, getProerty(p3, 'name'),  Object.prototype.isPrototypeOf(n2), Object.prototype)
+  console.log(p4.name, sub.color, sub2.color)
+  </script>
+</body>
+</html>

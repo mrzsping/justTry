@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BOM</title>
+</head>
+<body>
+  1.frames框架：_top,_blank,_self,_parent
+
+  2.window.open(url, name, "height=400,....")：window.close()
+
+  3.超时调用与延时调用：
+  js单线程 -> 任务队列 -> 延时调用设置时间 -> 队列为空立即调用 -> 不为空等待执行完毕
+
+  4.replace：不会产生记录
+
+  5.注册处理程序：了registerContentHandler()和registerProtocolHandler
+
+  6.go：去到最近的网址、back、forward
+  <div id="a">123</div>
+  <script>
+  // 1.属性删除
+    var a = 123;
+    window.b = 456;
+    console.log(a, window.b)
+    delete a;
+    delete window.b;
+    console.log(a, window.b)
+
+  // 2.replace
+  document.querySelector('#a').onclick = function(){
+    window.location.replace('http://www.cpsdb.com')
+    //window.location.reload(true/false)
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>函数表达式</title>
+</head>
+<body>
+  1.特征
+  标识符 = function(){}
+
+  2.闭包：有权访问函数作用域内部的变量的函数，通常通过返回方式，引用整体活动对象
+  外部函数活动对象添加到内部函数作用域链 -> 调用外部函数 -> 作用域链被销毁 -> 活动对象保留在内存中
+
+  作用域链生成：
+  包含全局变量对象作用域链[[Scope]] -> 执行环境 -> 复制scope -> 推入活动对象
+  指向变量对象的指针列表
+
+  3.this对象：
+  匿名函数执行居有全局性
+
+  4.块级作用域：
+  匿名函数
+  私有变量
+  模块模式：函数表达式 -> 匿名自执行 -> 返回对象字面量
+  增强模块模式：函数表达式 -> 匿名自执行 -> ->new创建对象 -> 返回对象
+  <script>
+  var a = undefined;
+    a = function(){
+      console.log(123)
+    }
+    a()
+    // this指向
+    name = '1'
+    var b1 = {
+      name: '2',
+      g: function(){
+        return this.name
+      }
+    }
+    var b2 = {
+      name: '3',
+      g: function(){
+        return this.name + '1'
+      }
+    }
+    // 执行匿名函数，并且赋值
+    console.log((b1.g = b2.g)(), b1.g)
+
+  </script>
+</body>
+</html>

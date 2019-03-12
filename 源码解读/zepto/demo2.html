@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>zepto demo2</title>
+  <script src="./zepto.js"></script>
+</head>
+<body>
+<form action="">
+  <input type="text" name="name ">
+  <input type="submit" value="a">
+</form>
+<p contenteditable="true">1</p>
+
+<p id="a">
+  <p class="a"></p>
+</p>
+<a>2</a>
+  <script>
+  // 1614序列化
+  var result = []
+  var add = function(value) {
+    if (value.forEach) return value.forEach(add)
+    result.push({ name: name, value: value })
+  }
+  add([1,2,3])
+  console.log(result)
+  // 1601
+  function a(){
+    var arr = []
+    b(arr)
+    return arr
+  }
+  function b(a){
+    a.push(132)
+  }
+  console.log(a())
+ </script>
+</body>
+</html>

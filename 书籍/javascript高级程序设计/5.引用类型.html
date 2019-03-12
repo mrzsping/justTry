@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>引用类型</title>
+</head>
+<body>
+  1.引用类型：对象定义，描述的是一类对象所具有的属性和方法，与类相似但是不是同一概念。
+  创建实例：
+  使用new操作符
+  使用对象字面量(不会调用构造函数)
+
+  2.表达式上下文：指能够返回一个值
+
+  3.函数传参：
+  必传时为参数名，不确定使用对象字面量
+
+  4.Array：
+  new Array(3) = Array(3) = [1,2,3]
+
+  Array.isArray()
+
+  调用toString/toLocaleString，调用的是每一项的toString/toLocaleString
+
+  sort()：调用每个toString()方法
+
+   indexOf(查找项， 起始位置)
+
+   reduce(前一项， 后一项， 索引， 数组对象)
+
+   5.函数：
+   没有重载
+   函数声明（执行环境中完全解析）和函数表达式（执行到所在代码才解析），变量提升
+
+   6.基本包装类型：
+   基本类型调用方法时，先通过后台临时创建一个实例，再调用方法，最后销毁实例
+   new Object('13123')
+   new String('12313')
+
+   7.全局作用域内置对象：
+   Global和Math
+   无法直接访问Global，window可访问
+  <script>
+    function obj(a, person){
+      if(typeof person.name === 'string'){
+        console.log(11111)
+      }
+      if(typeof person.age === 'number'){
+        console.log(2222)
+      }
+      console.log(a)
+    }
+    obj(123, {name: '123'})
+  </script>
+</body>
+</html>

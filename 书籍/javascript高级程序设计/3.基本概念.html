@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>基本概念</title>
+</head>
+<body>
+  1.标识符：变量、函数、属性名字
+  驼峰、区分大小写，字母、下划线、美元符开头，其他则包含数字
+  也可包含ASCII或Unicode（不推荐）
+  不能使用关键字
+
+  2.严格模式："use strict"，编译指示：js引擎切换到严格模式
+  处理ECMAScript3中的问题，抛出错误
+
+  3.基本数据类型：
+  undefined、null、string、boolean、number
+  复杂数据类型：object
+
+  4.数值：0.1+0.2 != 0.3
+  isNaN：对于对象，先使用valueOf转换，再用toString转换
+  Number('') === 0
+  Number('as') === NaN
+  Number('02') ===2 // 八进制并未起效果
+  Number('0x12') === 18 // 十六进制起效果
+  parseInt("") === NaN
+  parseInt(070) === 56 // 八进制起效果
+  parseInt(70, 8) === 56
+  parseFloat()只解析十进制值
+  toString(2) // 二进制字符串
+
+  5.字符串：
+  var a = '123\u03a3'
+  a.length === 4
+  字符串创建，值不可改变，如果需要改变，需要销毁原来的值
+  null/undefined：使用String()方法
+
+  6.对象：
+  使用new操作符创建实例
+  Object类型是所有实例的基础
+  Object中的属性：
+  constructor：对象生成函数，Object()
+
+  关于对象的定义,ECMA-262不一定适用所有的对象，例如宿主对象
+
+  7.运算符：
+  b = a-- 与 --a：一个先赋值，后计算；一个先计算，后赋值。从左往右依次计算
+  一元加减符号，相当于Number()
+
+  8.布尔操作符：
+  && 第一个为true，返回第二个参数；第一个为false，返回第一个
+  || 第一个为true，返回第一个参数；第一个为false，返回第二个
+
+  9.比较运算符：
+  NaN不等于任何值
+</body>
+</html>

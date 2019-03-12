@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2.使用</title>
+</head>
+<body>
+  1.外部引入
+  属性：
+  async：立即下载脚本，不妨碍其他操作
+  并不能保证按照先后顺序执行，确保不相互依赖，一定在load时间之前执行
+  defer：文档完全被解析显示之后执行
+  延迟脚本并不一定会按照顺序执行，也不一定会在DOMContentLoaded 事件触发前执行
+  sctipt/img元素包含来自外部域的JavaScript 文件：跨域
+
+  2.内部使用
+
+  解释器将script元素内的函数解释之后，将该函数的定义存储在自己的环境中
+  在对代码下载，解析和执行之前，页面中的其余内容都不会加载或显示，只有遇到body时开始呈现内容（放在head影响页面呈现，因此放在底部）
+
+  3.文档模式：混杂模式/标准模式
+  <!DOCTYPE html>
+
+  4.<noscript>不支持js或者被禁用</noscript>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>事件</title>
+</head>
+<body>
+  1.事件流：冒泡、捕获
+  捕获 -> 目标 -> 冒泡
+
+  2.事件处理
+  addEventListener，removeEventListener传入相同的函数
+  true/false：捕获/冒泡
+  IE：attachEvent/detachEvent，this指向window，按先后顺序反向执行
+  IE不支持捕获
+  cancelable属性设置为true的事件，才可以使用preventDefault
+  eventPhase：事件流阶段
+
+  3.事件类型
+  window.onload
+  img.onload：设置src属性就下载
+  script：设置src并添加到文档才下载
+  scroll：document.documentElement.scrollTop/document.body.scrollTop
+  不冒泡：blur、focus
+  按键
+  字符：keydown -> keypress -> keyup
+  非字符：keydown -> keyup
+  IME：输入法编辑器
+  事件委托：事件委托利用了事件冒泡，只指定一个事件处理程序，就可以管理某一类型的所有事件
+  <form method="post">
+    <input type="text" name="username" value="13">
+    <input type="button" value="Echo Username" onclick="console.log(username)">
+  </form>
+  <div id="a">a</div>
+  <a href="http://www.cpsdb.com" id="b">b</a>
+  <input id="c">
+  <script type="text/javascript">
+    document.querySelector('#a').onclick = function(e){
+      e.stopPropagation()
+      console.log(111)
+    }
+    document.querySelector('#b').onclick = function(e){
+      console.log(e.cancelable)
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    //document.body.onclick = function(e){
+      //console.log(222)
+    //}
+    document.querySelector('#c').onfocusin = function(e){
+      console.log(333)
+    }
+    document.documentElement.onmousewheel = function(e){
+      console.log(e.wheelDelta)
+    }
+    
+    document.documentElement.addEventListener('DOMMouseScroll', function(e){
+      console.log(e.detail)
+    })
+  </script>
+</body>
+</html>
