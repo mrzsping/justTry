@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>XHR</title>
+</head>
+<body>
+  XMLHttpRequest1级：
+  1.建立xhr对象：
+    var xhr = new XMLHttpRequest()
+
+  2.调用onreadystatechange：
+
+  3.设置请求头：xhr.setRequestHeader()/getResponseHeader/getAllResponseHeaders
+
+  4.不会真正发送请求，启动一个请求。
+    xhr.open("get", "http://www.runoob.com/try/ajax/ajax_info.txt", false);
+
+  5.发送：
+    xhr.send(null);
+
+  6.返回：
+    // 获取readyState属性：
+    // 0：未初始化，尚未调用open
+    // 1：启动。已调用open，未调用send
+    // 2：发送。已调用send，未接收到响应
+    // 3：接收。已接收到部分响应数据
+    // 4：完成。已接收到全部响应数据，可以在客户端使用
+
+    7.xhr属性：
+    responseText：响应主体被返回的文本
+    responseXML：如内容类型是"text/xml"或"application/xml"，将保存响应数据的XML DOM 文档
+    status：状态
+      304：请求资源没有被修改，直接使用缓存版本
+      IE的ActiveX 版本将204设置为1223，IE原生XHR将204规范化为200，Opera在取得204时报告status为0
+    statusText：状态说明
+
+    8.请求类型：
+    get：encodeURIComponent：url结尾编码保证正确
+
+    post：
+    数据作为请求的主体
+    服务端应有相应处理程序
+    模拟表单提交：Content-Type设置为application/x-www-form-urlencoded
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    格式与询字符串格式相同
+
+    XMLHttpRequest2级：
+    1.FormData：
+
+    2.timeout：open之后，send之前
+
+    xhr.timeout（IE8+）
+    xhr.ontimeout = function(){}
+
+    3.overrideMimeType：重写MIME类型，IE12
+
+    4.Progress Events：草案，客户端服务器通信有关的事件
+
+    跨源资源共享：
+    CORS：自定义请求头部
+    XDR：与XHR类似，实现安全可靠跨域通信
+      cookie不会随请求发送，也不会随响应返回
+      只能设置请求头部信息中的Content-Type 字段
+      不能访问响应头部信息
+      只支持GET和POST请求
+      异步
+    本地资源：使用相对URL，问远程资源：使用绝对URL
+    避免出现限制访问头部或本地cookie 信息等问题
+
+    Preflighted Requests：服务器验证机制
+
+    安全：
+    CSRF：跨站点请求伪造
+
+    以SSL连接来访问可以通过XHR请求的资源
+    每一次请求都要附带经过相应算法计算得到的验证码
+
+    不起作用：
+    发送POST而不是GET——改变
+    检查来源URL以确定是否可信——伪造
+    基于cookie信息进行验证——伪造
+
+    <form action="" id="a">
+      <input type="text" name="123" value="123">
+    </form>
+  <script>
+    function a(){
+      var data = new FormData(document.forms[0])
+      console.log(data)
+    }
+    a()
+  </script>
+</body>
+</html>

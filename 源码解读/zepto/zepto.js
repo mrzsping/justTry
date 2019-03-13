@@ -1478,7 +1478,7 @@ window.$ === undefined && (window.$ = Zepto)
     if (settings.headers) for (name in settings.headers) setHeader(name, settings.headers[name])
     xhr.setRequestHeader = setHeader
 
-    xhr.onreadystatechange = function(){
+    xhr.onreadystatechange = function(){ //http状态改变触发函数，open之前，保证兼容性
       if (xhr.readyState == 4) {
         xhr.onreadystatechange = empty
         clearTimeout(abortTimeout)
