@@ -7,6 +7,25 @@
   <title>离线存储</title>
 </head>
 <body>
-  
+  1.检测是否离线：
+  navigator.onLine
+  window上的online/offline事件：离线变为在线或者从在线变为离线时
+
+  2.应用缓存：application cache
+
+  3.数据存储
+  cookie：documnet.cookie添加到已有cookie
+  URL编码
+  绑定在特定域名
+  每个域的cookie总数是有限
+  大约4096B
+  名称，值，域，路径，失效时间，安全标志：只能通过SSL 连接才能传输
+  子cookie：使用cookie 值来存储多个名称值对
+
+  4.web存储：
+  Storage类型
+  sessionStorage：Storage 的一个实例，最初给对象存储数据的页面访问到
+  localStorage：页面必须来自同一个域名
+  IndexedDB
 </body>
 </html>

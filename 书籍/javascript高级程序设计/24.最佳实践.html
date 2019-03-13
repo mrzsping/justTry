@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>最佳实践</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+  1.代码约定：
+
+  可读性：
+    函数和方法：
+      注释：目的、算法、参数、返回值
+    大段代码：
+      注释：任务
+    复杂的算法：
+      注释：实现逻辑
+    Hack
+  
+  变量和函数命名：
+    变量名应为名词
+    函数名应该以动词开
+    返回布尔类型值的函数一般以is开头
+    匈牙利标记法：
+      "o"代表对象，"s"代表字符串，"i"代表整数，"f"代表浮点数，"b"代表布尔型
+  
+  2.松散耦合：
+    解耦HTML/JavaScript
+    解耦CSS/JavaScript
+    解耦应用逻辑／事件处理程序
+
+  3.编程实践：
+    尊重对象所有权
+    避免全局量
+    避免与null 进行比较
+    使用常量
+
+  4.性能：
+    作用域：
+      避免全局查找
+      避免with 语句
+    方法：
+      避免不必要的属性查找
+      优化循环
+      展开循环
+      避免双重解释
+    最小化语句数：
+      多个变量声明
+      插入迭代值
+      使用数组和对象字面量
+    优化DOM交互：
+      最小化现场更新
+      使用 innerHTML
+      使用事件代理
+      注意HTMLCollection
+
+    5.部署：
+      构建过程：
+        知识产权问题
+        文件大小
+        代码组织
+      验证：
+      压缩：
+        文件压缩
+        HTTP 压缩
+  </body>
+</html>

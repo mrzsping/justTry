@@ -109,6 +109,29 @@
   console.log(p.getName(), p2.getName())
   console.log(Peo.prototype, p3.__proto__, getProerty(p3, 'name'),  Object.prototype.isPrototypeOf(n2), Object.prototype)
   console.log(p4.name, sub.color, sub2.color)
+
+  // 继承
+
+  //原型链继承：
+
+  //组合继承：原型链和借用构造函数
+
+  //原型式继承:
+  function object(o){
+    function F(){}
+    F.prototype = o;
+    return new F();
+  }
+
+  //寄生式继承：原型式继承紧密相关
+
+
+  //寄生组合式继承：构造函数继承属性，原型链混成
+  function inheritPrototype(subType, superType){
+    var prototype = object(superType.prototype); //创建对象
+    prototype.constructor = subType; //增强对象
+    subType.prototype = prototype; //指定对象
+  }
   </script>
 </body>
 </html>
