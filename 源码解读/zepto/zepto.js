@@ -1078,17 +1078,17 @@ window.$ === undefined && (window.$ = Zepto)
         stopPropagation: 'isPropagationStopped'
       }
 
-  function compatible(event, source) { // 兼容
+  function compatible(event, source) { // 修正event
     if (source || !event.isDefaultPrevented) {
       source || (source = event)
 
       $.each(eventMethods, function(name, predicate) {
         var sourceMethod = source[name]
-        event[name] = function(){ // ??????,使用event、source都指向用一个对象，目的？this的指向？
-          this[predicate] = returnTrue
+        event[name] = function(){
+          this[predicate] = returnTrue // this指向event对象
           return sourceMethod && sourceMethod.apply(source, arguments)
         }
-        event[predicate] = returnFalse
+        event[predicate] = returnFalse// 添加方法
       })
 
       event.timeStamp || (event.timeStamp = Date.now())
@@ -1101,10 +1101,10 @@ window.$ === undefined && (window.$ = Zepto)
     return event
   }
 
-  function createProxy(event) {
+  function createProxy(event) { // 创建代理
     var key, proxy = { originalEvent: event }
     for (key in event)
-      if (!ignoreProperties.test(key) && event[key] !== undefined) proxy[key] = event[key]
+      if (!ignoreProperties.test(key) && event[key] !== undefined) proxy[key] = event[key] // ignoreProperties.test(key)排除自带属性
 
     return compatible(proxy, event)
   }
@@ -1212,7 +1212,7 @@ window.$ === undefined && (window.$ = Zepto)
     $.fn[event] = function(callback) {
       return (0 in arguments) ?
         this.bind(event, callback) :
-        this.trigger(event)
+        this.trigger(event) //添加各个事件
     }
   })
 
@@ -1305,7 +1305,7 @@ window.$ === undefined && (window.$ = Zepto)
   // Empty function, used as default callback
   function empty() {}
 
-  $.ajaxJSONP = function(options, deferred){
+  $.ajaxJSONP = function(options, deferred){ //使用jsonp
     if (!('type' in options)) return $.ajax(options)
 
     var _callbackName = options.jsonpCallback,
@@ -1399,7 +1399,7 @@ window.$ === undefined && (window.$ = Zepto)
     dataFilter: empty
   }
 
-  function mimeToDataType(mime) {
+  function mimeToDataType(mime) {// 返回type
     if (mime) mime = mime.split(';', 2)[0]
     return mime && ( mime == htmlType ? 'html' :
       mime == jsonType ? 'json' :
@@ -1426,18 +1426,18 @@ window.$ === undefined && (window.$ = Zepto)
         urlAnchor, hashIndex
     for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key] // options没有怎默认使用配置
 
-    ajaxStart(settings)
+    ajaxStart(settings)// 如果没有其他Ajax请求当前活跃将会被触发
 
     if (!settings.crossDomain) {
       urlAnchor = document.createElement('a')
       urlAnchor.href = settings.url
       // cleans up URL for .href (IE only), see https://github.com/madrobby/zepto/pull/1049
-      urlAnchor.href = urlAnchor.href
-      settings.crossDomain = (originAnchor.protocol + '//' + originAnchor.host) !== (urlAnchor.protocol + '//' + urlAnchor.host)
+      urlAnchor.href = urlAnchor.href // 兼容IE
+      settings.crossDomain = (originAnchor.protocol + '//' + originAnchor.host) !== (urlAnchor.protocol + '//' + urlAnchor.host) // 是否跨域
     }
 
-    if (!settings.url) settings.url = window.location.toString()
-    if ((hashIndex = settings.url.indexOf('#')) > -1) settings.url = settings.url.slice(0, hashIndex)
+    if (!settings.url) settings.url = window.location.toString() // url字符串
+    if ((hashIndex = settings.url.indexOf('#')) > -1) settings.url = settings.url.slice(0, hashIndex)// 去除hash
     serializeData(settings)
 
     var dataType = settings.dataType, hasPlaceholder = /\?.+=\?/.test(settings.url)
@@ -1447,7 +1447,7 @@ window.$ === undefined && (window.$ = Zepto)
          (!options || options.cache !== true) &&
          ('script' == dataType || 'jsonp' == dataType)
         ))
-      settings.url = appendQuery(settings.url, '_=' + Date.now()) // 添加时间戳
+      settings.url = appendQuery(settings.url, '_=' + Date.now()) // 添加时间戳，不被缓存，请求新的内容
 
     if ('jsonp' == dataType) {
       if (!hasPlaceholder)
@@ -1459,21 +1459,21 @@ window.$ === undefined && (window.$ = Zepto)
     var mime = settings.accepts[dataType],
         headers = { },
         setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
-        protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol,
+        protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol, // RegExp.$1:与正则表达式匹配的第一个子匹配
         xhr = settings.xhr(),
         nativeSetHeader = xhr.setRequestHeader,
         abortTimeout
 
     if (deferred) deferred.promise(xhr)
 
-    if (!settings.crossDomain) setHeader('X-Requested-With', 'XMLHttpRequest')
+    if (!settings.crossDomain) setHeader('X-Requested-With', 'XMLHttpRequest')// requestedWith为XMLHttpRequest则为Ajax请求
     setHeader('Accept', mime || '*/*')
     if (mime = settings.mimeType || mime) {
       if (mime.indexOf(',') > -1) mime = mime.split(',', 2)[0]
       xhr.overrideMimeType && xhr.overrideMimeType(mime)
     }
     if (settings.contentType || (settings.contentType !== false && settings.data && settings.type.toUpperCase() != 'GET'))
-      setHeader('Content-Type', settings.contentType || 'application/x-www-form-urlencoded')
+      setHeader('Content-Type', settings.contentType || 'application/x-www-form-urlencoded') // 设置传输到服务器编码类型
 
     if (settings.headers) for (name in settings.headers) setHeader(name, settings.headers[name])
     xhr.setRequestHeader = setHeader
@@ -1519,11 +1519,11 @@ window.$ === undefined && (window.$ = Zepto)
     var async = 'async' in settings ? settings.async : true
     xhr.open(settings.type, settings.url, async, settings.username, settings.password)//初始化请求
 
-    if (settings.xhrFields) for (name in settings.xhrFields) xhr[name] = settings.xhrFields[name]
+    if (settings.xhrFields) for (name in settings.xhrFields) xhr[name] = settings.xhrFields[name] //一个对象包含的属性被逐字复制到XMLHttpRequest的实例
 
-    for (name in headers) nativeSetHeader.apply(xhr, headers[name])
+    for (name in headers) nativeSetHeader.apply(xhr, headers[name]) // 设置请求头
 
-    if (settings.timeout > 0) abortTimeout = setTimeout(function(){
+    if (settings.timeout > 0) abortTimeout = setTimeout(function(){ // 请求超时
         xhr.onreadystatechange = empty
         xhr.abort()
         ajaxError(null, 'timeout', xhr, settings, deferred)
