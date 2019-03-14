@@ -1357,7 +1357,7 @@ window.$ === undefined && (window.$ = Zepto)
     return xhr
   }
 
-  $.ajaxSettings = {
+  $.ajaxSettings = { // ajax设置
     // Default type of request
     type: 'GET',
     // Callback that is executed before request
@@ -1422,9 +1422,9 @@ window.$ === undefined && (window.$ = Zepto)
 
   $.ajax = function(options){ // ajax封装
     var settings = $.extend({}, options || {}),
-        deferred = $.Deferred && $.Deferred(),
+        deferred = $.Deferred && $.Deferred(), // promise
         urlAnchor, hashIndex
-    for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key]
+    for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key] // options没有怎默认使用配置
 
     ajaxStart(settings)
 

@@ -8,5 +8,14 @@
 </head>
 <body>
   1.xhr介绍<a href="../书籍/javascript高级程序设计/21.XHR.html" target="_blank">xhr</a>
+
+  2.幂等：put/get/head/delete 2.非幂等：post
+  幂等：第一次与第N次执行时产生的副作用都是相等的，比如get第一次与N次产生副作用一样（并不是结果一样） post:在对应URL的服务端创建资源,同一操作可以产生多个 put:创建或者更新资源 例子：转账（post产生多个id,put根据id执行取款操作,只根据第一次的结果） 分布式：笨重，需要中间件，不易拓展
+
+  3.domain
+    a.b.com.cn/.b.com.cn:子域名可获取父域名的cookie
+    子域名与父域名之间cookie可重复，服务端都会获取到
+    不同子域名cookie不同：即单点登录（不同子域名切换导致跨域，判断为登出）
+    限制性：cookie域名路径必须要http request域名路径中
 </body>
 </html>

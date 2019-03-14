@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>api</title>
+</head>
+<body>
+  1.Vue.extend:创建一个子类，相当于组件，挂在到容器上
+
+var a = Vue.extend({template:'<img />',data: function(){
+    return {
+    }
+}})
+new a().$mount('#app')
+2.Vue.nextTick(() => {}):dom异步更新，在created生命周期进行的dom操作放在回调里面
+
+<div ref="msg">{{msg}}</div>
+this.msg = 123;this.$refs.msg.innerHTML:数据改变
+3.data:全局组件使用纯粹的对象，局部组件使用返回纯粹对象的函数：组件会被多次使用，创建多个实例，如果使用纯粹对象会发生冲突
+
+全局：data:{}
+局部：data: function(){return{}}
+4.computed:计算属性，会被缓存
+
+computed: function(){
+}或者
+computed:{
+    get: (vm) =>{
+        return vm.msg // 箭头函数使用vm代替this
+    },//获取数据
+    set: function(v){
+        this.msg = v//设置
+    }
+}
+5.method:不应使用箭头函数，this绑定了父作用域的上下文，不会指向期望实例
+
+6.watch:不应使用箭头函数，this绑定了父作用域的上下文，不会指向期望实例
+
+watch: {
+    a: function(new, old){
+        
+    },
+    b: 'functionName',
+    'c.d':function(){},
+    e: [
+    function a(){},
+    function b(){}
+    ]
+}
+</body>
+</html>
