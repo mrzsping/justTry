@@ -102,16 +102,16 @@
   }
   uniq = function(array){ return filter.call(array, function(item, idx){ return array.indexOf(item) == idx }) } //查找
 
-  function classRE(name) {
+  function classRE(name) { // 查找className
     return name in classCache ?
       classCache[name] : (classCache[name] = new RegExp('(^|\\s)' + name + '(\\s|$)'))
   }
 
   function maybeAddPx(name, value) {
-    return (typeof value == "number" && !cssNumber[dasherize(name)]) ? value + "px" : value
+    return (typeof value == "number" && !cssNumber[dasherize(name)]) ? value + "px" : value // 排除某些css属性，转换为px
   }
 
-  function defaultDisplay(nodeName) {
+  function defaultDisplay(nodeName) { // 默认设置为display
     var element, display
     if (!elementDisplay[nodeName]) {
       element = document.createElement(nodeName)
@@ -124,7 +124,7 @@
     return elementDisplay[nodeName]
   }
 
-  function children(element) {
+  function children(element) { // 返回子元素
     return 'children' in element ?
       slice.call(element.children) :
       $.map(element.childNodes, function(node){ if (node.nodeType == 1) return node })
@@ -137,7 +137,7 @@
     this.selector = selector || ''
   }
 
-  // `$.zepto.fragment` takes a html string and an optional tag name
+  // `$.zepto.fragment` takes a html string and an optional tag name // 根据html字符串生成DON node节点数组
   // to generate DOM nodes from the given html string.
   // The generated DOM nodes are returned as an array.
   // This function can be overridden in plugins for example to make
@@ -270,7 +270,7 @@
     return target
   }
 
-  // `$.zepto.qsa` is Zepto's CSS selector implementation which
+  // `$.zepto.qsa` is Zepto's CSS selector implementation which 根据class或id查找
   // uses `document.querySelectorAll` and optimizes for some special cases, like `#id`.
   // This method can be overridden in plugins.
   zepto.qsa = function(element, selector){
@@ -290,11 +290,11 @@
       )
   }
 
-  function filtered(nodes, selector) {
+  function filtered(nodes, selector) { // 筛选节点
     return selector == null ? $(nodes) : $(nodes).filter(selector)
   }
 
-  $.contains = document.documentElement.contains ?
+  $.contains = document.documentElement.contains ? // 父元素是否包含子元素
     function(parent, node) {
       return parent !== node && parent.contains(node)
     } :
@@ -308,7 +308,7 @@
     return isFunction(arg) ? arg.call(context, idx, payload) : arg
   }
 
-  function setAttribute(node, name, value) {
+  function setAttribute(node, name, value) { // 设置属性
     value == null ? node.removeAttribute(name) : node.setAttribute(name, value)
   }
 
@@ -350,13 +350,13 @@
   $.isArray = isArray
   $.isPlainObject = isPlainObject
 
-  $.isEmptyObject = function(obj) {
+  $.isEmptyObject = function(obj) { //是否为空对象
     var name
     for (name in obj) return false
     return true
   }
 
-  $.isNumeric = function(val) {
+  $.isNumeric = function(val) { // 是否是数字的
     var num = Number(val), type = typeof val
     return val != null && type != 'boolean' &&
       (type != 'string' || val.length) &&
@@ -364,7 +364,7 @@
   }
 
   $.inArray = function(elem, array, i){
-    return emptyArray.indexOf.call(array, elem, i)
+    return emptyArray.indexOf.call(array, elem, i) // indexOf(item, start)
   }
 
   $.camelCase = camelize
@@ -372,13 +372,13 @@
     return str == null ? "" : String.prototype.trim.call(str)
   }
 
-  // plugin compatibility
+  // plugin compatibility：插件兼容
   $.uuid = 0
   $.support = { }
   $.expr = { }
   $.noop = function() {}
 
-  $.map = function(elements, callback){
+  $.map = function(elements, callback){ // 数组执行，返回新的数组
     var value, values = [], i, key
     if (likeArray(elements))
       for (i = 0; i < elements.length; i++) {
@@ -393,7 +393,7 @@
     return flatten(values)
   }
 
-  $.each = function(elements, callback){
+  $.each = function(elements, callback){ // 遍历数组，为false是停止
     var i, key
     if (likeArray(elements)) { // 判断是否为数组或者类数组
       for (i = 0; i < elements.length; i++)
@@ -406,7 +406,7 @@
     return elements
   }
 
-  $.grep = function(elements, callback){
+  $.grep = function(elements, callback){ //返回全为真的数据
     return filter.call(elements, callback)
   }
 
