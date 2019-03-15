@@ -1,6 +1,8 @@
-# justTry
-平时学习总结
-### [BUG](https://github.com/mrzsping/justTry/tree/master/bug)
+# 目录
+
+### BUG
+
+  [总结](https://github.com/mrzsping/justTry/blob/master/bug/%E6%80%BB%E7%BB%93.html)
 
 ### DEMO
 
@@ -25,6 +27,8 @@
 ### 性能优化
 
 ### 操作系统
+  
+  [linux](https://github.com/mrzsping/justTry/tree/master/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/linux)
 
 ### 框架
 
