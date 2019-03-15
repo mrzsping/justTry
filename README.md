@@ -28,7 +28,7 @@
   [linux](https://github.com/mrzsping/justTry/tree/master/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/linux)
   
 ### 框架
-
+  [vue](https://github.com/mrzsping/justTry/tree/master/%E6%A1%86%E6%9E%B6/vue)
 ### 源码解读
 
 ### 版本控制
@@ -40,7 +40,8 @@
 ### 网络基础
 
 ### 规范
-
+  [API](https://github.com/mrzsping/justTry/tree/master/%E8%A7%84%E8%8C%83/API)
+  
 ### 计算机基础
   [计算机基础](https://github.com/mrzsping/justTry/tree/master/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80)
   
