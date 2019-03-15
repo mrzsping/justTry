@@ -7,6 +7,25 @@
   <title>用户管理</title>
 </head>
 <body>
+  1.who：
+  -a	打印能打印的全部
+  -d	打印死掉的进程
+  -m	同am i,mom likes
+  -q	打印当前登录用户数及用户名
+  -u	打印当前登录用户登录信息
+  -r	打印运行等级
+
+  su：切换到用户，输入密码
+  sudo：属于sudo组
+  su -：切换用户，变量环境改变
+
+  sudo adduser name
   
+  用户组：
+  groups
+  /etc/group：group_name:password:GID:user_list
+  cat /etc/group | grep -E 'name'
+  usermod：改变用户组，sudo usermod -G sudo lilei
+  删除用户： sudo deluser lilei --remove-home
 </body>
 </html>

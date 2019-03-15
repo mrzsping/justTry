@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>文件权限</title>
+</head>
+<body>
+  查看目录权限：ls -dl <目录名>
+  ls -AsSh
+  sudo chown name filename：更改文件所属，root权限下
+  文件权限：
+  rwx => 2*2 + 2 + 1 === 7
+  echo '' > name：添加内容
+  chomd 666 name：修改权限
+  chmod go-rw name：g、o 还有 u 分别表示 group、others 和 user，+ 和 - 分别表示增加和去掉相应的权限、
+
+  useradd 只创建用户，创建完了用 passwd lilei 去设置新用户的密码。adduser 会创建用户，创建目录，创建密码
+</body>
+</html>
