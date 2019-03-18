@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+  <p id="get">{{msg}}</p>
+  <button @click="get">get</button>
+  </div>
+  <script>
+    let Vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 123
+      },
+      methods: {
+        get () {
+          console.log(this.msg)
+          this.msg = 321
+          console.log(this.msg)
+          console.log(document.querySelector('#get').innerHTML)
+          this.$nextTick().then(() => {
+            console.log(document.querySelector('#get').innerHTML)
+            console.log('更新完毕')
+          })
+        }
+      }
+    })
+  </script>
+</body>
+</html>

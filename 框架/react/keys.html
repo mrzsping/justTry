@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+   
+<div id="root"></div>
+
+<script type="text/babel">
+function List (props) {
+  return <li>{props.id}{props.key}</li>
+}
+function Ulist(props){
+  return (<ul>{
+    props.list.map((i, index) => {
+      return <List key={i.id} id={i.id} value={i.name}/>
+    })
+  }</ul>)
+}
+let list = [{name: 'xiaoming', id: 12}]
+ReactDOM.render(
+  <Ulist list={list}/>,
+  document.getElementById('root')
+);
+
+</script>
+</body>
+</html>

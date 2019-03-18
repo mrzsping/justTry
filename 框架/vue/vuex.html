@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div id="app">
+<child></child>
+</div>
+<script src=" https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script src="https://unpkg.com/vuex@3.1.0/dist/vuex.js"></script>
+<script>
+// vuex:应用程序开发的状态管理模式
+// https://mp.weixin.qq.com/s/-FwA9aHMrE0BBPrpJMAsaw
+// https://vuex.vuejs.org/zh/guide/
+// https://www.jianshu.com/p/a804606ad8e9
+const store = new Vuex.Store({
+  modules: {
+    a: {
+      namespaced: true,
+      state: {
+        count: 1,
+        counbtList: [1,2,3,4,5,5,7,8]
+      },// 模块内部的 mutation 和 getter，接收的第一个参数是模块的局部状态对象。
+      getters: {
+        countGet: (state) => {
+          return state.counbtList.filter(c => c > 5)
+        }
+      }, 
+      mutations: {
+        ['incr'](state){
+            state.count += 1
+        },
+        ['incr_next'](state){
+            state.count += 4
+        }
+      },
+      actions: {
+        incrAction (context) {
+          return new Promise ((r, j) => {
+            setTimeout(() => {
+              context.commit('incr')
+              console.log('timeout end')
+              r()
+            }, 3000)
+          })
+        },
+        async incrActionNext (context) {
+          await context.dispatch('incrAction')
+        }
+      }
+    }
+  }
+})
+//Vue.use(Vuex)
+
+  Vue.component('child', {
+    data () {
+      return {
+      }
+    },
+    computed: {
+      ...Vuex.mapGetters(['a/countGet']),
+      //...Vuex.mapState(['a/count'])
+      count () {
+        return this.$store.state.a.count
+      }
+    }
+    ,
+    template: `<div><p @click="incr">{{count}}</p><p @click="incrAction">{{count}}</p></div>`,
+    methods:{
+      incr () {
+        this.$store.commit('a/incr')
+      },
+      // ...Vuex.mapMutations(['a/incr']),
+      // ...Vuex.mapActions(['incrAction']),
+      incrAction(){
+        this.$store.dispatch('a/incrAction').then(() => {
+          this.$store.commit('a/incr_next')
+        })
+      },
+      incrActionNext(){
+        this.$store.dispatch('incrActionNext').then(() => {
+          console.log('end')
+        })
+      }
+    }
+  })
+
+  var app = new Vue({
+    el: '#app',
+    data:{
+      msg: '123'
+    },
+    store
+  })
+</script>
+</body>
+</html>

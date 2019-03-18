@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>环境变量与文件查找</title>
+</head>
+<body>
+  变量类型：
+    当前Shell进程私有用户自定义变量
+    Shell 本身内建的变量
+    从自定义变量导出的环境变量
+    set、env、export
+  Shell变量：作用于自身和它的子进程
+  1.环境变量设置
+    PATH=$PATH:/home/name
+    自动添加：echo "PATH=$PATH:/home/shiyanlou/mybin" >> .zshrc
+    ${变量名#匹配字串}	从头向后开始匹配，删除符合匹配字串的最短数据
+    ${变量名##匹配字串}	从头向后开始匹配，删除符合匹配字串的最长数据
+    ${变量名%匹配字串}	从尾向前开始匹配，删除符合匹配字串的最短数据
+    ${变量名%%匹配字串}	从尾向前开始匹配，删除符合匹配字串的最长数据
+    ${变量名/旧的字串/新的字串}	将符合旧字串的第一个字串替换为新的字串
+    ${变量名//旧的字串/新的字串}	将符合旧字串的全部字串替换为新的字串
+  2.环境变量
+  删除：unset name
+
+  source .zshrc：更改配置文件，立即执行
+
+  3.搜索
+    whereis：二进制文件(-b)，man 帮助文件(-m)和源代码文件(-s)
+</body>
+</html>

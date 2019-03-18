@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+   
+<div id="root"></div>
+
+<script type="text/babel">
+class Form extends React.Component {
+  constructor(props){
+    super(props)
+    this.formChange = this.formChange.bind(this)
+    this.formSubmit = this.formSubmit.bind(this)
+    this.state = {
+      value: '',
+      name: ''
+    }
+  }
+  formChange(e){
+    const name = e.target.name
+    let obj = {}
+    obj[name] = name === 'name' ? e.target.value.toUpperCase() :  e.target.value
+    console.log(obj)
+    this.setState(obj)
+  }
+  formSubmit(){
+    alert(this.state.value)
+  }
+  render(){
+    return(
+      <form onSubmit = {this.formSubmit}>
+        <input type="text" name="name" onChange={this.formChange} value={this.state.name}/>
+        <input type="text" name="value" onChange={this.formChange} value={this.state.value}/>
+        <input type="submit"/>
+      </form>
+    )
+  }
+}
+ReactDOM.render(
+  <Form/>,
+  document.getElementById('root')
+);
+
+</script>
+</body>
+</html>

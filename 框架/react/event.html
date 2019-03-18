@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+   
+<div id="root"></div>
+
+<script type="text/babel">
+class LoginControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.loginClick = this.loginClick.bind(this)
+    this.logoutClick = this.logoutClick.bind(this)
+    this.state = {isLogin: false}
+  }
+  loginClick(){
+    this.setState({
+      isLogin: true
+    })
+  }
+  logoutClick(){
+    this.setState({
+      isLogin: false
+    })
+  }
+  render() {
+    let isLogin = this.state.isLogin
+    return(
+      <div>
+        <Say isLogin={isLogin}/>
+        {!isLogin ? (<Login onClick={this.loginClick}/>) : (<Logout onClick={this.logoutClick}/>)}
+      </div>
+    )
+  }
+}
+function Say(props){
+  if(props.isLogin){
+    return <LoginSay />
+  }
+  return <LogoutSay />
+}
+function LoginSay(){
+  return (<h2>login</h2>)
+}
+function LogoutSay(){
+  return (<h2>logout</h2>)
+}
+function Login(props){
+  return (<button onClick={props.onClick}>login</button>)
+}
+function Logout(props){
+  return (<button onClick={props.onClick}>Logout</button>)
+}
+ReactDOM.render(
+  <LoginControl/>,
+  document.getElementById('root')
+);
+
+</script>
+</body>
+</html>

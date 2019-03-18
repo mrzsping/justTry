@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+  <p id="get">{{obj.msg}}</p>
+  </div>
+  <script>
+  //向响应式对象中添加一个属性，并确保这个新属性同样是响应式的
+  //注意对象不能是 Vue 实例，或者 Vue 实例的根数据对象。
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        obj: {}
+      },
+      mounted(){
+        //this.obj.msg = 123
+        //this.$set(this.obj, 'msg', 123)
+      }
+    })
+    //console.log(vm)
+    Vue.set(vm.obj, 'msg', 456)
+  </script>
+</body>
+</html>
