@@ -29,5 +29,18 @@
 
   3.搜索
     whereis：二进制文件(-b)，man 帮助文件(-m)和源代码文件(-s)
+
+    locate /usr/share/\*.jpg
+
+    which：确定是否安装了某个指定的软件
+
+    find：强大，sudo find /etc/ -name interfaces
+    -atime	最后访问时间
+    -ctime	最后修改文件内容的时间
+    -mtime	最后修改文件属性的时间
+      -mtime n：n 为数字，表示为在 n 天之前的“一天之内”修改过的文件
+      -mtime +n：列出在 n 天之前（不包含 n 天本身）被修改过的文件
+      -mtime -n：列出在 n 天之内（包含 n 天本身）被修改过的文件
+      -newer file：file 为一个已存在的文件，列出比 file 还要新的文件名
 </body>
 </html>

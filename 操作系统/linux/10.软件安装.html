@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>10.软件安装</title>
+</head>
+<body>
+    安装
+    sudo apt-get install
+    
+    更新软件源
+    sudo apt-get update
+
+    升级没有依赖问题的软件包
+    sudo apt-get upgrade
+
+    升级并解决依赖关系
+    sudo apt-get dist-upgrade
+    
+    卸载
+    sudo apt-get remove
+
+    不保留配置文件的移除
+    sudo apt-get purge w3m
+
+    sudo apt-get --purge remove
+    移除不再需要的被依赖的软件包
+    sudo apt-get autoremove
+
+    软件搜索
+    sudo apt-cache search softname1 softname2 softname3……
+    
+    dpkg：
+      -i	安装指定deb包
+      -R	后面加上目录名，用于安装该目录下的所有deb安装包
+      -r	remove，移除某个已安装的软件包
+      -I	显示deb包文件的信息
+      -s	显示已安装软件的信息
+      -S	搜索已安装的软件包
+      -L	显示已安装软件包的目录信息
+</body>
+</html>

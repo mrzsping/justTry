@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>压缩解压</title>
+</head>
+<body>
+  zip：打包压缩的文件
+
+    zip -r -9 -q -o shiyanlou_9.zip /home/shiyanlou/Desktop -x ~/*.zip
+      -r：递归打包包含子目录的全部内容
+      -q：安静模式，即不向屏幕输出信息
+      -o：打包输出文件名。
+      du：查看打包后文件的大小
+        du -h shiyanlou.zip
+      1：最快压缩但体积大
+      -x：排除我们上一次创建的 zip 文件
+      -e：加密
+      -l：兼容windows
+    unzip -q zip -d dir：解压缩
+    unzip -l name：查看内容
+    unzip -O GBK zip：指定编码类型
+  tar：程序打包，未压缩的文件
+    tar -cf shiyanlou.tar /home/shiyanlou/Desktop
+      -c：创建tar包
+      -f：指定文件名
+      -v：可视方式输出
+      -P：保留绝对路径
+
+    tar -xf shiyanlou.tar -C tardir
+    解压文件到目标文件夹
+
+    tar -tf shiyanlou.tar
+    只查看文件夹
+
+    tar -cphf etc.tar /etc
+    保留文件属性和跟随链接
+      -p：文件的属性
+      -h：备份链接指向的源文件而不是链接本身
+
+    tar -czf name.tar.gz /home/test
+    tar -xzf name.tar.gz
+</body>
+</html>
