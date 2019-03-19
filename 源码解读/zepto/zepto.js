@@ -1,26 +1,26 @@
 /* Zepto v1.2.0 - zepto event ajax form ie - zeptojs.com/license */
 (function(global, factory) {
-  if (typeof define === 'function' && define.amd) // 模块化使用使用
+  if (typeof define === 'function' && define.amd) // ???????
     define(function() { return factory(global) })
   else
-    factory(global) // 执行传入的回调
+    factory(global) // ???????
 }(this, function(window) {
-  // 8-953 获取Zepto对象
+  // 8-953 ??Zepto??
   var Zepto = (function() {
   var undefined, key, $, classList, emptyArray = [], concat = emptyArray.concat, filter = emptyArray.filter, slice = emptyArray.slice,
     document = window.document,
     elementDisplay = {}, classCache = {},
     cssNumber = { 'column-count': 1, 'columns': 1, 'font-weight': 1, 'line-height': 1,'opacity': 1, 'z-index': 1, 'zoom': 1 },
-    fragmentRE = /^\s*<(\w+|!)[^>]*>/, // html片段，只存在
-    singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,// 单标签，\1引用子匹配，?: 后者选项二选一
-    tagExpanderRE = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig, // 匹配非单独一个闭合标签的标签<div /> ?!非选择匹配
+    fragmentRE = /^\s*<(\w+|!)[^>]*>/, // html??????
+    singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,// ????\1???????: ???????
+    tagExpanderRE = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig, // ??????????????<div /> ?!?????
     rootNodeRE = /^(?:body|html)$/i, // ?:body|html === [body|html]
     capitalRE = /([A-Z])/g,
 
     // special attributes that should be get/set via method calls
     methodAttributes = ['val', 'css', 'html', 'text', 'data', 'width', 'height', 'offset'],
 
-    adjacencyOperators = [ 'after', 'prepend', 'before', 'append' ], // adjacency:相邻
+    adjacencyOperators = [ 'after', 'prepend', 'before', 'append' ], // adjacency:??
     table = document.createElement('table'),
     tableRow = document.createElement('tr'),
     containers = {
@@ -29,15 +29,15 @@
       'td': tableRow, 'th': tableRow,
       '*': document.createElement('div')
     },
-    readyRE = /complete|loaded|interactive/, //interactive：交互式的
+    readyRE = /complete|loaded|interactive/, //interactive?????
     simpleSelectorRE = /^[\w-]*$/,
-    class2type = {}, // 引用对象类型
+    class2type = {}, // ??????
     toString = class2type.toString,
     zepto = {},
     camelize, uniq,
     tempParent = document.createElement('div'),
     propMap = {
-      'tabindex': 'tabIndex', //  tab键链接
+      'tabindex': 'tabIndex', //  tab???
       'readonly': 'readOnly',
       'for': 'htmlFor',
       'class': 'className',
@@ -46,41 +46,41 @@
       'cellpadding': 'cellPadding',
       'rowspan': 'rowSpan',
       'colspan': 'colSpan',
-      'usemap': 'useMap', //不同区域，链接不同
+      'usemap': 'useMap', //?????????
       'frameborder': 'frameBorder',
-      'contenteditable': 'contentEditable' // 可编辑 user-modify：read-write
+      'contenteditable': 'contentEditable' // ??? user-modify?read-write
     },
     isArray = Array.isArray ||
       function(object){ return object instanceof Array }
 
   zepto.matches = function(element, selector) {
-    if (!selector || !element || element.nodeType !== 1) return false// 不存在或者不为元素节点
-    var matchesSelector = element.matches || element.webkitMatchesSelector || //元素被指定的选择器字符串选择，兼容多种情况，非标准名称matchesSelector
+    if (!selector || !element || element.nodeType !== 1) return false// ???????????
+    var matchesSelector = element.matches || element.webkitMatchesSelector || //?????????????????ture?false?????????????matchesSelector
                           element.mozMatchesSelector || element.oMatchesSelector ||
                           element.matchesSelector
     if (matchesSelector) return matchesSelector.call(element, selector)
     // fall back to performing a selector:
     var match, parent = element.parentNode, temp = !parent
     if (temp) (parent = tempParent).appendChild(element)
-    match = ~zepto.qsa(parent, selector).indexOf(element) // ~：按位非，二进制取反 ~1 = -2
+    match = ~zepto.qsa(parent, selector).indexOf(element) // ~?????????? ~1 = -2
     temp && tempParent.removeChild(element)
     return match
   }
 
   function type(obj) {
-    return obj == null ? String(obj) : // String转换null/undefined为字符串字面量
-      class2type[toString.call(obj)] || "object" // toString.call():转化为相应对象
+    return obj == null ? String(obj) : // String??null/undefined???????
+      class2type[toString.call(obj)] || "object" // toString.call():???????
   }
 
   function isFunction(value) { return type(value) == "function" }
-  function isWindow(obj)     { return obj != null && obj == obj.window } // 是否为window对象
-  function isDocument(obj)   { return obj != null && obj.nodeType == obj.DOCUMENT_NODE }// 是否为documnet
+  function isWindow(obj)     { return obj != null && obj == obj.window } // ???window??
+  function isDocument(obj)   { return obj != null && obj.nodeType == obj.DOCUMENT_NODE }// ???documnet
   function isObject(obj)     { return type(obj) == "object" }
   function isPlainObject(obj) {
-    return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype // 自然对象，字面量或者new Object()
+    return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype // ??????????new Object()
   }
 
-  function likeArray(obj) { // 检测是否为数组或者类数组对象：nodelist,Array.prototype.slice.call({'0': 1,length: 1})
+  function likeArray(obj) { // ???????????????nodelist,Array.prototype.slice.call({'0': 1,length: 1})
     var length = !!obj && 'length' in obj && obj.length,
       type = $.type(obj)
 
@@ -90,28 +90,28 @@
     )
   }
 
-  function compact(array) { return filter.call(array, function(item){ return item != null }) }// 过滤掉为空的数据
-  function flatten(array) { return array.length > 0 ? $.fn.concat.apply([], array) : array }// 扁平化，组合为一个数组
-  camelize = function(str){ return str.replace(/-+(.)?/g, function(match, chr){ return chr ? chr.toUpperCase() : '' }) }//驼峰转化
-  function dasherize(str) { //添加破折号abcXyz =>abc-xyz
+  function compact(array) { return filter.call(array, function(item){ return item != null }) }// ????????
+  function flatten(array) { return array.length > 0 ? $.fn.concat.apply([], array) : array }// ???????????
+  camelize = function(str){ return str.replace(/-+(.)?/g, function(match, chr){ return chr ? chr.toUpperCase() : '' }) }//????
+  function dasherize(str) { //?????abcXyz =>abc-xyz
     return str.replace(/::/g, '/')
-           .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')//([A-Z]+) => $1，([A-Z][a-z]) => $2
+           .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')//([A-Z]+) => $1?([A-Z][a-z]) => $2
            .replace(/([a-z\d])([A-Z])/g, '$1_$2')
            .replace(/_/g, '-')
            .toLowerCase()
   }
-  uniq = function(array){ return filter.call(array, function(item, idx){ return array.indexOf(item) == idx }) } //查找
+  uniq = function(array){ return filter.call(array, function(item, idx){ return array.indexOf(item) == idx }) } //??
 
-  function classRE(name) { // 查找className
+  function classRE(name) { // ??className
     return name in classCache ?
       classCache[name] : (classCache[name] = new RegExp('(^|\\s)' + name + '(\\s|$)'))
   }
 
   function maybeAddPx(name, value) {
-    return (typeof value == "number" && !cssNumber[dasherize(name)]) ? value + "px" : value // 排除某些css属性，转换为px
+    return (typeof value == "number" && !cssNumber[dasherize(name)]) ? value + "px" : value // ????css??????px
   }
 
-  function defaultDisplay(nodeName) { // 默认设置为display
+  function defaultDisplay(nodeName) { // ?????display
     var element, display
     if (!elementDisplay[nodeName]) {
       element = document.createElement(nodeName)
@@ -124,7 +124,7 @@
     return elementDisplay[nodeName]
   }
 
-  function children(element) { // 返回子元素
+  function children(element) { // ?????
     return 'children' in element ?
       slice.call(element.children) :
       $.map(element.childNodes, function(node){ if (node.nodeType == 1) return node })
@@ -137,7 +137,7 @@
     this.selector = selector || ''
   }
 
-  // `$.zepto.fragment` takes a html string and an optional tag name // 根据html字符串生成DON node节点数组
+  // `$.zepto.fragment` takes a html string and an optional tag name // ??html?????DON node????
   // to generate DOM nodes from the given html string.
   // The generated DOM nodes are returned as an array.
   // This function can be overridden in plugins for example to make
@@ -171,9 +171,10 @@
     return dom
   }
 
-  // `$.zepto.Z` swaps out the prototype of the given `dom` array //swaps out:置换
+  // `$.zepto.Z` swaps out the prototype of the given `dom` array //swaps out:??
   // of nodes with `$.fn` and thus supplying all the Zepto functions
   // to the array. This method can be overridden in plugins.
+  //??Z????
   zepto.Z = function(dom, selector) {
     return new Z(dom, selector)
   } 
@@ -190,14 +191,14 @@
 
   // This method can be overridden in plugins.
 
-  // init初始化，包括选择器和执行上下文/各种容器，当有容器时，将执行init方法两遍
+  // init???????????????/??????????????init????
   zepto.init = function(selector, context) {
     var dom
     // If nothing given, return an empty Zepto collection
     if (!selector) return zepto.Z()
 
     // Optimize for string selectors
-    // 选择器为字符串
+    // ???????
     else if (typeof selector == 'string') {
       selector = selector.trim()
 
@@ -215,7 +216,7 @@
     // If a function is given, call it when the DOM is ready
     else if (isFunction(selector)) return $(document).ready(selector)
     // If a Zepto collection is given, just return it
-    else if (zepto.isZ(selector)) return selector
+    else if (zepto.isZ(selector)) return selector // $?????
     else {
       // normalize array if an array of nodes is given
       if (isArray(selector)) dom = compact(selector)
@@ -240,48 +241,50 @@
   // details of selecting nodes and creating Zepto collections
   // patchable in plugins.
 
-  // $基于Zepto对象，调用时使用init方法，创建Zepto实例
+  // $??Zepto????????init?????Zepto??
 
   $ = function(selector, context){
     return zepto.init(selector, context)
   }
 
-  function extend(target, source, deep) { // PlainObject面量形式或new Object()
+  function extend(target, source, deep) { // PlainObject?????new Object()
     for (key in source)
-      if (deep && (isPlainObject(source[key]) || isArray(source[key]))) { // source是数组
+      if (deep && (isPlainObject(source[key]) || isArray(source[key]))) { // source???
         if (isPlainObject(source[key]) && !isPlainObject(target[key]))
           target[key] = {}
         if (isArray(source[key]) && !isArray(target[key]))
           target[key] = []
-        extend(target[key], source[key], deep) // 递归
+        extend(target[key], source[key], deep) // ??
       }
       else if (source[key] !== undefined) target[key] = source[key]
   }
 
   // Copy all but undefined properties from one or more
   // objects to the `target` object.
-  $.extend = function(target){ // 展目标对象的属性
+  $.extend = function(target){ // ????????
     var deep, args = slice.call(arguments, 1)
-    if (typeof target == 'boolean') { //深拷贝
+    if (typeof target == 'boolean') { //???
       deep = target
-      target = args.shift() // 目标对象
+      target = args.shift() // ????
     }
-    args.forEach(function(arg){ extend(target, arg, deep) }) // 被复制对象数组
+    args.forEach(function(arg){ extend(target, arg, deep) }) // ???????
     return target
   }
 
-  // `$.zepto.qsa` is Zepto's CSS selector implementation which 根据class或id查找
+  // `$.zepto.qsa` is Zepto's CSS selector implementation which ??class?id??
   // uses `document.querySelectorAll` and optimizes for some special cases, like `#id`.
   // This method can be overridden in plugins.
+
+  // ??????????
   zepto.qsa = function(element, selector){
     var found,
         maybeID = selector[0] == '#',
         maybeClass = !maybeID && selector[0] == '.',
         nameOnly = maybeID || maybeClass ? selector.slice(1) : selector, // Ensure that a 1 char tag name still gets checked
         isSimple = simpleSelectorRE.test(nameOnly)
-    return (element.getElementById && isSimple && maybeID) ? // Safari DocumentFragment doesn't have getElementById
+    return (element.getElementById && isSimple && maybeID) ? // Safari DocumentFragment doesn't have getElementById DocumentFragment???????????????????DOM?????
       ( (found = element.getElementById(nameOnly)) ? [found] : [] ) :
-      (element.nodeType !== 1 && element.nodeType !== 9 && element.nodeType !== 11) ? [] :
+      (element.nodeType !== 1 && element.nodeType !== 9 && element.nodeType !== 11) ? [] : // 1????3????11????? Document ??
       slice.call(
         isSimple && !maybeID && element.getElementsByClassName ? // DocumentFragment doesn't have getElementsByClassName/TagName
           maybeClass ? element.getElementsByClassName(nameOnly) : // If it's simple, it could be a class
@@ -290,11 +293,11 @@
       )
   }
 
-  function filtered(nodes, selector) { // 筛选节点
+  function filtered(nodes, selector) { // ????
     return selector == null ? $(nodes) : $(nodes).filter(selector)
   }
 
-  $.contains = document.documentElement.contains ? // 父元素是否包含子元素
+  $.contains = document.documentElement.contains ? // ??????????
     function(parent, node) {
       return parent !== node && parent.contains(node)
     } :
@@ -308,7 +311,7 @@
     return isFunction(arg) ? arg.call(context, idx, payload) : arg
   }
 
-  function setAttribute(node, name, value) { // 设置属性
+  function setAttribute(node, name, value) { // ????
     value == null ? node.removeAttribute(name) : node.setAttribute(name, value)
   }
 
@@ -329,6 +332,7 @@
   // "08"    => "08"
   // JSON    => parse if valid
   // String  => self
+  // ????
   function deserializeValue(value) {
     try {
       return value ?
@@ -350,13 +354,13 @@
   $.isArray = isArray
   $.isPlainObject = isPlainObject
 
-  $.isEmptyObject = function(obj) { //是否为空对象
+  $.isEmptyObject = function(obj) { //??????
     var name
     for (name in obj) return false
     return true
   }
 
-  $.isNumeric = function(val) { // 是否是数字的
+  $.isNumeric = function(val) { // ??????
     var num = Number(val), type = typeof val
     return val != null && type != 'boolean' &&
       (type != 'string' || val.length) &&
@@ -372,13 +376,13 @@
     return str == null ? "" : String.prototype.trim.call(str)
   }
 
-  // plugin compatibility：插件兼容
+  // plugin compatibility?????
   $.uuid = 0
   $.support = { }
   $.expr = { }
   $.noop = function() {}
 
-  $.map = function(elements, callback){ // 数组执行，返回新的数组
+  $.map = function(elements, callback){ // ???????????
     var value, values = [], i, key
     if (likeArray(elements))
       for (i = 0; i < elements.length; i++) {
@@ -393,11 +397,11 @@
     return flatten(values)
   }
 
-  $.each = function(elements, callback){ // 遍历数组，为false是停止
+  $.each = function(elements, callback){ // ??????false???
     var i, key
-    if (likeArray(elements)) { // 判断是否为数组或者类数组
+    if (likeArray(elements)) { // ????????????
       for (i = 0; i < elements.length; i++)
-        if (callback.call(elements[i], i, elements[i]) === false) return elements // key, elements[key]对应回调函数中的key与value，执行callback，对应作用域为各项值
+        if (callback.call(elements[i], i, elements[i]) === false) return elements // key, elements[key]????????key?value???callback??????????
     } else {
       for (key in elements)
         if (callback.call(elements[key], key, elements[key]) === false) return elements
@@ -406,27 +410,29 @@
     return elements
   }
 
-  $.grep = function(elements, callback){ //返回全为真的数据
+  $.grep = function(elements, callback){ //????????
     return filter.call(elements, callback)
   }
 
   if (window.JSON) $.parseJSON = JSON.parse
 
   // Populate the class2type map
-  // 数据类型验证map
+  // ??????map
   $.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(i, name) {
     class2type[ "[object " + name + "]" ] = name.toLowerCase()
   })
 
   // Define methods that will be available on all
   // Zepto collections 
-  // 所有方法
+  // ?????fn????Z????????Z????fn?????
   $.fn = {
     constructor: zepto.Z,
     length: 0,
 
     // Because a collection acts like an array
     // copy over these useful array functions.
+
+    // ??????
     forEach: emptyArray.forEach,
     reduce: emptyArray.reduce,
     push: emptyArray.push,
@@ -444,27 +450,29 @@
 
     // `map` and `slice` in the jQuery API work differently
     // from their array counterparts
-    map: function(fn){
+    map: function(fn){ //elements.map???????
       return $($.map(this, function(el, i){ return fn.call(el, i, el) }))
     },
     slice: function(){
       return $(slice.apply(this, arguments))
     },
-
+    // DOMContentLoaded?????DOM??????
     ready: function(callback){
       // need to check if document.body exists for IE as that browser reports
       // document ready when it hasn't yet created the body element
-      if (readyRE.test(document.readyState) && document.body) callback($)
+      if (readyRE.test(document.readyState) && document.body) callback($) // uninitialized - ?????? loading - ??? interactive - ??????????????? complete - ????
       else document.addEventListener('DOMContentLoaded', function(){ callback($) }, false)
       return this
     },
     get: function(idx){
       return idx === undefined ? slice.call(this) : this[idx >= 0 ? idx : idx + this.length]
     },
+    // ??????
     toArray: function(){ return this.get() },
     size: function(){
       return this.length
     },
+    //????????????????
     remove: function(){
       return this.each(function(){
         if (this.parentNode != null)
@@ -478,7 +486,7 @@
       return this
     },
     filter: function(selector){
-      if (isFunction(selector)) return this.not(this.not(selector))
+      if (isFunction(selector)) return this.not(this.not(selector))//not?????????
       return $(filter.call(this, function(element){
         return zepto.matches(element, selector)
       }))
@@ -491,15 +499,15 @@
     },
     not: function(selector){
       var nodes=[]
-      if (isFunction(selector) && selector.call !== undefined)
+      if (isFunction(selector) && selector.call !== undefined) // ??
         this.each(function(idx){
           if (!selector.call(this,idx)) nodes.push(this)
         })
-      else {
+      else { // ??
         var excludes = typeof selector == 'string' ? this.filter(selector) :
-          (likeArray(selector) && isFunction(selector.item)) ? slice.call(selector) : $(selector)
+          (likeArray(selector) && isFunction(selector.item)) ? slice.call(selector) : $(selector) // ??????
         this.forEach(function(el){
-          if (excludes.indexOf(el) < 0) nodes.push(el)
+          if (excludes.indexOf(el) < 0) nodes.push(el) // ??????
         })
       }
       return $(nodes)
@@ -526,7 +534,7 @@
       var result, $this = this
       if (!selector) result = $()
       else if (typeof selector == 'object')
-        result = $(selector).filter(function(){
+        result = $(selector).filter(function(){ // filter?some????
           var node = this
           return emptyArray.some.call($this, function(parent){
             return $.contains(parent, node)
@@ -536,7 +544,7 @@
       else result = this.map(function(){ return zepto.qsa(this, selector) })
       return result
     },
-    closest: function(selector, context){
+    closest: function(selector, context){ //????????
       var nodes = [], collection = typeof selector == 'object' && $(selector)
       this.each(function(_, node){
         while (node && !(collection ? collection.indexOf(node) >= 0 : zepto.matches(node, selector)))
@@ -953,7 +961,7 @@
 window.Zepto = Zepto
 window.$ === undefined && (window.$ = Zepto)
 
-// 事件相关
+// ????
 ;(function($){
   var _zid = 1, undefined,
       slice = Array.prototype.slice,
@@ -1041,7 +1049,7 @@ window.$ === undefined && (window.$ = Zepto)
 
   $.event = { add: add, remove: remove }
 
-  $.proxy = function(fn, context) { //接受一个函数，然后返回一个新函数
+  $.proxy = function(fn, context) { //????????????????
     var args = (2 in arguments) && slice.call(arguments, 2)
     if (isFunction(fn)) {
       var proxyFn = function(){ return fn.apply(context, args ? args.concat(slice.call(arguments)) : arguments) }
@@ -1078,33 +1086,33 @@ window.$ === undefined && (window.$ = Zepto)
         stopPropagation: 'isPropagationStopped'
       }
 
-  function compatible(event, source) { // 修正event
+  function compatible(event, source) { // ??event
     if (source || !event.isDefaultPrevented) {
       source || (source = event)
 
       $.each(eventMethods, function(name, predicate) {
         var sourceMethod = source[name]
         event[name] = function(){
-          this[predicate] = returnTrue // this指向event对象
+          this[predicate] = returnTrue // this??event??
           return sourceMethod && sourceMethod.apply(source, arguments)
         }
-        event[predicate] = returnFalse// 添加方法
+        event[predicate] = returnFalse// ????
       })
 
       event.timeStamp || (event.timeStamp = Date.now())
 
-      if (source.defaultPrevented !== undefined ? source.defaultPrevented : // 处理兼容
+      if (source.defaultPrevented !== undefined ? source.defaultPrevented : // ????
           'returnValue' in source ? source.returnValue === false :
-          source.getPreventDefault && source.getPreventDefault()) // getPreventDefault：老方法，对应defaultPrevented
+          source.getPreventDefault && source.getPreventDefault()) // getPreventDefault???????defaultPrevented
         event.isDefaultPrevented = returnTrue
     }
     return event
   }
 
-  function createProxy(event) { // 创建代理
+  function createProxy(event) { // ????
     var key, proxy = { originalEvent: event }
     for (key in event)
-      if (!ignoreProperties.test(key) && event[key] !== undefined) proxy[key] = event[key] // ignoreProperties.test(key)排除自带属性
+      if (!ignoreProperties.test(key) && event[key] !== undefined) proxy[key] = event[key] // ignoreProperties.test(key)??????
 
     return compatible(proxy, event)
   }
@@ -1125,7 +1133,7 @@ window.$ === undefined && (window.$ = Zepto)
     return this
   }
 
-  $.fn.on = function(event, selector, data, callback, one){ // 绑定事件
+  $.fn.on = function(event, selector, data, callback, one){ // ????
     var autoRemove, delegator, $this = this
     if (event && !isString(event)) {
       $.each(event, function(type, fn){
@@ -1158,7 +1166,7 @@ window.$ === undefined && (window.$ = Zepto)
       add(element, event, callback, data, selector, delegator || autoRemove)
     })
   }
-  $.fn.off = function(event, selector, callback){ // 移除通过on绑定的事件
+  $.fn.off = function(event, selector, callback){ // ????on?????
     var $this = this
     if (event && !isString(event)) {
       $.each(event, function(type, fn){
@@ -1177,7 +1185,7 @@ window.$ === undefined && (window.$ = Zepto)
     })
   }
 
-  $.fn.trigger = function(event, args){ // 触发事件
+  $.fn.trigger = function(event, args){ // ????
     event = (isString(event) || $.isPlainObject(event)) ? $.Event(event) : compatible(event)
     event._args = args
     return this.each(function(){
@@ -1189,8 +1197,8 @@ window.$ === undefined && (window.$ = Zepto)
     })
   }
 
-  // triggers event handlers on current element just as if an event occurred, 仅仅触发当前元素上的事件
-  // doesn't trigger an actual event, doesn't bubble 不触发真实的事件,不冒泡
+  // triggers event handlers on current element just as if an event occurred, ????????????
+  // doesn't trigger an actual event, doesn't bubble ????????,???
   $.fn.triggerHandler = function(event, args){
     var e, result
     this.each(function(i, element){
@@ -1212,21 +1220,21 @@ window.$ === undefined && (window.$ = Zepto)
     $.fn[event] = function(callback) {
       return (0 in arguments) ?
         this.bind(event, callback) :
-        this.trigger(event) //添加各个事件
+        this.trigger(event) //??????
     }
   })
 
   $.Event = function(type, props) {
     if (!isString(type)) props = type, type = props.type
-    var event = document.createEvent(specialEvents[type] || 'Events'), bubbles = true // createEvent：创建事件
+    var event = document.createEvent(specialEvents[type] || 'Events'), bubbles = true // createEvent?????
     if (props) for (var name in props) (name == 'bubbles') ? (bubbles = !!props[name]) : (event[name] = props[name])
-    event.initEvent(type, bubbles, true) // 初始化事件，事件名称/冒泡/取消事件
+    event.initEvent(type, bubbles, true) // ??????????/??/????
     return compatible(event)
   }
 
 })(Zepto)
 
-// ajax相关
+// ajax??
 ;(function($){
   var jsonpID = +new Date(),
       document = window.document,
@@ -1305,7 +1313,7 @@ window.$ === undefined && (window.$ = Zepto)
   // Empty function, used as default callback
   function empty() {}
 
-  $.ajaxJSONP = function(options, deferred){ //使用jsonp
+  $.ajaxJSONP = function(options, deferred){ //??jsonp
     if (!('type' in options)) return $.ajax(options)
 
     var _callbackName = options.jsonpCallback,
@@ -1357,7 +1365,7 @@ window.$ === undefined && (window.$ = Zepto)
     return xhr
   }
 
-  $.ajaxSettings = { // ajax设置
+  $.ajaxSettings = { // ajax??
     // Default type of request
     type: 'GET',
     // Callback that is executed before request
@@ -1399,7 +1407,7 @@ window.$ === undefined && (window.$ = Zepto)
     dataFilter: empty
   }
 
-  function mimeToDataType(mime) {// 返回type
+  function mimeToDataType(mime) {// ??type
     if (mime) mime = mime.split(';', 2)[0]
     return mime && ( mime == htmlType ? 'html' :
       mime == jsonType ? 'json' :
@@ -1409,45 +1417,45 @@ window.$ === undefined && (window.$ = Zepto)
 
   function appendQuery(url, query) {
     if (query == '') return url
-    return (url + '&' + query).replace(/[&?]{1,2}/, '?') // 含有的&以及多个?被替换
+    return (url + '&' + query).replace(/[&?]{1,2}/, '?') // ???&????????
   }
 
   // serialize payload and append it to the URL for GET requests
   function serializeData(options) {
-    if (options.processData && options.data && $.type(options.data) != "string") // 非get请求，是否序列化
+    if (options.processData && options.data && $.type(options.data) != "string") // ?get????????
       options.data = $.param(options.data, options.traditional)
     if (options.data && (!options.type || options.type.toUpperCase() == 'GET' || 'jsonp' == options.dataType))
       options.url = appendQuery(options.url, options.data), options.data = undefined
   }
 
-  $.ajax = function(options){ // ajax封装
+  $.ajax = function(options){ // ajax??
     var settings = $.extend({}, options || {}),
         deferred = $.Deferred && $.Deferred(), // promise
         urlAnchor, hashIndex
-    for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key] // options没有怎默认使用配置
+    for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key] // options?????????
 
-    ajaxStart(settings)// 如果没有其他Ajax请求当前活跃将会被触发
+    ajaxStart(settings)// ??????Ajax???????????
 
     if (!settings.crossDomain) {
       urlAnchor = document.createElement('a')
       urlAnchor.href = settings.url
       // cleans up URL for .href (IE only), see https://github.com/madrobby/zepto/pull/1049
-      urlAnchor.href = urlAnchor.href // 兼容IE
-      settings.crossDomain = (originAnchor.protocol + '//' + originAnchor.host) !== (urlAnchor.protocol + '//' + urlAnchor.host) // 是否跨域
+      urlAnchor.href = urlAnchor.href // ??IE
+      settings.crossDomain = (originAnchor.protocol + '//' + originAnchor.host) !== (urlAnchor.protocol + '//' + urlAnchor.host) // ????
     }
 
-    if (!settings.url) settings.url = window.location.toString() // url字符串
-    if ((hashIndex = settings.url.indexOf('#')) > -1) settings.url = settings.url.slice(0, hashIndex)// 去除hash
+    if (!settings.url) settings.url = window.location.toString() // url???
+    if ((hashIndex = settings.url.indexOf('#')) > -1) settings.url = settings.url.slice(0, hashIndex)// ??hash
     serializeData(settings)
 
     var dataType = settings.dataType, hasPlaceholder = /\?.+=\?/.test(settings.url)
     if (hasPlaceholder) dataType = 'jsonp'
 
-    if (settings.cache === false || ( //不缓存·
+    if (settings.cache === false || ( //???�
          (!options || options.cache !== true) &&
          ('script' == dataType || 'jsonp' == dataType)
         ))
-      settings.url = appendQuery(settings.url, '_=' + Date.now()) // 添加时间戳，不被缓存，请求新的内容
+      settings.url = appendQuery(settings.url, '_=' + Date.now()) // ?????????????????
 
     if ('jsonp' == dataType) {
       if (!hasPlaceholder)
@@ -1459,26 +1467,26 @@ window.$ === undefined && (window.$ = Zepto)
     var mime = settings.accepts[dataType],
         headers = { },
         setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
-        protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol, // RegExp.$1:与正则表达式匹配的第一个子匹配
+        protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol, // RegExp.$1:???????????????
         xhr = settings.xhr(),
         nativeSetHeader = xhr.setRequestHeader,
         abortTimeout
 
     if (deferred) deferred.promise(xhr)
 
-    if (!settings.crossDomain) setHeader('X-Requested-With', 'XMLHttpRequest')// requestedWith为XMLHttpRequest则为Ajax请求
+    if (!settings.crossDomain) setHeader('X-Requested-With', 'XMLHttpRequest')// requestedWith?XMLHttpRequest??Ajax??
     setHeader('Accept', mime || '*/*')
     if (mime = settings.mimeType || mime) {
       if (mime.indexOf(',') > -1) mime = mime.split(',', 2)[0]
       xhr.overrideMimeType && xhr.overrideMimeType(mime)
     }
     if (settings.contentType || (settings.contentType !== false && settings.data && settings.type.toUpperCase() != 'GET'))
-      setHeader('Content-Type', settings.contentType || 'application/x-www-form-urlencoded') // 设置传输到服务器编码类型
+      setHeader('Content-Type', settings.contentType || 'application/x-www-form-urlencoded') // ????????????
 
     if (settings.headers) for (name in settings.headers) setHeader(name, settings.headers[name])
     xhr.setRequestHeader = setHeader
 
-    xhr.onreadystatechange = function(){ //http状态改变触发函数，open之前，保证兼容性
+    xhr.onreadystatechange = function(){ //http?????????open????????
       if (xhr.readyState == 4) {
         xhr.onreadystatechange = empty
         clearTimeout(abortTimeout)
@@ -1511,32 +1519,32 @@ window.$ === undefined && (window.$ = Zepto)
     }
 
     if (ajaxBeforeSend(xhr, settings) === false) {
-      xhr.abort() // 终止请求
+      xhr.abort() // ????
       ajaxError(null, 'abort', xhr, settings, deferred)
       return xhr
     }
 
     var async = 'async' in settings ? settings.async : true
-    xhr.open(settings.type, settings.url, async, settings.username, settings.password)//初始化请求
+    xhr.open(settings.type, settings.url, async, settings.username, settings.password)//?????
 
-    if (settings.xhrFields) for (name in settings.xhrFields) xhr[name] = settings.xhrFields[name] //一个对象包含的属性被逐字复制到XMLHttpRequest的实例
+    if (settings.xhrFields) for (name in settings.xhrFields) xhr[name] = settings.xhrFields[name] //???????????????XMLHttpRequest???
 
-    for (name in headers) nativeSetHeader.apply(xhr, headers[name]) // 设置请求头
+    for (name in headers) nativeSetHeader.apply(xhr, headers[name]) // ?????
 
-    if (settings.timeout > 0) abortTimeout = setTimeout(function(){ // 请求超时
+    if (settings.timeout > 0) abortTimeout = setTimeout(function(){ // ????
         xhr.onreadystatechange = empty
         xhr.abort()
         ajaxError(null, 'timeout', xhr, settings, deferred)
       }, settings.timeout)
 
     // avoid sending empty string (#319)
-    xhr.send(settings.data ? settings.data : null)// 发送请求
+    xhr.send(settings.data ? settings.data : null)// ????
     return xhr
   }
 
   // handle optional data/success arguments
-  // ajax请求参数
-  function parseArguments(url, data, success, dataType) {// data为函数
+  // ajax????
+  function parseArguments(url, data, success, dataType) {// data???
     if ($.isFunction(data)) dataType = success, success = data, data = undefined
     if (!$.isFunction(success)) dataType = success, success = undefined
     return {
@@ -1547,23 +1555,23 @@ window.$ === undefined && (window.$ = Zepto)
     }
   }
 
-  $.get = function(/* url, data, success, dataType */){ // get提交
+  $.get = function(/* url, data, success, dataType */){ // get??
     return $.ajax(parseArguments.apply(null, arguments))
   }
 
-  $.post = function(/* url, data, success, dataType */){ // post提交
+  $.post = function(/* url, data, success, dataType */){ // post??
     var options = parseArguments.apply(null, arguments)
     options.type = 'POST'
     return $.ajax(options)
   }
 
-  $.getJSON = function(/* url, data, success */){ // Ajax GET请求获取JSON数据
+  $.getJSON = function(/* url, data, success */){ // Ajax GET????JSON??
     var options = parseArguments.apply(null, arguments)
     options.dataType = 'json'
     return $.ajax(options)
   }
 
-  $.fn.load = function(url, data, success){ // 载入远程数据进某个元素
+  $.fn.load = function(url, data, success){ // ???????????
     console.dir(this)
     if (!this.length) return this
     var self = this, parts = url.split(/\s/), selector,
@@ -1574,19 +1582,19 @@ window.$ === undefined && (window.$ = Zepto)
       self.html(selector ?
         $('<div>').html(response.replace(rscript, "")).find(selector)
         : response)
-      callback && callback.apply(self, arguments) // 指定作用域Z
+      callback && callback.apply(self, arguments) // ?????Z
     }
     $.ajax(options)
     return this
   }
 
-  var escape = encodeURIComponent // url编码
+  var escape = encodeURIComponent // url??
 
   function serialize(params, obj, traditional, scope){
     var type, array = $.isArray(obj), hash = $.isPlainObject(obj)
     $.each(obj, function(key, value) {
       type = $.type(value)
-      if (scope) key = traditional ? scope : // 对象值为数组，traditional=true，则转换为name[]=1&name[]=2。。。
+      if (scope) key = traditional ? scope : // ???????traditional=true?????name[]=1&name[]=2???
         scope + '[' + (hash || type == 'object' || type == 'array' ? key : '') + ']'
       // handle data in serializeArray() format
       if (!scope && array) params.add(value.name, value.value)
@@ -1597,22 +1605,22 @@ window.$ === undefined && (window.$ = Zepto)
     })
   }
 
-  $.param = function(obj, traditional){ // 对象转变为url参数
+  $.param = function(obj, traditional){ // ?????url??
     var params = []
     params.add = function(key, value) {
       if ($.isFunction(value)) value = value()
       if (value == null) value = ""
       this.push(escape(key) + '=' + escape(value))
     }
-    serialize(params, obj, traditional) //traditional = true，嵌套对象不会被序列化
-    return params.join('&').replace(/%20/g, '+') // 表单提交空格使用加号
+    serialize(params, obj, traditional) //traditional = true???????????
+    return params.join('&').replace(/%20/g, '+') // ??????????
   }
 })(Zepto)
 
 ;(function($){
-  $.fn.serializeArray = function() { // 序列化对象数组
+  $.fn.serializeArray = function() { // ???????
     var name, type, result = [],
-      add = function(value) { // 添加对象
+      add = function(value) { // ????
         if (value.forEach) return value.forEach(add)
         result.push({ name: name, value: value })
       }
@@ -1620,13 +1628,13 @@ window.$ === undefined && (window.$ = Zepto)
       type = field.type, name = field.name
       if (name && field.nodeName.toLowerCase() != 'fieldset' &&
         !field.disabled && type != 'submit' && type != 'reset' && type != 'button' && type != 'file' &&
-        ((type != 'radio' && type != 'checkbox') || field.checked)) // 排除file、submit等类型
+        ((type != 'radio' && type != 'checkbox') || field.checked)) // ??file?submit???
           add($(field).val())
     })
     return result
   }
 
-  $.fn.serialize = function(){ // 序列化
+  $.fn.serialize = function(){ // ???
     var result = []
     this.serializeArray().forEach(function(elm){
       result.push(encodeURIComponent(elm.name) + '=' + encodeURIComponent(elm.value))
@@ -1634,28 +1642,28 @@ window.$ === undefined && (window.$ = Zepto)
     return result.join('&')
   }
 
-  $.fn.submit = function(callback) { // 表单提交
-    if (0 in arguments) this.bind('submit', callback) // 有无回调函数
-    else if (this.length) { // this：Z对象
+  $.fn.submit = function(callback) { // ????
+    if (0 in arguments) this.bind('submit', callback) // ??????
+    else if (this.length) { // this?Z??
       var event = $.Event('submit')
-      this.eq(0).trigger(event) // 触发事件
-      if (!event.isDefaultPrevented()) this.get(0).submit(); // 提交表单
+      this.eq(0).trigger(event) // ????
+      if (!event.isDefaultPrevented()) this.get(0).submit(); // ????
     }
     return this
   }
 
 })(Zepto)
 
-// 重新指定getComputedStyle指向函数，保证没有元素时不崩溃
-// pseudoElement 伪元素
+// ????getComputedStyle???????????????
+// pseudoElement ???
 ;(function(){
   // getComputedStyle shouldn't freak out when called
   // without a valid element as argument
   try {
     getComputedStyle(undefined)
   } catch(e) {
-    var nativeGetComputedStyle = getComputedStyle // 保存原有方法
-    window.getComputedStyle = function(element, pseudoElement){ // 重写getComputedStyle
+    var nativeGetComputedStyle = getComputedStyle // ??????
+    window.getComputedStyle = function(element, pseudoElement){ // ??getComputedStyle
       try {
         return nativeGetComputedStyle(element, pseudoElement)
       } catch(e) {

@@ -9,14 +9,26 @@
 </head>
 <body>
   <div id="a">12</div>
+  <p>
+    <div class="c"></div>
+  </p>
+  <p></p>
+  <p></p>
   <script>
-    $('#a').click(function(){
+    // $('#a').click(function(){
 
-    })
+    // })
   function f(arr){
     return Array.filter.call(arr,function(item){
       return item != null
     })
+  }
+
+  function each(arr, callback){
+    Array.prototype.every.call(arr, function(e, i){
+      return callback.call(e, i, e) !== false
+    })
+    return arr
   }
   </script>
 </body>

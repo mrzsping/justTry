@@ -1,6 +1,6 @@
 let fs = require('fs');
 let dir = process.argv.slice(2) || 'just';
-let name = dir[2] || ''
+let name = ''
 let str = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,15 +13,21 @@ let str = `<!DOCTYPE html>
   
 </body>
 </html>`
+dir.unshift('.')
+if (dir[dir.length-1].indexOf('.html') > 0) {
+  name = dir.pop()
+  // fs.writeFile(`./${dir[0]}/${dir[1]}/${name}.html`,`${str}`,{flag:"a"},function(err) {
+              
+  // })
+} else {
 
-fs.mkdir(`./${dir[0]}`,function(err){
-  fs.mkdir(`./${dir[0]}/${dir[1]}`,function(err){
-      fs.writeFile(`./${dir[0]}/${dir[1]}/${name}.html`,`${str}`,{flag:"a"},function(err) {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log('创建成功')
-        }
-    })
-  });
-});
+}
+
+dir.reduce((sum, i) => {
+  fs.mkdir(`${sum}/${i}`,function(err){
+    console.log(`${sum}/${i}`)
+    let str = err && err.code !== 'EEXIST' ? err : '创建成功~'
+    console.log(str)
+  })
+return sum + '/' +i
+})
