@@ -536,7 +536,7 @@
       else result = this.map(function(){ return zepto.qsa(this, selector) })
       return result
     },
-    closest: function(selector, context){
+    closest: function(selector, context){// ?
       var nodes = [], collection = typeof selector == 'object' && $(selector)
       this.each(function(_, node){
         while (node && !(collection ? collection.indexOf(node) >= 0 : zepto.matches(node, selector)))
@@ -563,17 +563,18 @@
       return filtered(this.map(function(){ return children(this) }), selector)
     },
     contents: function() {
-      return this.map(function() { return this.contentDocument || slice.call(this.childNodes) })
+      return this.map(function() { return this.contentDocument || slice.call(this.childNodes) }) // contentDocument：frame里的内容
     },
     siblings: function(selector){
       return filtered(this.map(function(i, el){
-        return filter.call(children(el.parentNode), function(child){ return child!==el })
+        return filter.call(children(el.parentNode), function(child){ return child!==el })// 获取父元素所有子元素，去掉自身
       }), selector)
     },
     empty: function(){
       return this.each(function(){ this.innerHTML = '' })
     },
     // `pluck` is borrowed from Prototype.js
+    //返回属性值
     pluck: function(property){
       return $.map(this, function(el){ return el[property] })
     },
@@ -587,10 +588,10 @@
     replaceWith: function(newContent){
       return this.before(newContent).remove()
     },
-    wrap: function(structure){
+    wrap: function(structure){ // 匹配元素外包上一层元素
       var func = isFunction(structure)
       if (this[0] && !func)
-        var dom   = $(structure).get(0),
+        var dom   = $(structure).get(0), //创建dom
             clone = dom.parentNode || this.length > 1
 
       return this.each(function(index){
@@ -602,15 +603,15 @@
     },
     wrapAll: function(structure){
       if (this[0]) {
-        $(this[0]).before(structure = $(structure))
+        $(this[0]).before(structure = $(structure)) // 之前插入节点
         var children
         // drill down to the inmost element
         while ((children = structure.children()).length) structure = children.first()
-        $(structure).append(this)
+        $(structure).append(this) //添加节点
       }
       return this
     },
-    wrapInner: function(structure){
+    wrapInner: function(structure){ //元素中的内容包裹
       var func = isFunction(structure)
       return this.each(function(index){
         var self = $(this), contents = self.contents(),
