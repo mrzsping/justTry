@@ -2,16 +2,26 @@
 
 ### BUG
   [总结](https://github.com/mrzsping/justTry/blob/master/bug/%E6%80%BB%E7%BB%93.html)
+  
+### CSS
 
-### DEMO
+### EN
 
+### HTML
+
+### JS
+  [ES6](https://github.com/mrzsping/justTry/tree/master/js/es6)
+  
 ### NODE
-
+  [NODEINACTION](https://github.com/mrzsping/justTry/tree/master/node/nodeInAction)
+  
 ### SEO
+  [SEO](https://github.com/mrzsping/justTry/tree/master/seo)
+  
+### TS
+  [TS](https://github.com/mrzsping/justTry/tree/master/ts)
 
-### TYPESCRIPT
-
-### 三大基本
+### 版本控制
 
 ### 书籍
   [高级程序设计](https://github.com/mrzsping/justTry/tree/master/%E4%B9%A6%E7%B1%8D/javascript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1)
@@ -30,8 +40,6 @@
 ### 框架
   [vue](https://github.com/mrzsping/justTry/tree/master/%E6%A1%86%E6%9E%B6/vue)
 ### 源码解读
-
-### 版本控制
 
 ### 移动端
 
