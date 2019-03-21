@@ -1,0 +1,24 @@
+1:
+scalable：可扩展的
+sheer：绝对的
+notable：值得注意的
+frankly mind-blowing：令人兴奋的
+boost：推动
+assumption：设想
+conventional：传统的
+essentially：本质上
+latency：潜在因素
+sluggish：迟缓的
+illustrate：阐述
+benchmark：基准
+memory footprint：内存占用
+emulator：仿真器
+peripherals：周边设备
+leverages：手段
+
+2:
+demystify：阐明
+slash：斜杠
+simultaneously：同时地
+bidirectional：双向的
+fleshing out：充实
