@@ -10,11 +10,14 @@
 <body>
   <div id="a">12</div>
   <div class="b"></div>
-  <div class="c"></div>
+  <div class="c">
+    <div class="d"></div>
+  </div>
   <script>
-    $('#a').click(function(){
-
+    $('#a').on('click mouseover', function(){
+      console.log(123)
     })
+    $('head').append('<script>console.log(12313)<\/script>')
   function f(arr){
     return Array.filter.call(arr,function(item){
       return item != null

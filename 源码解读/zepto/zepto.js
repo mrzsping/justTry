@@ -304,7 +304,7 @@
       return false
     }
 
-  function funcArg(context, arg, idx, payload) {
+  function funcArg(context, arg, idx, payload) { // 是否是函数来取值
     return isFunction(arg) ? arg.call(context, idx, payload) : arg
   }
 
@@ -378,7 +378,7 @@
   $.expr = { }
   $.noop = function() {}
 
-  $.map = function(elements, callback){ // 数组执行，返回新的数组
+  $.map = function(elements, callback){ // 数组执行，返回新的数组，添加长度：例如before等方法
     var value, values = [], i, key
     if (likeArray(elements))
       for (i = 0; i < elements.length; i++) {
@@ -858,6 +858,7 @@
   $.fn.detach = $.fn.remove
 
   // Generate the `width` and `height` functions
+  // 宽高方法
   ;['width', 'height'].forEach(function(dimension){
     var dimensionProperty =
       dimension.replace(/./, function(m){ return m[0].toUpperCase() })
@@ -874,6 +875,7 @@
     }
   })
 
+  // 对节点下的每个子节点执行方法
   function traverseNode(node, fun) {
     fun(node)
     for (var i = 0, len = node.childNodes.length; i < len; i++)
@@ -882,8 +884,11 @@
 
   // Generate the `after`, `prepend`, `before`, `append`,
   // `insertAfter`, `insertBefore`, `appendTo`, and `prependTo` methods.
-  adjacencyOperators.forEach(function(operator, operatorIndex) {
-    var inside = operatorIndex % 2 //=> prepend, append
+
+  // after、before等添加节点方法
+
+  adjacencyOperators.forEach(function(operator, operatorIndex) { // [ 'after', 'prepend', 'before', 'append' ]
+    var inside = operatorIndex % 2 //=== 1 =>  prepend, append
 
     $.fn[operator] = function(){
       // arguments can be nodes, arrays of nodes, Zepto objects and HTML strings
@@ -894,7 +899,7 @@
               arg.forEach(function(el) {
                 if (el.nodeType !== undefined) return arr.push(el)
                 else if ($.zepto.isZ(el)) return arr = arr.concat(el.get())
-                arr = arr.concat(zepto.fragment(el))
+                arr = arr.concat(zepto.fragment(el)) // fragment：字符串节点化
               })
               return arr
             }
@@ -902,9 +907,9 @@
               arg : zepto.fragment(arg)
           }),
           parent, copyByClone = this.length > 1
-      if (nodes.length < 1) return this
+      if (nodes.length < 1) return this // 参数为空时，返回本节点
 
-      return this.each(function(_, target){
+      return this.each(function(_, target){ // 指引/每一项
         parent = inside ? target : target.parentNode
 
         // convert all methods to a "before" operation
@@ -923,8 +928,8 @@
           if (parentInDocument) traverseNode(node, function(el){
             if (el.nodeName != null && el.nodeName.toUpperCase() === 'SCRIPT' &&
                (!el.type || el.type === 'text/javascript') && !el.src){
-              var target = el.ownerDocument ? el.ownerDocument.defaultView : window
-              target['eval'].call(target, el.innerHTML)
+              var target = el.ownerDocument ? el.ownerDocument.defaultView : window //ownerDocument：返回自身的Document对象，defaultView：所关联的window对象
+              target['eval'].call(target, el.innerHTML) // 添加script并执行
             }
           })
         })
@@ -936,7 +941,7 @@
     // before   => insertBefore
     // append   => appendTo
     $.fn[inside ? operator+'To' : 'insert'+(operatorIndex ? 'Before' : 'After')] = function(html){
-      $(html)[operator](this)
+      $(html)[operator](this) //反过来
       return this
     }
   })
@@ -963,7 +968,7 @@ window.$ === undefined && (window.$ = Zepto)
       handlers = {},
       specialEvents={},
       focusinSupported = 'onfocusin' in window,
-      focus = { focus: 'focusin', blur: 'focusout' },
+      focus = { focus: 'focusin', blur: 'focusout' }, //focusin：Bubbles
       hover = { mouseenter: 'mouseover', mouseleave: 'mouseout' }
 
   specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents'
@@ -982,28 +987,28 @@ window.$ === undefined && (window.$ = Zepto)
         && (!selector || handler.sel == selector)
     })
   }
-  function parse(event) {
+  function parse(event) {//事件整理
     var parts = ('' + event).split('.')
     return {e: parts[0], ns: parts.slice(1).sort().join(' ')}
   }
   function matcherFor(ns) {
-    return new RegExp('(?:^| )' + ns.replace(' ', ' .* ?') + '(?: |$)')
+    return new RegExp('(?:^| )' + ns.replace(' ', ' .* ?') + '(?: |$)')//?:^|例如：r(?:y|ies) => ry|industries
   }
 
-  function eventCapture(handler, captureSetting) {
+  function eventCapture(handler, captureSetting) {// 事件捕获
     return handler.del &&
       (!focusinSupported && (handler.e in focus)) ||
       !!captureSetting
   }
 
-  function realEvent(type) {
+  function realEvent(type) { //事件类型
     return hover[type] || (focusinSupported && focus[type]) || type
   }
 
   function add(element, events, fn, data, selector, delegator, capture){
     var id = zid(element), set = (handlers[id] || (handlers[id] = []))
     events.split(/\s/).forEach(function(event){
-      if (event == 'ready') return $(document).ready(fn)
+      if (event == 'ready') return $(document).ready(fn) //ready方法
       var handler   = parse(event)
       handler.fn    = fn
       handler.sel   = selector
@@ -1025,7 +1030,7 @@ window.$ === undefined && (window.$ = Zepto)
       }
       handler.i = set.length
       set.push(handler)
-      if ('addEventListener' in element)
+      if ('addEventListener' in element) // 添加事件
         element.addEventListener(realEvent(handler.e), handler.proxy, eventCapture(handler, capture))
     })
   }
@@ -1072,7 +1077,7 @@ window.$ === undefined && (window.$ = Zepto)
 
   var returnTrue = function(){return true},
       returnFalse = function(){return false},
-      ignoreProperties = /^([A-Z]|returnValue$|layer[XY]$|webkitMovement[XY]$)/,
+      ignoreProperties = /^([A-Z]|returnValue$|layer[XY]$|webkitMovement[XY]$)/,//匹配属性
       eventMethods = {
         preventDefault: 'isDefaultPrevented',
         stopImmediatePropagation: 'isImmediatePropagationStopped',
@@ -1128,7 +1133,7 @@ window.$ === undefined && (window.$ = Zepto)
 
   $.fn.on = function(event, selector, data, callback, one){ // 绑定事件
     var autoRemove, delegator, $this = this
-    if (event && !isString(event)) {
+    if (event && !isString(event)) { //传入事件为对象时
       $.each(event, function(type, fn){
         $this.on(type, selector, data, fn, one)
       })
