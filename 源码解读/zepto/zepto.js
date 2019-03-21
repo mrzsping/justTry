@@ -621,7 +621,7 @@
     },
     unwrap: function(){
       this.parent().each(function(){
-        $(this).replaceWith($(this).children())
+        $(this).replaceWith($(this).children()) // 子元素替代父元素
       })
       return this
     },
@@ -657,7 +657,7 @@
     },
     attr: function(name, value){
       var result
-      return (typeof name == 'string' && !(1 in arguments)) ?
+      return (typeof name == 'string' && !(1 in arguments)) ? // 是否有值
         (0 in this && this[0].nodeType == 1 && (result = this[0].getAttribute(name)) != null ? result : undefined) :
         this.each(function(idx){
           if (this.nodeType !== 1) return
@@ -672,7 +672,7 @@
     },
     prop: function(name, value){
       name = propMap[name] || name
-      return (1 in arguments) ?
+      return (1 in arguments) ? // 判断是有值
         this.each(function(idx){
           this[name] = funcArg(this, value, idx, this[name])
         }) :
@@ -680,7 +680,7 @@
     },
     removeProp: function(name){
       name = propMap[name] || name
-      return this.each(function(){ delete this[name] })
+      return this.each(function(){ delete this[name] }) //使用delete方法
     },
     data: function(name, value){
       var attrName = 'data-' + name.replace(capitalRE, '-$1').toLowerCase()
@@ -698,7 +698,7 @@
           this.value = funcArg(this, value, idx, this.value)
         })
       } else {
-        return this[0] && (this[0].multiple ?
+        return this[0] && (this[0].multiple ? // 单选与多选，返回数组
            $(this[0]).find('option').filter(function(){ return this.selected }).pluck('value') :
            this[0].value)
       }
@@ -719,16 +719,16 @@
       if (!this.length) return null
       if (document.documentElement !== this[0] && !$.contains(document.documentElement, this[0]))
         return {top: 0, left: 0}
-      var obj = this[0].getBoundingClientRect()
+      var obj = this[0].getBoundingClientRect() //兼容性良好
       return {
-        left: obj.left + window.pageXOffset,
+        left: obj.left + window.pageXOffset,//文档在窗口左上角水平和垂直方向滚动的像素
         top: obj.top + window.pageYOffset,
         width: Math.round(obj.width),
         height: Math.round(obj.height)
       }
     },
     css: function(property, value){
-      if (arguments.length < 2) {
+      if (arguments.length < 2) { // 只有属性，获取值
         var element = this[0]
         if (typeof property == 'string') {
           if (!element) return
@@ -760,7 +760,7 @@
 
       return this.each(function(){ this.style.cssText += ';' + css })
     },
-    index: function(element){
+    index: function(element){//没有给定父元素，就返回在兄弟节点中的位置
       return element ? this.indexOf($(element)[0]) : this.parent().children().indexOf(this[0])
     },
     hasClass: function(name){
@@ -805,7 +805,7 @@
     scrollTop: function(value){
       if (!this.length) return
       var hasScrollTop = 'scrollTop' in this[0]
-      if (value === undefined) return hasScrollTop ? this[0].scrollTop : this[0].pageYOffset
+      if (value === undefined) return hasScrollTop ? this[0].scrollTop : this[0].pageYOffset // 兼容scrollTop
       return this.each(hasScrollTop ?
         function(){ this.scrollTop = value } :
         function(){ this.scrollTo(this.scrollX, value) })
