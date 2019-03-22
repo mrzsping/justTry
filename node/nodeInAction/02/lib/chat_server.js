@@ -1,3 +1,11 @@
+
+let socketio = require('socket.io');
+let io;
+let guestNumber = 1;
+let nickNames = {};
+let namesUsed = [];
+let currentRoom = {};
+
 exports.listen = function(server){
   io = socketio.listen(server); // StartSocket.IO server allowing it to piggyback on existing HTTP server
   io.set('log level', 1);
