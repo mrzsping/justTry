@@ -22,3 +22,6 @@ slash：斜杠
 simultaneously：同时地
 bidirectional：双向的
 fleshing out：充实
+malicious：恶毒的
+intentionally：故意地
+unaltered：不变的
