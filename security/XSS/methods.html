@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>methods</title>
+</head>
+<body>
+  1.转义：
+    对不可信字符串进行html转义
+    所有ASCII小于256的字符都转义：以防止开关的值伸出属性
+
+  2.加上引号：
+    为html属性加上引号，不使用`：不带引号的属性被分解为多个字符
+
+  3.事件句柄：
+    先js转义，再html转义
+
+  4.html属性中的url：
+    加上引号
+
+  5.js中的html：
+    先html转义，再js字符串转义
+
+  6.设置utf-8
+
+  7.用户可控制脚本不能放置在meta前
+
+  8.使用 <!-- <!doct5ype>: 因为含有<!，所以使用注释 -->
+
+  9.http响应头进行防护：
+    X-XSS-Protection: 1;mode=block：开启浏览器的防XSS过滤器
+    X-Frame-Options: deny：禁止页面被加载到框架
+    X-Content-Type-Options: nosniff：阻止浏览器做MIMEtype嗅探
+    Content-Security-Policy(X-Content-Security-Policy：旧版): default-src 'self'：最有效的解决方案之一。 它允许我们定义从URLS或内容中加载和执行对象的策略(CSP)
+    Set-Cookie: key=value;HttpOnly：Set-Cookie响应头通过HttpOnly标签的设置将限制JavaScript访问你的Cookie 
+    Content-Type: type/subtype;charset=utf-8：始终设置响应的内容类型和字符集，例如 :返回jsonjson格式应该使用 application/json, 纯文本使用text/plain, HTML使用text/html等，以及设置字符集为utf-8。
+  10.放置CRLF注入/http响应拆分：
+
+  11.禁止TRACE和其他非必要方法：
+
+  12.csp安全策略：https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP
+</body>
+</html>
