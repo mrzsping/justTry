@@ -11,7 +11,7 @@ exports.listen = function(server){
   io.set('log level', 1);
 
   io.sockets.on('connection', function(socket){ //Define how each user connection will be handled
-    guestNumber = assignGuestName(socket, guestNumber, nickNames, nameUsed); //Assign user a guest name when they connect
+    guestNumber = assignGuestName(socket, guestNumber, nickNames, namesUsed); //Assign user a guest name when they connect
     joinRoom(socket, 'Lobby');//Place user in Lobby room when they connect
 
     handleMessageBroadcasting(socket, nickNames);//Handle user messages, namechange attempts, and room creation/changes
@@ -27,14 +27,14 @@ exports.listen = function(server){
 }
 
 //ASSIGNING GUEST NAMES
-function assignGuestName(socket, guestNumber, nickNames, nameUsed){
+function assignGuestName(socket, guestNumber, nickNames, namesUsed){
   let name = 'Guest' + guestNumber;
   nickNames[socket.id] = name;
   socket.emit('nameRseult', {
     success: true,
     name: name
   })
-  nameUsed.psuh(name);
+  namesUsed.push(name);
   return guestNumber + 1;
 }
 
@@ -64,7 +64,7 @@ function joinRoom(socket, room){
 }
 
 //HANDLING NAME-CHANGE REQUESTS
-function handleNameChangeAttempts(socket, nickNames, nameUsed){
+function handleNameChangeAttempts(socket, nickNames, namesUsed){
   socket.on('nameAttempt', function(name){
     if(name.indexOf('Guest') == 0){
       socket.emit('nameResult', {
@@ -72,12 +72,12 @@ function handleNameChangeAttempts(socket, nickNames, nameUsed){
         message: 'Names cannot begin with "Guest".'
       })
     }else{
-      if(nameUsed.indexOf(name) == -1){
+      if(namesUsed.indexOf(name) == -1){
         let previousName = nickNames[socket,id];
-        let previousNameIndex = nameUsed.indexOf(previousName);
-        nameUsed.push(name);
+        let previousNameIndex = namesUsed.indexOf(previousName);
+        namesUsed.push(name);
         nickNames[socket.id] = name;
-        delete nameUsed[previousNameIndex];
+        delete namesUsed[previousNameIndex];
         socket.emit('nameResult', {
           success: true,
           name: name
