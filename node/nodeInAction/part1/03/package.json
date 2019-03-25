@@ -1,0 +1,18 @@
+{
+  "name": "03",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test-modules.js",
+  "dependencies": {
+    "nimble": "0.0.2"
+  },
+  "devDependencies": {
+    "htmlparser": "^1.7.7",
+    "request": "^2.88.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
