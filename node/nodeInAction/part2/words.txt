@@ -5,3 +5,16 @@ robust：健壮的
 bare：空的
 concise：简明的
 boost：推动
+stderr：标准错误
+Preemptive：优先的
+stale：陈旧的
+refactored：重构的
+generic：一般的
+REPL：交互执行
+integrated：整合
+invoked：唤醒
+formidable：强大的
+hindered：阻碍
+eavesdrop：窃听
+2：
+trade-offs：权衡
