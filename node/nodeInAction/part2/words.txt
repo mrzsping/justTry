@@ -18,3 +18,7 @@ hindered：阻碍
 eavesdrop：窃听
 2：
 trade-offs：权衡
+
+
+5：
+skeleton：骨架
