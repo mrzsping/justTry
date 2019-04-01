@@ -12,16 +12,44 @@
     2.normal:如果是中文则到边界处的汉字换行，如果是英文整个词换行
     3.如果出现英文字符长度超过边界，则后面的部分将撑开边框
     4.如果边框为固定属性，则后面部分将无法显示
-    5.break-all:强行换行，将截断英文单词
-    
+    5.break-all:强行换行，将截断英文单词 
   white-space:
     1.作用于空格和回车，用于控制空格是否进行合并，回车是否进行换行，如果句子过长是否在空格处换行
     2.normal:多个连续的空格会被合并为一个，回车会被忽略，同时句子如果太长，会在空白处折行
     3.Nowrap:强制在同一行显示文本，合并多余的空白，除非遇到br才换行
-
   word-space:
     1.主要用于单词上，控制水平方向上的超长单词是否折行
     2.Normal:单词超长也不可折行，会产生溢出
     3.Break-word:单词超长会折行
+
+
+  回流与重绘：https://mp.weixin.qq.com/s/BboZ5wxNaXXjpAFignOYdw
+  dom与cssdom结合生成渲染树 -> 渲染树进行回流得到节点几何信息 -> 渲染树与回流得到的几何信息得到绝对像素 -> 将像素发送给GPU，展示页面
+  回流：计算渲染树在设备视口(viewport)内的确切位置和大小，这个计算的阶段就是回流。
+  重绘：将渲染树的每个节点都转换为屏幕上的实际像素
+  发生场景：
+    回流：页面布局和几何信息发生变化（一定触发重绘）
+      添加或删除可见DOM元素
+      元素位置变化
+      元素尺寸变化（外边距、内边框、边框大小、高度和宽度等）
+      内容变化，比如文本变化或图片被另一个不同尺寸的图片所替代。
+      页面一开始渲染的时候（避免不了）
+      浏览器的窗口尺寸变化
+    重绘：
+      浏览器将修改操作放入队列，获取布局信息操作的时候强制队列更新，例如使用以下方法：
+        offsetTop、offsetLeft、offsetWidth、offsetHeight
+        scrollTop、scrollLeft、scrollWidth、scrollHeight
+        clientTop、clientLeft、clientWidth、clientHeight
+        getComputedStyle()
+        getBoundingClientRect
+  优化：
+    合并样式属性修改：class名字，操作cssText
+    脱离文档流
+    css3硬件加速：
+      transform
+      opacity
+      filters
+      Will-change
+    
 </body>
 </html>
