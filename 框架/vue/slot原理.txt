@@ -1,0 +1,5 @@
+https://blog.csdn.net/a419419/article/details/80847553
+
+Shadow DOM 使用 <slot> 元素将不同的 DOM 树组合在一起。Slot 是组件内部的占位符，用户可以使用自己的标记来填充。
+
+通过定义一个或多个 slot，您可将外部标记引入到组件的 shadow DOM 中进行渲染。 这相当于您在说“在此处渲染用户的标记”。
