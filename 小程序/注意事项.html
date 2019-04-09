@@ -29,5 +29,33 @@
   9.只有一个 App 实例，是全部页面共享
 
   10.所有页面的脚本逻辑都跑在同一个JsCore线程，页面使用setTimeout或者setInterval的定时器，跳转到其他页面时进行清理。
+
+  11.setData：
+    每次只设置需要改变的最小单位数据
+    每次设置数据不应超过1024kB
+    不要把data中的任意一项的value设为undefined
+
+  12.下拉刷新：
+    在app.json的window选项中或页面配置page.json中设置enablePullDownRefresh为true
+
+  13.页面跳转：
+    wx.navigateTo/wx.navigateBack/wx.redirectTo/wx.switchTab({url: 'pageF'})/wx.reLaunch({url: 'pageH'})：重启小程序，进入页面H
+    页面栈限制为10
+    wx.navigateTo和wx.redirectTo只能打开非TabBar页面
+    wx.switchTab只能打开Tabbar页面。
+
+  14.组件名和属性都是小写，多个单词会以英文横杠"-"进行连接
+
+  15.有部分API会拉起微信的原生界面，此时会触发Page的onHide方法，当用户从原生界面返回到小程序时，会触发Page的onShow方法
+
+  16.交互优化：
+    触摸button，底色变为浅灰色 hover-class属性
+
+    按钮文字添加loading loading属性
+
+    提示操作成功并且不打断用户  wx.showToast()
+
+    错误提示，告知原因，使用模态框，指引下一步操作 wx.showModal()
+    
 </body>
 </html>

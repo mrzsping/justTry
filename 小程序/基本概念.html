@@ -80,8 +80,8 @@
     安卓             X5 JSCore	    X5浏览器
     小程序开发者工具	NWJS	         Chrome WebView
   4.文件结构：
-      wxml/json/js/wxss：文件名和目录名一致，防止报错
-      project.config.json：开发工具配置
+    wxml/json/js/wxss：文件名和目录名一致，防止报错
+    project.config.json：开发工具配置
   5.小程序app实例生命周期：
     onLaunch：小程序初始化启动，全局只触发一次
     onShow：后台进入前台
@@ -90,10 +90,54 @@
   6.渲染：
     wxml结构 -> js对象 -> setData传递数据 -> 对比修改 -> dom树
   7.页面生命周期：
-    onLoad	  页面加载，触发时机早于onShow和onReady
-    onReady	  页面初次渲染完成
+    onLoad	  页面加载，触发时机早于onShow和onReady，页面没被销毁则不触发
     onShow	  页面显示，触发事件早于onReady
+    onReady	  页面初次渲染完成
     onHide	  页面隐藏
     onUnload  页面卸载
+  8.路由触发及页面生命周期：
+    路由方式	  触发时机	       路由前	  路由后
+    初始化	    打开第一个页面	          onLoad, onShow
+    打开新页面  wx.navigateTo	  onHide	 onLoad, onShow
+    页面重定向 	wx.redirectTo	  onUnload onLoad, onShow
+    页面返回    wx.navigateBack	onUnload onShow
+    重启动	    wx.reLaunch	    onUnload onLoad, onShow
+  9.tab切换生命周期：
+    A -> C -> D
+    B
+    Tabbar页面初始化之后不会被销毁
+    当前页面	    路由后页面	  触发的生命周期（按顺序）
+    A	           A	          无
+    A	           B	          A.onHide(), B.onLoad(), B.onShow()
+    A	           B(再次打开)	 A.onHide(), B.onShow()
+    C	           A	          C.onUnload(), A.onShow()
+    C	           B	          C.onUnload(), B.onLoad(), B.onShow()
+    D	           B	          D.onUnload(), C.onUnload(), B.onLoad(), B.onShow()
+    D(从转发进入)	A	           D.onUnload(), A.onLoad(), A.onShow()
+    D(从转发进入)	B	           D.onUnload(), B.onLoad(), B.onShow()
+    总结：同级之间不会卸载，跳转上一级会卸载
+  10.组件：
+
+  11.API分类：网络、媒体、文件、数据缓存、位置、设备、界面、界面节点信息
+    约定：
+    wx.on*：监听某个事件发生的API接口，接受一个 Callback 函数作为参数
+    未特殊约定，多数 API 接口为异步接口 ，都接受一个Object作为参数
+    API的Object参数一般由success、fail、complete三个回调来接收接口调用结果
+    wx.get*：获取宿主环境数据的接口
+    wx.set*：写入数据到宿主环境的接口
+  12.事件：
+    touchstart：手指触摸动作开始
+    touchmove：手指触摸后移动
+    touchcancel：手指触摸动作被打断，如来电提醒，弹窗
+    touchend：手指触摸动作结束
+    tap：手指触摸后马上离开
+    longpress：手指触摸后，超过350ms再离开，如果指定了事件回调函数并触发了这个事件，tap事件将不被触发
+    longtap：手指触摸后，超过350ms再离开（推荐使用longpress事件代替）
+    transitionend：会在 WXSS transition 或 wx.createAnimation 动画结束后触发
+    animationstart：会在一个 WXSS animation 动画开始时触发
+    animationiteration：会在一个 WXSS animation 一次迭代结束时触发
+    animationend：会在一个 WXSS animation 动画完成时触发
+  13.兼容：
+    wx.getSystemInfo/wx.getSystemInfoSync
 </body>
 </html>
