@@ -72,5 +72,28 @@
           // 新版本下载失败
         })
       </code>
+  3.运行线程：
+    网页开发渲染线程和脚本线程双线程：通信经由微信客户端中转
+
+    运行环境	       逻辑层	        渲染层
+    iOS	            JavaScriptCore WKWebView
+    安卓             X5 JSCore	    X5浏览器
+    小程序开发者工具	NWJS	         Chrome WebView
+  4.文件结构：
+      wxml/json/js/wxss：文件名和目录名一致，防止报错
+      project.config.json：开发工具配置
+  5.小程序app实例生命周期：
+    onLaunch：小程序初始化启动，全局只触发一次
+    onShow：后台进入前台
+    onHide：前台进入后台
+    onError
+  6.渲染：
+    wxml结构 -> js对象 -> setData传递数据 -> 对比修改 -> dom树
+  7.页面生命周期：
+    onLoad	  页面加载，触发时机早于onShow和onReady
+    onReady	  页面初次渲染完成
+    onShow	  页面显示，触发事件早于onReady
+    onHide	  页面隐藏
+    onUnload  页面卸载
 </body>
 </html>

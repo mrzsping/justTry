@@ -1,6 +1,6 @@
 let fs = require('fs');
 let dir = process.argv.slice(2) || 'just';
-let name = dir[2] || ''
+let name = dir[dir.length - 1] || ''
 let str = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,13 +15,25 @@ let str = `<!DOCTYPE html>
 </html>`
 
 fs.mkdir(`./${dir[0]}`,function(err){
-  fs.mkdir(`./${dir[0]}/${dir[1]}`,function(err){
-      fs.writeFile(`./${dir[0]}/${dir[1]}/${name}.html`,`${str}`,{flag:"a"},function(err) {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log('创建成功')
-        }
-    })
-  });
+  if(dir.length === 2){
+    fs.mkdir(`./${dir[0]}`,function(err){
+        fs.writeFile(`./${dir[0]}/${name}.html`,`${str}`,{flag:"a"},function(err) {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log('创建成功')
+          }
+      })
+    });
+  } else {
+    fs.mkdir(`./${dir[0]}/${dir[1]}`,function(err){
+        fs.writeFile(`./${dir[0]}/${dir[1]}/${name}.html`,`${str}`,{flag:"a"},function(err) {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log('创建成功')
+          }
+      })
+    });
+  }
 });

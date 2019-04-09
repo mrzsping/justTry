@@ -23,5 +23,11 @@
   6.出于性能考虑，使用 usingComponents 时， setData 内容不会被直接深复制，即 this.setData({ field: obj }) 后 this.data.field === obj 。（深复制会在这个值被组件间传递时发生。）
   
   7.如果页面比较复杂，新增或删除 usingComponents 定义段时建议重新测试一下。
+
+  8.pages中的第一条就是第一个页面。
+
+  9.只有一个 App 实例，是全部页面共享
+
+  10.所有页面的脚本逻辑都跑在同一个JsCore线程，页面使用setTimeout或者setInterval的定时器，跳转到其他页面时进行清理。
 </body>
 </html>
