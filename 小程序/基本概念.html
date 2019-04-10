@@ -117,7 +117,6 @@
     D(从转发进入)	B	           D.onUnload(), B.onLoad(), B.onShow()
     总结：同级之间不会卸载，跳转上一级会卸载
   10.组件：
-
   11.API分类：网络、媒体、文件、数据缓存、位置、设备、界面、界面节点信息
     约定：
     wx.on*：监听某个事件发生的API接口，接受一个 Callback 函数作为参数
@@ -138,6 +137,9 @@
     animationiteration：会在一个 WXSS animation 一次迭代结束时触发
     animationend：会在一个 WXSS animation 动画完成时触发
   13.兼容：
-    wx.getSystemInfo/wx.getSystemInfoSync
+    使用wx.getSystemInfo/wx.getSystemInfoSync查看系统信息
+    使用canIUse
+  14.微信服务器与开发者服务器接口：
+    https://api.weixin.qq.com/sns/jscode2session?appid=<AppId>&secret=<AppSecret>&js_code=<code>&grant_type=authorization_code
 </body>
 </html>
