@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>高性能网站建设指南</title>
+</head>
+<body>
+  1.查看网络请求：
+    请求并行：使用不同主机名
+  2.减少http请求：
+    使用图片地图
+    雪碧图
+    内联图片：base64
+      缺点：跨越页面不会被缓存
+      方法：放置在背景中，外联css。可以被缓存
+    分别合并脚本与样式表
+  3.使用内容发布网络：CDN
+  4.添加expires头：过期时间，需时间验证，客户端与服务端严格一致
+    GMT：世界时UT即格林尼治平太阳时间，是指格林尼治所在地的标准时间，北京时间 = GMT + 8
+  5.Cache-Control：设置max-age，重写exories头
+  6.压缩：gzip/deflate
+    大于2kb压缩
+    cpu开销
+    图片/PDF不压缩
+    Vary: Accept-Encoding：代理缓存，根据是否支持gzip返回对应缓存文件
+    边缘情形
+  7.将样式表放在顶部：阻止DOM渲染
+  8.脚本放在底部：阻止解析
+  9.避免CSS表达式
+  10.使用外部js与css，主页内联？减少缓存，加快速度
+  11.减少DNS查找：
+    keep-alive和较少的域名
+  12.精简js：
+    移除注释
+    移除空白字符
+    混淆：缩短字符
+    压缩
+  13.避免重定向：
+    结尾添加斜线
+  14.移除重复脚本：
+  15.配置ETag：
+    web服务器和浏览器用于确认缓存组件有效性的机制
+  16.使用ajax可缓存：一组技术，DHTML
+</body>
+</html>
