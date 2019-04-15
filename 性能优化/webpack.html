@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>webpack</title>
+</head>
+<body>
+  1.打包vendor过大:
+    使用CDN并在build/webpack.base.conf.js配置：
+    例如：externals: {
+          'vue': 'Vue'
+        }
+  2去除.map文件：
+    map文件作用：准确的输出是哪一行哪一列有错。
+    优点：减轻项目的大小，提升build速度，深度保护源码
+    方法：修改config/index.js中productionSourceMap: false
+</body>
+</html>
