@@ -24,3 +24,4 @@ trade-offs：权衡
 skeleton：骨架
 former：模型
 migrating：迁移
+redundant：多余的
