@@ -6,10 +6,13 @@
   给开发者的终极XSS防护备忘录
   图解HTTP
 在读：
-  高性能网站建设进阶指南：WEB开发者性能优化最佳实践
-  Justjavac(迷渡)《前端性能优化》
+  大型网站技术架构
+  javascrip异步编程
 未读：
   你不知道的JavaScript（上中下）
   高性能JavaScript_编程
   JavaScript忍者秘籍
   构建高性能WEB站点
+  JavaScript设计模式与开发实践
+  Justjavac(迷渡)《前端性能优化》
+  高性能网站建设进阶指南：WEB开发者性能优化最佳实践
