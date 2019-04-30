@@ -8,29 +8,49 @@
   <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
   <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
 <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
-<style>
-  .hide{
-    background: #f00;
-  }
-</style>
 </head>
 <body>
    
 <div id="root"></div>
 
 <script type="text/babel">
-function Box(){
-  return React.createElement(
-    'div',
-    {className: 'name'},
-    '123'
-  )
+class  Clock extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      time: new Date()
+    }
+  }
+  tick(){
+    this.setState({
+      time: new Date()
+    })
+  }
+  componentDidMount = () => {
+    this.timer = setInterval(() => {
+      this.tick()
+    }, 1000);
+  };
+  componentWillUnmount = () => {
+    clearInterval(this.timer)
+  };
+  
+  render(){
+    return(
+      <div>
+        {this.state.time.getSeconds()}
+      </div>
+    )
+  }
 }
 ReactDOM.render(
-  <Box />,
+  <Clock />,
   document.getElementById('root')
 );
-// jsx js表达式
+// 状态不可直接更新
+//只能使用this.state初始化状态
+//状态更新可能为异步
+//数据自顶向下流动
 </script>
 </body>
 </html>

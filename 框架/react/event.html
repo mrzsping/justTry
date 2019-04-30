@@ -63,7 +63,13 @@ ReactDOM.render(
   <LoginControl/>,
   document.getElementById('root')
 );
+// 不能使用返回 false 的方式阻止默认行为。你必须明确的使用 preventDefault
 
+// 绑定this
+
+//时间传参
+//<button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+//<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
 </script>
 </body>
 </html>
