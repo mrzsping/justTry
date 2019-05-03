@@ -75,4 +75,46 @@ ReactDOM.render(
 //确保&&之前为布尔值
 </script>
 </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+<style>
+</style>
+</head>
+<body>
+   
+<div id="root"></div>
+
+<script type="text/babel">
+class Box extends React.Component{
+    constructor(props){
+        super(props);
+        this.myref = React.createRef();
+    }
+    show = () => {
+        console.log(this.myref)
+    }
+    render(){
+        return(
+            <div ref={this.myref}>
+                <button type="" onClick={this.show}>12</button>
+            </div>
+        )
+    }
+}
+ReactDOM.render(
+  <Box/>,
+  document.getElementById('root')
+);
+//不能在函数式组件上使用 ref 属性，因为它们没有实例
+//ref 的更新会发生在componentDidMount 或 componentDidUpdate 生命周期钩子之前
+</script>
+</body>
 </html>
