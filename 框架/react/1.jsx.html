@@ -29,8 +29,8 @@ let choose = {
   },
   Name: function Name(props){
     return(
-      <div>
-        {props.children}
+      <div style={{color: 'red'}}>
+        {props.id}{props.name}
       </div>
     )
   }
@@ -52,8 +52,9 @@ function Jsx(props){
    </div>
   )
 }
+let prop = {name: '123', id: '456'}
 ReactDOM.render(
-  <choose.Name id={2}>2</choose.Name>,
+  <choose.Name {...prop}>2</choose.Name>,
   document.getElementById('root')
 );
 // jsx js表达式

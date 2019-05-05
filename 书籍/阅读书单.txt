@@ -8,6 +8,7 @@
 在读：
   大型网站技术架构
   javascrip异步编程
+  TypeScript Language Specification
 未读：
   你不知道的JavaScript（上中下）
   高性能JavaScript_编程
