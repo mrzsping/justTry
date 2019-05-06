@@ -6,9 +6,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>响应式原理</title>
+  <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
 </head>
 <body>
-  1.官网：
-    对象的属性传给vue实例data选项 -> 使用Object.defineProperty转换为getter/setter -> watcher记录属性为依赖 -> setter通知watcher改变属性 -> 更新视图
+  1.原理:
+
+    对象的属性传给vue实例data选项 -> 使用Object.defineProperty转换为getter/setter -> getter返回属性 -> watcher记录属性为依赖 -> setter更改属性 -> 通知watcher改变属性 -> 更新视图
+
+  2.Object.defineProperty限制:
+
+    ie8以上支持
+
+    vue初始化实例时对属性进行getter/setter转化，必须在data对象上才能被转化为响应式的
+
+    不能检测数组更新，例如：vm.items[indexOfItem] = newValue、vm.items.length = newLength
+      解决方法:
+      Vue.set(vm.items, indexOfItem, newValue)
+      push、pop、shift、unshift、splice、sort、reverse（更改数组的方法）
+
+    不能检测对象属性的添加或删除，不能动态添加根级别属性，但是可以向嵌套对象中添加
+      解决方法:
+      vm.set
+      Object.assign()
+
+    当在vm上动态添加属性时，并不是响应性的，但是执行set方法后，变为响应性的
+
+  3.异步更新DOM:
+
+    数据变化 -> 开启队列 -> 缓冲所有数据变更 -> 下一个事件循环中执行
+    视图变化不一定DOM变化
+      解决方法:
+      vm.nextTick():返回Promise对象
+
+  4.原理图:
+  
+  <img src="./data.png" alt="" width="600" height="400">
+
+  5.官网解释:
+
+  <a href="https://cn.vuejs.org/v2/guide/reactivity.html">官网解释</a>
+
+  <!-- 实例 -->
+
+  <div id="app">
+    <p id="get">{{msg}}</p>
+    <button @click="get">get</button>
+    <div v-for="item in items">{{item}}</div>
+    <p @click="click">click</p>
+    <span v-for="x in people">{{x}}</span>
+  </div>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 123,
+        items: [1, 2, 3],
+        people: {
+          name: 'xiaoming'
+        }
+      },
+      methods: {
+        get () { // 试验nextTick
+          console.log(this.msg)
+          this.msg = 321
+          console.log(this.msg)
+          console.log(document.querySelector('#get').innerHTML)
+          this.$nextTick().then(() => {
+            console.log(document.querySelector('#get').innerHTML)
+            console.log('更新完毕')
+          })
+        },
+        click () {
+        // 试验更改数组
+          this.items[0] = 11
+          console.log(this.items)
+          this.$set(this.items, 0, 11)
+          console.log(this.b)
+        }
+      },
+      mounted() {
+        // 试验更改数组
+        this.items[0] = 11
+
+        // 试验添加根对象
+        this.b = 123
+
+        console.log('mounted', this)
+      }
+    })
+  </script>
 </body>
 </html>
