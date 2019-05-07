@@ -4,7 +4,7 @@
 
   [1. JavaScript规定了几种语言类型](../书籍/javascript高级程序设计/3.基本概念.html)
 
-  2.JavaScript对象的底层数据结构是什么
+  [2.JavaScript对象的底层数据结构是什么]('js/对象的底层数据结构.txt')
 
   3.Symbol类型在实际开发中的应用、可手动实现一个简单的 Symbol
 
@@ -14,7 +14,7 @@
 
   6.理解值类型和引用类型
 
-  7.null和 undefined的区别
+  7.null和undefined的区别
 
   8.至少可以说出三种判断 JavaScript数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
 
@@ -26,7 +26,7 @@
 
   1.理解原型设计模式以及 JavaScript中的原型规则
 
-  2.instanceof的底层实现原理，手动实现一个 instanceof
+  2.instanceof的底层实现原理，手动实现一个instanceof
 
   3.实现继承的几种方式以及他们的优缺点
 
@@ -92,15 +92,15 @@
 
   9.Promise内部实现原理
 
-  10.ES6 的 Set 内部实现
+  10.ES6的Set内部实现
   
 (六).环境:
 
-  1.ECMAScript描述了 JavaScript语言的语法和基本对象规范
+  1.ECMAScript描述了JavaScript语言的语法和基本对象规范
 
   2.浏览器作为 JavaScript的一种运行环境，为它提供了：文档对象模型（ DOM），描述处理网页内容的方法和接口、浏览器对象模型（ BOM），描述与浏览器进行交互的方法和接口
 
-  3.Node也是 JavaScript的一种运行环境，为它提供了操作 I/O、网络等 API
+  3.Node也是JavaScript的一种运行环境，为它提供了操作I/O、网络等API
 
 (七).其他:
 

@@ -7,8 +7,17 @@
   <title>vue-router</title>
 </head>
 <body>
+  环境:更改URL而不刷新页，指导浏览器行为，不存在请求中
+  1.hash
+  2.history
   参考：
     https://zhuanlan.zhihu.com/p/27588422
     https://www.jianshu.com/p/4295aec31302
+    https://zhuanlan.zhihu.com/p/24574970
+    <script>
+      window.addEventListener('hashchange', function(e){
+        console.log(e)
+      }, false)
+    </script>
 </body>
 </html>

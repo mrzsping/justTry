@@ -1,0 +1,16 @@
+元素分类:
+
+  替换元素: 替换元素内容的部分并非由文档内容直接表示，例如: img
+  非替换元素: span等
+
+  块级元素: 填充父元素内容区，之前之后都有“分隔符”，不能有其他元素，特例: 列表项，有数字关联，其他与块级元素一样
+  行内元素: 文本行生成元素，不会打断文本，可以有多个
+
+文档与css关联方式:
+  外联:
+    <link type="text/css" href="" rel="stylesheet" media="screen" />
+    @import url() screen: 出现在style中，在其他规则之前，否则不起作用
+  嵌套:
+    <style media="screen"></style>
+    在元素里编写
+  

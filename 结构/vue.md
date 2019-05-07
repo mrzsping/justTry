@@ -8,7 +8,7 @@
   
   4.Vue的事件机制
 
-  5.从template转换成真实 DOM的实现机制
+  5.从template转换成真实DOM的实现机制
 
   6.vue-lazyloader原理
 

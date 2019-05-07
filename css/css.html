@@ -7,16 +7,19 @@
   <title>Document</title>
 </head>
 <body>
+
   word-beak：
     1.针对长字符，keep-all:不允许断开
     2.normal:如果是中文则到边界处的汉字换行，如果是英文整个词换行
     3.如果出现英文字符长度超过边界，则后面的部分将撑开边框
     4.如果边框为固定属性，则后面部分将无法显示
-    5.break-all:强行换行，将截断英文单词 
+    5.break-all:强行换行，将截断英文单词
+
   white-space:
     1.作用于空格和回车，用于控制空格是否进行合并，回车是否进行换行，如果句子过长是否在空格处换行
     2.normal:多个连续的空格会被合并为一个，回车会被忽略，同时句子如果太长，会在空白处折行
     3.Nowrap:强制在同一行显示文本，合并多余的空白，除非遇到br才换行
+
   word-space:
     1.主要用于单词上，控制水平方向上的超长单词是否折行
     2.Normal:单词超长也不可折行，会产生溢出
@@ -49,10 +52,11 @@
         opacity
         filters
         Will-change
-    vw/vw/vh/vmin/vmax:
-      vw：视窗宽度的百分比（1vw 代表视窗的宽度为 1%）
-      vh：视窗高度的百分比
-      vmin：当前 vw 和 vh 中较小的一个值
-      vmax：当前 vw 和 vh 中较大的一个值
+
+  vw/vw/vh/vmin/vmax:
+    vw：视窗宽度的百分比（1vw 代表视窗的宽度为 1%）
+    vh：视窗高度的百分比
+    vmin：当前 vw 和 vh 中较小的一个值
+    vmax：当前 vw 和 vh 中较大的一个值
 </body>
 </html>
