@@ -7,20 +7,61 @@
   <title>选择器</title>
 </head>
 <body>
+
   1.元素
+
   2.类
+
   3.id
+
   4.属性
+    h1#page 与h1[id = "page"]存在着微妙差别(权重不一样)
+    包含有某class名: [class~ = ""]
+    以某一class开头: [class^ = ""]
+    以某一class结尾: [class$ = ""]
+    只要包含某一class名: [class* = ""]
+    全等或者以某一class开头: [class | = ""]
+
+  5.后代: 从右向左读
+    p h1
+    p > h1
+
+  6.相邻兄弟
+    p+h1: p元素后面紧接着的h1
+
+  7.伪类: 幻像类关联到与伪类相关的元素
+    静态伪类:
+      visited/link/first-child(作为某元素的第一个子元素)/lang
+    动态伪类: 避免动态伪类改变布局
+      hover/active/focus
+
+  8.伪元素: 插入假想元素
+    first-letter/first-line(只能应用于display为block, inline-block, table-cell, list-item 或者 table-caption)/::defore/::after
   <style>
-    #a{
-      color: #f00;
-    }
     div[id="b"]{
       color: #00f;
     }
+    div[class~="d"]{
+      color: #0f0;
+    }
+    a:link{
+      color: purple;
+    }
+
+    span:first-child{
+      color: darkblue;
+    }
+
+    .a::first-letter{
+      color: aqua;
+    }
   </style>
-  <div id="a">123</div>
+  <div id="a" class="as d">123</div>
   <div id="b">123</div>
-  <div id="a">123</div>
+  <div id="c" class="df d">123</div>
+  <a href="12">
+    <span>12</span>
+  </a>
+  <p class="a">13213131313</p>
 </body>
 </html>

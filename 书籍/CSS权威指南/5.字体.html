@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>字体</title>
+</head>
+<body>
+  1.通用字体系列:
+    times/verdana/helvetica/arial/serifsans-serif/monosaoce/cursive/fantasy
+
+  2.加粗:
+    bolder: 确定从父元素继承的大小，加粗
+
+  3.字体大小
+    相对大小: larger/smaller
+    绝对大小: xx-small/x-small/small/medium/large/x-large/xx-large(缩放因子: 0.66 1.2-1.5)/百分数
+  
+  4.字体样式
+    normal/italic/oblique
+
+  5.font:
+    font-style、font-variant、font-weight(三者可以任意排列)  font-size/line-height、font-family(size、family两者必须存在，并且顺序不能改变)
+    <style>
+      p{
+        font-weight: 100;
+      }
+      span, a{
+        font-weight: bolder;
+      }
+      div{
+        font-size: xx-large;
+      }
+    </style>
+    <p>1
+      <span>1
+        <a href="">1</a>
+      </span>
+    </p>
+</body>
+</html>
