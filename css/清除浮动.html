@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>清除浮动</title>
+</head>
+<body>
+  <style>
+    /* overflow: hidden(不能和position配合使用)/overflow: auto(内部宽高超过父级div时，会出现滚动条) */
+    .p1{
+      width: 100px;
+      overflow: hidden;
+      border: 1px solid #f00;
+      margin-bottom: 10px;
+    }
+    .c1{
+      float: left;
+      width: 50px;
+      height: 50px;
+    }
+    /* 兄弟元素clear: both; 浏览器支持好，不容易出现怪问题，多了很多空元素*/
+    .p2{
+      width: 100px;
+      border: 1px solid #f00;
+      margin-bottom: 10px;
+    }
+    .c2{
+      float: left;
+      width: 50px;
+      height: 50px;
+    }
+    .cl2{
+      clear: both;
+    }
+    /* 父元素伪类clear: both; 浏览器支持好，不容易出现怪问*/
+    .p3{
+      width: 100px;
+      border: 1px solid #f00;
+      margin-bottom: 10px;
+    }
+    .c3{
+      float: left;
+      width: 50px;
+      height: 50px;
+    }
+    .p3:after{
+      clear: both;
+      display: block;
+      content: "";
+    }
+    /* 兼容ie6、7 */
+    .p4{
+      width: 100px;
+      border: 1px solid #f00;
+      margin-bottom: 10px;
+      zoom: 1;
+    }
+    .c4{
+      float: left;
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+  <div class="p1">
+    <div class="c1">
+      1
+    </div>
+  </div>
+  <div class="p2">
+    <div class="c2">
+      2
+    </div>
+    <div class="cl2"></div>
+  </div>
+  <div class="p3">
+    <div class="c3">
+      3
+    </div>
+  </div>
+  <div class="p4">
+    <div class="c4">
+      4
+    </div>
+  </div>
+</body>
+</html>

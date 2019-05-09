@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>垂直居中</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <style>
+      /* 绝对定位 */
+      .p1{
+        width: 100px;
+        height: 100px;
+        position: relative;
+      }
+      .c1{
+        width: 60px;
+        height: 60px;
+        background: #f00;
+        position: absolute;
+        top: 50%;
+        margin-top: -30px;
+        left: 50%;
+        margin-left: -30px;
+      }
+      /* 绝对定位 + transform */
+      .p2{
+        width: 100px;
+        height: 100px;
+        position: relative;
+      }
+      .c2{
+        width: 60px;
+        height: 60px;
+        background: #0f0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      /* display: table-cell; */
+      .p3{
+        width: 100px;
+        height: 100px;
+        display: table;
+      }
+      .c3{
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+      }
+      /* display: flex; */
+      .p4{
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .c4{
+        background: #ff0;
+      }
+      /* 绝对定位 + 设置位置 */
+      .p5{
+        width: 100px;
+        height: 100px;
+        position: relative;
+      }
+      .c5{
+        background: #0ff;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        margin: auto;
+      }
+      /* after占位 */
+      .p6{
+        width: 100px;
+        height: 100px;
+        text-align: center;
+      }
+      .c6{
+        vertical-align:middle;
+        display:inline-block;
+      }
+      .p6:after{
+        content:'';
+        width:0;
+        height:100%;
+        display:inline-block;
+        vertical-align:middle;
+      }
+      /* flex */
+      .p7{
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        display: flex;
+      }
+      .c7{
+        margin: auto;
+      }
+      /* chrome特有 */
+      .p8{
+        width: 100px;
+        height: 100px;
+        display: -webkit-box;
+        -webkit-box-pack:center;
+        -webkit-box-align:center;
+        -webkit-box-orient: vertical;
+        text-align: center;
+      }
+      .c8{
+        background: #f0f;
+      }
+      /* 利用clear: both */
+      .b9{
+        height: 100px;
+        width: 100px;
+      }
+      .p9{
+        float: left;
+        height: 50%;
+        margin-bottom: -30px;
+      }
+      .c9{
+        clear: both;
+        height: 60px;
+        position: relative;
+        width: 100px;
+        margin: auto;
+        background: #ff0;
+      }
+    </style>
+    <div class="p1">
+      <div class="c1">
+        1
+      </div>
+    </div>
+    <div class="p2">
+      <div class="c2">
+        2
+      </div>
+    </div>
+    <div class="p3">
+      <span class="c3">
+        3
+      </span>
+    </div>
+    <div class="p4">
+      <span class="c4">
+        4
+      </span>
+    </div>
+    <div class="p5">
+      <div class="c5">
+        5
+      </div>
+    </div>
+    <div class="p6">
+      <span class="c6">
+        6
+      </span>
+    </div>
+    <div class="p7">
+      <span class="c7">
+        7
+      </span>
+    </div>
+    <div class="p8">
+      <span class="c8">
+        8
+      </span>
+    </div>
+   <div class="b9">
+      <div class="p9"></div>  
+    <div class="c9">9</div>  
+   </div>
+  </body>
+</html>

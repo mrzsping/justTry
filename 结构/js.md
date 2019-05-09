@@ -2,11 +2,11 @@
 
 (一).变量和类型:
 
-  [1. JavaScript规定了几种语言类型](../书籍/javascript高级程序设计/3.基本概念.html)
+  [1.JavaScript规定了几种语言类型](../书籍/javascript高级程序设计/3.基本概念.html)
 
   [2.JavaScript对象的底层数据结构是什么]('js/对象的底层数据结构.txt')
 
-  3.Symbol类型在实际开发中的应用、可手动实现一个简单的 Symbol
+  3.Symbol类型在实际开发中的应用、可手动实现一个简单的Symbol
 
   4.JavaScript中的变量在内存中的具体存储形式
 
@@ -16,33 +16,33 @@
 
   7.null和undefined的区别
 
-  8.至少可以说出三种判断 JavaScript数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
+  8.至少可以说出三种判断JavaScript数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
 
   9.可能发生隐式类型转换的场景以及转换原则，应如何避免或巧妙应用
 
-  10.出现小数精度丢失的原因， JavaScript可以存储的最大数字、最大安全数字， JavaScript处理大数字的方法、避免精度丢失的方法
+  10.出现小数精度丢失的原因，JavaScript可以存储的最大数字、最大安全数字，JavaScript处理大数字的方法、避免精度丢失的方法
 
 (二).原型和原型链:
 
-  1.理解原型设计模式以及 JavaScript中的原型规则
+  1.理解原型设计模式以及JavaScript中的原型规则
 
   2.instanceof的底层实现原理，手动实现一个instanceof
 
   3.实现继承的几种方式以及他们的优缺点
 
-  4.至少说出一种开源项目(如 Node)中应用原型继承的案例
+  4.至少说出一种开源项目(如Node)中应用原型继承的案例
 
-  5.可以描述 new一个对象的详细过程，手动实现一个 new操作符
+  5.可以描述new一个对象的详细过程，手动实现一个new操作符
 
-  6.理解 es6class构造以及继承的底层实现原理
+  6.理解es6 class构造以及继承的底层实现原理
 
 (三).作用域和闭包:
 
   1.理解词法作用域和动态作用域
 
-  2.理解 JavaScript的作用域和作用域链
+  2.理解JavaScript的作用域和作用域链
 
-  3.理解 JavaScript的执行上下文栈，可以应用堆栈信息快速定位问题
+  3.理解JavaScript的执行上下文栈，可以应用堆栈信息快速定位问题
 
   4.this的原理以及几种不同使用场景的取值
 
@@ -56,15 +56,15 @@
 
 (四).执行机制:
 
-  1.为何 try里面放 return， finally还会执行，理解其内部机制
+  1.为何try里面放return，finally还会执行，理解其内部机制
 
-  2.JavaScript如何实现异步编程，可以详细描述 EventLoop机制
+  2.JavaScript如何实现异步编程，可以详细描述EventLoop机制
 
   3.宏任务和微任务分别有哪些
 
   4.可以快速分析一个复杂的异步嵌套逻辑，并掌握分析方法
 
-  5.使用 Promise实现串行
+  5.使用Promise实现串行
 
   6.Node与浏览器EventLoop的差异
 
@@ -74,17 +74,17 @@
 
 (五).语法和API:
 
-  1.理解 ECMAScript和 JavaScript的关系
+  1.理解ECMAScript和JavaScript的关系
 
-  2.熟练运用 es5、 es6提供的语法规范
+  2.熟练运用es5、 es6提供的语法规范
 
-  3.熟练掌握 JavaScript提供的全局对象（例如 Date、 Math）、全局函数（例如 decodeURI、 isNaN）、全局属性（例如 Infinity、 undefined）
+  3.熟练掌握JavaScript提供的全局对象（例如 Date、 Math）、全局函数（例如 decodeURI、isNaN）、全局属性（例如 Infinity、undefined）
 
-  4.熟练应用 map、 reduce、 filter 等高阶函数解决问题
+  4.熟练应用map、reduce、filter等高阶函数解决问题
 
-  5.setInterval需要注意的点，使用 settimeout实现 setInterval
+  5.setInterval需要注意的点，使用settimeout实现setInterval
 
-  6.JavaScript提供的正则表达式 API、可以使用正则表达式（邮箱校验、 URL解析、去重等）解决常见问题
+  6.JavaScript提供的正则表达式API、可以使用正则表达式（邮箱校验、URL解析、去重等）解决常见问题
 
   7.JavaScript异常处理的方式，统一的异常处理方案
 
@@ -98,7 +98,7 @@
 
   1.ECMAScript描述了JavaScript语言的语法和基本对象规范
 
-  2.浏览器作为 JavaScript的一种运行环境，为它提供了：文档对象模型（ DOM），描述处理网页内容的方法和接口、浏览器对象模型（ BOM），描述与浏览器进行交互的方法和接口
+  2.浏览器作为JavaScript的一种运行环境，为它提供了：文档对象模型（DOM），描述处理网页内容的方法和接口、浏览器对象模型（BOM），描述与浏览器进行交互的方法和接口
 
   3.Node也是JavaScript的一种运行环境，为它提供了操作I/O、网络等API
 

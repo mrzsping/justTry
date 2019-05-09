@@ -22,7 +22,7 @@ API与概念:
 
   2.MVVM框架设计理念
 
-  3.v-if 和 v-show 有什么区别
+  3.v-if和v-show有什么区别
 
   4.delete和Vue.delete删除数组的区别
 
@@ -30,9 +30,9 @@ API与概念:
 
   6.vuex的理解
 
-  7.nextTick 实现原理以及应用场景
+  7.nextTick实现原理以及应用场景
 
-  8.Vue3 proxy 解决了哪些问题
+  8.Vue3 proxy解决了哪些问题
 
 实现:
 
