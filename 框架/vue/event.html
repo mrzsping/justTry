@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../../源码解读/vue/vue.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  1.vm.$on(event, callback): 监听当前实例上的自定义事件
+
+  2.vm.$once(event, callback): 监听一个自定义事件，但是只触发一次
+
+  3.vm.$off([event, callback]): 移除自定义事件监听器
+
+  4.vm.$emit(eventName, [arg]): 触发当前实例上的事件
+
+  <div id="app">
+    <div id="test1" @click="click1">click1</div>
+    <div id="test2" @click.stop="click2">click2</div>
+    <my-component v-on:click.native="nativeclick" v-on:componenton="parentOn">
+    </my-component>
+  </div>
+  <script type="text/javascript">
+    var Child = {
+      template: '<div>A custom component!</div>'
+    } 
+    Vue.component('my-component', {
+      name: 'my-component',
+      template: '<div>A custom component!<div @click.stop="toParent">test click</div></div>',
+      components: {
+        Child:Child
+      },
+      created(){
+        console.log(this);
+      },
+      methods: {
+        toParent(){
+          this.$emit('componenton','toParent')
+        }
+      },
+      mounted(){
+        console.log(this);
+      }
+    })
+      new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          heihei:{name:3333},
+          a:1
+        }
+      },
+      components: {
+        Child:Child
+      },
+      methods: {
+        click1(){
+          alert('click1')
+        },
+        click2(){
+          alert('click2')
+        },
+        nativeclick(){
+          alert('nativeclick')
+        },
+        parentOn(value){
+          alert(value)
+        }
+      }
+    })
+  </script>
+</body>
+</html>

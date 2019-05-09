@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>meta使用</title>
+
+   <!-- 360浏览器切换内核 -->
+   <meta name="renderer" content="webkit|ie-comp|ie-stand">
+   <!-- IE可以渲染IE成Chrome，没有chrome渲染至最高版本 -->
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   <!-- 百度识别自适应 -->
+   <meta http-equiv="Cache-Control" content="no-transform" /> 
+   <meta http-equiv="Cache-Control" content="no-siteapp" />
+   <meta name="applicable-device" content="pc,mobile">
+  <!-- 自适应 -->
+   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+   <!-- iphone禁止打电话 -->
+   <meta name="format-detection" content="telephone=no" />
+</head>
+<body>
+
+  https://segmentfault.com/a/1190000004279791
+
+  1.meta用处:
+    meta常用于定义页面的说明，关键字，最后修改日期，和其它的元数据。这些元数据将服务于浏览器（如何布局或重载页面），搜索引擎和其它网络服务
+  
+  2.http-equiv: http参数
+
+    content-Type: 网页字符集
+      utf-8
+
+    X-UA-Compatible: 览器采取何种版本渲染当前页面
+      IE=edge,chrome=1
+    
+    cache-control: 请求和响应遵循的缓存机制
+      1.no-cache: 先发送请求，与服务器确认该资源是否被更改，如果未被更改，则使用缓存
+      2.no-store: 不允许缓存，每次都要去服务器上，下载完整的响应（安全措施）
+      3.public: 缓存所有响应，但并非必须。因为max-age也可以做到相同效果
+      4.private: 只为单个用户缓存，因此不允许任何中继进行缓存。（比如说CDN就不允许缓存private的响应）
+      5.maxage: 表示当前请求开始，该响应在多久内能被缓存和重用，而不去服务器重新请求。例如：max-age=60表示响应可以再缓存和重用 60 秒。
+      6.no-siteapp: 禁止百度转码
+
+    expires: 到期时间/Sunday 26 October 2016 01:00 GMT的时间格式
+    到期时间: 自动刷新并指向某页面/"2; URL=" //意思是2秒后跳转
+    Set-Cookie: cookie设定/"name, date"
+
+    Pragma: 禁止浏览器从本地计算机的缓存中访问页面内容
+      no-cache
+
+    content-Language: 显示语言的设定
+    imagetoolbar: 是否显示图片工具栏
+
+  3.name: 描述网页
+  <!-- <meta name="" content=""> -->
+    keywords: 关键字
+    description: 主要内容
+    viewport: 移动窗口
+
+    robots: 搜索引擎爬虫的索引方式
+      1.none: 搜索引擎将忽略此网页，等价于noindex，nofollow
+      2.noindex: 搜索引擎不索引此网页
+      3.nofollow: 搜索引擎不继续通过此网页的链接索引搜索其它的网页
+      4.all: 搜索引擎将索引此网页与继续通过此网页的链接索引，等价于index，follow
+      5.index: 搜索引擎索引此网页
+      6.follow: 搜索引擎继续通过此网页的链接索引搜索其它的网页
+
+    author: 作者
+    generator: 制作软件
+    copyright: 版权
+    revisit-after: 搜索引擎爬虫重访时间
+
+    renderer: 双核浏览器渲染方式
+      webkit: webkit内核
+      ie-comp: 默认IE兼容模式
+      ie-stand: 默认IE标准模式
+</body>
+</html>
