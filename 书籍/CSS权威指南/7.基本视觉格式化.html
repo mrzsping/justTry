@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>基本视觉格式化</title>
+</head>
+<body>
+  1.正常流/块级元素/行内元素/非替换元素/替换元素
+    padding/margin使用百分比时，取父元素宽度
+  
+  2.行内元素:
+    匿名文本: 未包含在元素中
+  <style>
+    .a{
+      width: 400px;
+      height: 100px;
+      border: 1px solid red;
+    }
+    .b{
+      margin-left: 150px;
+      background: firebrick;
+      width: 300px;
+      height: 100px;
+    }
+  </style>
+  <div class="a">
+    <div class="b">
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+    </div>
+  </div>
+  <a href="1">12313</a>
+</body>
+</html>
