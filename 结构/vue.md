@@ -24,7 +24,7 @@ API与概念:
 
   2.MVVM框架设计理念
 
-  3.v-if和v-show有什么区别
+  [3.v-if和v-show有什么区别](../框架/vue/v-if与v-show.html)
 
   4.delete和Vue.delete删除数组的区别
 

@@ -17,15 +17,15 @@
   
   9.CSS模块化方案、如何配置按需加载、如何防止CSS阻塞渲染
   
-  10.熟练使用CSS实现常见动画，如渐变、移动、旋转、缩放等等
+  [10.熟练使用CSS实现常见动画，如渐变、移动、旋转、缩放等等](https://www.runoob.com/css3/css3-animations.html)
   
-  11.CSS浏览器兼容性写法，了解不同API在不同浏览器下的兼容性情况
+  [11.CSS浏览器兼容性写法，了解不同API在不同浏览器下的兼容性情况](https://www.duitang.com/static/csshack.html)
   
   12.掌握一套完整的响应式布局方案
 
   [13.flex布局]('../css/flex.html')
 
-  14.css reset和normalize.css
+  [14.css reset](../css/reset.css)和[normalize.css](../css/normalize.css)
 
   [15.清除浮动]('../css/清除浮动.html')
 
