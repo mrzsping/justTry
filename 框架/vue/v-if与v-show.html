@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+      <!-- 不会渲染 -->
+    <div class="a" v-if="false">v-if</div>
+    <!-- dosplay:none; -->
+    <div class="b" v-show="false">v-show</div>
+  </div>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+      }
+    })
+  </script>
+</body>
+</html>

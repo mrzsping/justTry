@@ -1,0 +1,25 @@
+1.关闭sourceMap -> productionSourceMap: false
+
+2.js/css压缩 ->  productionGzip: true
+
+3.路由懒加载 -> r => require.ensure([], require => r(require('@/page/goods/add')), 'goodsEdit')
+
+4.使用v-lazy
+
+5.使用v-show
+
+6.为item设置key
+
+7.细分vue组件
+
+8.减少watch的数据
+
+9.菊花图
+
+10.better-click点击优化手机延迟300ms
+
+11.骨架屏
+
+12.压缩js: UglifyJsPlugin
+
+13.压缩css: OptimizeCSSPlugin
