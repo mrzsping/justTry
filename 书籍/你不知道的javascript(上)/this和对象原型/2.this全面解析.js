@@ -32,4 +32,37 @@ var bar3 = function(){ // 无法改变this
 bar3();
 setTimeout(bar, 100)
 
+//     绑定例外
 
+function foo2(){
+    console.log(this.a1)
+}
+var a1 = 123;
+foo2.call(null) // 123
+
+//    参数柯里化： 将多个参数合并为一个参数
+function foo3(a, b){
+    console.log('a' + a, 'b' + b)
+}
+function bind(fn ,obj){
+    return function(){
+        fn.apply(obj, arguments)
+    }
+}
+var bar = foo3.bind(null, 2)
+bar(3)
+
+//     更安全的this
+//     使用Object.create(null)替换null，比null更空
+
+ //    间接引用
+var a2 = 111;
+var bar4 = {
+    a2: 222,
+    foo: foo
+}
+var bar5 = {
+    a2: 333
+}
+bar4.foo()
+(bar5.foo = bar4.foo)()
