@@ -32,30 +32,26 @@ var bar3 = function(){ // 无法改变this
 bar3();
 setTimeout(bar, 100)
 
-//     绑定例外
+//    new绑定: 被new操作符调用的普通函数
+//     步骤: 1.创建一个全新对象 -> 2.执行原型连接 -> 3.绑定到函数调用的this -> 4.如没返回对象，则自动返回对象
 
-function foo2(){
-    console.log(this.a1)
+
+//    优先级: new > 显式 > 隐式 > 默认
+
+//    DMZ对象
+
+function foo(a,b) {
+    console.log( "a:" + a + ", b:" + b );
 }
-var a1 = 123;
-foo2.call(null) // 123
+// 我们的DMZ 空对象
+var ø = Object.create( null );
+// 把数组展开成参数
+foo.apply( ø, [2, 3] ); // a:2, b:3
+// 使用bind(..) 进行柯里化
+var bar = foo.bind( ø, 2 );
+bar( 3 ); // a:2, b:3
 
-//    参数柯里化： 将多个参数合并为一个参数
-function foo3(a, b){
-    console.log('a' + a, 'b' + b)
-}
-function bind(fn ,obj){
-    return function(){
-        fn.apply(obj, arguments)
-    }
-}
-var bar = foo3.bind(null, 2)
-bar(3)
-
-//     更安全的this
-//     使用Object.create(null)替换null，比null更空
-
- //    间接引用
+//    间接引用
 var a2 = 111;
 var bar4 = {
     a2: 222,
