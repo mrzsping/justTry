@@ -1,0 +1,3 @@
+1.qq：<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=229307241&site=qq&menu=yes" title="在线咨询">在线咨询</a>
+
+2.拨打电话：<a href="tel:xxxx">window.location.href="tel:110";
