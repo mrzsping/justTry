@@ -1,0 +1,38 @@
+https://lbs.amap.com/api/javascript-api/guide/abc/basetype
+
+经纬度 AMap.LngLat
+像素点 AMap.Pixel
+像素尺寸 AMap.Size
+经纬度矩形边界 AMap.Bounds
+经纬度路径边界 AMap.ArrayBounds
+
+1.中心点
+var map = new AMap.Center('conatiner',{
+  center:position // 中心点
+})
+
+2.直线
+var path [ [116,39], [116,40], [117,39] ]
+var polyline = new AMap.Polyline({
+  path : path,
+})
+map.add(polyline);
+
+3.距离
+var lnglat1 = new AMap.LngLat(116, 39);
+var lnglat2 = new AMap.LngLat(117, 39);
+var distance = lnglat1.distance(lnglat2);//计算lnglat1到lnglat2之间的实际距离(m)
+
+4.坐标 
+var offset  = new AMap.Pixel(-16,-30);
+var marker = new AMap.Marker({
+    offset:offset,
+    icon:'xxx.png',
+});
+map.add(marker);
+
+5.容器尺寸
+var mapSize = map.getSize();//获取地图大小，返回的是地图容器的像素大小
+
+6.边界
+AMap.Bounds/AMap.ArrayBounds

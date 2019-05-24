@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    /* .c{
+      width: 20px;
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M884.2 909.6H126.8c-38.6 0-70-31.4-70-70v-635c0-38.6 31.4-70 70-70h328.6c38.6 0 70 31.4 70 70 0 11-9 20-20 20s-20-9-20-20c0-16.6-13.4-30-30-30H126.8c-16.6 0-30 13.4-30 30v635c0 16.6 13.4 30 30 30h757.4c11 0 20 9 20 20s-8.8 20-20 20z' fill='%23fff000'/%3E%3Cpath d='M884.2 909.6c-11 0-20-9-20-20s9-20 20-20c16.6 0 30-13.4 30-30V428.2c0-16.6-13.4-30-30-30H292.6c-16.6 0-30 13.4-30 30v268.6c0 11-9 20-20 20s-20-9-20-20V428.2c0-38.6 31.4-70 70-70h591.6c38.6 0 70 31.4 70 70v411.4c0 38.6-31.4 70-70 70zM734 295H555.8c-38.6 0-70-31.4-70-70v-10.4c0-11 9-20 20-20s20 9 20 20V225c0 16.6 13.4 30 30 30H734c11 0 20 9 20 20s-9 20-20 20z' fill='%23262435'/%3E%3Cpath d='M192.8 909.6H177c-11 0-20-9-20-20s9-20 20-20h15.8c16.6 0 30-13.4 30-30V671c0-11 9-20 20-20s20 9 20 20v168.6c-.2 38.6-31.4 70-70 70zM818 398.4c-11 0-20-9-20-20v-53.2c0-16.6-13.4-30-30-30h-90.4c-11 0-20-9-20-20s9-20 20-20H768c38.6 0 70 31.4 70 70v53.2c0 11-9 20-20 20zM598.2 764.6c-11 0-20-9-20-20V532.4c0-11 9-20 20-20s20 9 20 20v212.2c0 11-9 20-20 20z' fill='%23262435'/%3E%3Cpath d='M683.8 638c-5.2 0-10.2-2-14.2-5.8L584 546.6c-7.8-7.8-7.8-20.4 0-28.2 7.8-7.8 20.4-7.8 28.2 0L698 604c7.8 7.8 7.8 20.4 0 28.2-4 4-9 5.8-14.2 5.8z' fill='%23262435'/%3E%3Cpath d='M512.4 638c-5.2 0-10.2-2-14.2-5.8-7.8-7.8-7.8-20.4 0-28.2l85.8-85.8c7.8-7.8 20.4-7.8 28.2 0 7.8 7.8 7.8 20.4 0 28.2l-85.8 85.8c-3.8 4-8.8 5.8-14 5.8z' fill='%2333333'/%3E%3C/svg%3E");
+    } */
+    html,body,p{margin:0;padding: 0}
+.summary{
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 5px;
+    line-height: 22px;
+    word-break: break-all;
+    text-indent:28px;
+}
+.packup p{
+    height: 90px;
+}
+.packup:before{
+    display: block;
+    content: attr(data-content);
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 66px;
+    width: 100%;
+    overflow: hidden;
+    color: #000;
+    background-color: #fff;
+    text-indent: 28px;
+       
+}
+.packup:after{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-line-clamp: 4;
+    content: attr(data-content);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-indent: 20px;
+    padding-right: 3em;
+    color: #000;
+    background-color: #fff;
+}
+.pick{
+  position: absolute;
+  bottom: 0;
+  right: 26px;
+  z-index: 1000;
+}
+.tg_top:after{
+  display: block;
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: -11px;
+  height: 10px;
+  width: 0px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #f00 transparent;
+}
+.tg_bottom:after{
+  display: block;
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: -11px;
+  height: 10px;
+  width: 0px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #f00 transparent transparent transparent;
+}
+  </style>
+</head>
+<body>
+  <div class="summary packup" data-content="四川金盆地（集团）有限公司地处中国四川盆地腹心地带，中国历史文化名城、全国优秀旅游城市、中国最大的传统白酒原酒生产基地——崇州。 企业成立于八十年代初期,经过三十余年的快速发展，成为一家集白酒、房地产、医疗、农业投资、旅游开发等为一体的多元化集团企业。公司占地面积近千亩，拥有万吨级酿酒基地、崇阳分厂、1886年清代老窖池、金堂淮口分厂、宜宾分厂五大生产基地。年产白酒5万吨，储酒能力10万余吨。主要生产销售“金盆地”、“一品江山”、“崇阳”等系列浓香型白酒，同时具备酱香、清香及药香等多种香型白酒的酿造能力,是川西地区规模名列前茅的白酒生产营销企业。 集团公司下属崇阳分厂起源于清代光绪年间的“姚烧坊”，历经百余年的清代窖池至今仍在使用。据拷证资料，四川省百年老窖池现仅存2000余口，崇阳百年老窖池120口就位列其中。老窖池被评为“成都市文物保护单位”，酿造工艺被列入“四川省非物质文化遗产保护”。 公司先后荣获“中国食品工业优秀龙头企业”、“中国驰名商标”、“国家地理标志保护产品”、“四川八大原酒企业”、“四川名牌产品”、“川酒新金花”等多项殊荣。 目前，公司正抓住国家经济条件下的发展机遇，通过整合资源，发挥企业自身优势，提升产业链服务水平，力图从一个原酒生产型企业转型为品牌营销型企业，打造中国白酒又一名牌！ '海内存知己，天涯若比邻。'金盆地集团热忱欢迎来自国内外友人前来作客，共谋发展，共创辉煌。让我们诚信合作，共享丰盛。"><p class="content">四川金盆地（集团）有限公司地处中国四川盆地腹心地带，中国历史文化名城、全国优秀旅游城市、中国最大的传统白酒原酒生产基地——崇州。 企业成立于八十年代初期,经过三十余年的快速发展，成为一家集白酒、房地产、医疗、农业投资、旅游开发等为一体的多元化集团企业。公司占地面积近千亩，拥有万吨级酿酒基地、崇阳分厂、1886年清代老窖池、金堂淮口分厂、宜宾分厂五大生产基地。年产白酒5万吨，储酒能力10万余吨。主要生产销售“金盆地”、“一品江山”、“崇阳”等系列浓香型白酒，同时具备酱香、清香及药香等多种香型白酒的酿造能力,是川西地区规模名列前茅的白酒生产营销企业。 集团公司下属崇阳分厂起源于清代光绪年间的“姚烧坊”，历经百余年的清代窖池至今仍在使用。据拷证资料，四川省百年老窖池现仅存2000余口，崇阳百年老窖池120口就位列其中。老窖池被评为“成都市文物保护单位”，酿造工艺被列入“四川省非物质文化遗产保护”。 公司先后荣获“中国食品工业优秀龙头企业”、“中国驰名商标”、“国家地理标志保护产品”、“四川八大原酒企业”、“四川名牌产品”、“川酒新金花”等多项殊荣。 目前，公司正抓住国家经济条件下的发展机遇，通过整合资源，发挥企业自身优势，提升产业链服务水平，力图从一个原酒生产型企业转型为品牌营销型企业，打造中国白酒又一名牌！ "海内存知己，天涯若比邻。"金盆地集团热忱欢迎来自国内外友人前来作客，共谋发展，共创辉煌。让我们诚信合作，共享丰盛。132131313</p><div class="pick">查看详情</div></div>
+  <script>
+    document.querySelector('.pick').onclick = function(){
+      if( document.querySelector('.summary').classList.contains('packup')){
+        document.querySelector('.summary').classList.remove('packup')
+        this.innerHTML = '收起'
+        this.className = 'pick tg_top'
+        console.dir(this)
+      }else {
+        document.querySelector('.summary').classList.add('packup')
+        this.innerHTML = '显示详情'
+        this.className = 'pick tg_bottom'
+      }
+      
+    }
+  </script>
+</body>
+</html>
