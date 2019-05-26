@@ -1,0 +1,11 @@
+1.类似文件夹 com.a.b: 创建文件夹com>a>b
+
+2.om.a与com.a.jar: 两者相互独立
+
+3.JDK: awt/io/util/lang(核心，不需导入)/net
+
+4.import：*则为全导入，性能较差
+
+5.静态导入: import static
+
+6.同一个包里不能有重名class
