@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f6a61a69-2e7a-4444-bc7b-9dc538773c82" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../书籍/你不知道的javascript(上)/作用域和闭包/1.作用域是什么.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../书籍/你不知道的javascript(上)/作用域和闭包/1.作用域是什么.txt" afterDir="false" />
+    <list default="true" id="7931c93a-873b-4e58-b7ff-13f94c3a83df" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.基础/13.数组.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../1.基础/13.数组.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pro01/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pro01/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pro01/src/cn/ja/oo3/TestArray.java" beforeDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,13 +15,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="324" />
-    <option name="y" value="121" />
-    <option name="width" value="942" />
-    <option name="height" value="600" />
+    <option name="x" value="2" />
+    <option name="y" value="27" />
+    <option name="width" value="1380" />
+    <option name="height" value="699" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -25,16 +29,14 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
       <pane id="Scope" />
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558536569402" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -55,27 +57,27 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f6a61a69-2e7a-4444-bc7b-9dc538773c82" name="Default Changelist" comment="" />
-      <created>1558534885649</created>
+      <changelist id="7931c93a-873b-4e58-b7ff-13f94c3a83df" name="Default Changelist" comment="" />
+      <created>1558932446865</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1558534885649</updated>
-      <workItem from="1558534888102" duration="1677000" />
+      <updated>1558932446865</updated>
+      <workItem from="1558932450177" duration="790000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1677000" />
+    <option name="totallyTimeSpent" value="790000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="324" y="121" width="942" height="600" extended-state="0" />
+    <frame x="2" y="27" width="1380" height="699" extended-state="0" />
     <layout>
       <window_info id="Image Layers" />
       <window_info id="Designer" />
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.237581" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" />
