@@ -1,0 +1,5 @@
+1.常用方法: charAt/length/indexO/equals/equalsIgnoreCase/replace/startsWith/endsWith/substring...
+
+2.数组的拷贝: arraycopy(src,srcpos,dest,destpos,length)，可以自己拷贝自己，去掉某个元素
+
+3.removeElement

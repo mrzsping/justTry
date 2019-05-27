@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0096b8c5-dadb-4cd3-a878-a7654cf980ee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../1.基础/13.数组.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../1.基础/13.数组.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/ja/oo3/TestArray.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pro02/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pro02/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,16 +15,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/cn/ja/oo3/TestAbstract.java">
+        <entry file="file://$PROJECT_DIR$/src/cn/ja/str/TestString.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
-              <folding>
-                <element signature="e#164#165#0" expanded="true" />
-                <element signature="e#200#201#0" expanded="true" />
-                <element signature="e#278#279#0" expanded="true" />
-                <element signature="e#314#315#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="261">
+              <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -36,6 +28,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -72,12 +65,18 @@
         <option value="$PROJECT_DIR$/src/cn/ja/oo2/TestPoly.java" />
         <option value="$PROJECT_DIR$/src/cn/ja/oo3/TestArray.java" />
         <option value="$PROJECT_DIR$/src/cn/ja/oo3/TestAbstract.java" />
+        <option value="$PROJECT_DIR$/src/cn/ja/oo3/MyInterafce.java" />
+        <option value="$PROJECT_DIR$/src/cn/ja/oo3/TestInterface.java" />
+        <option value="$PROJECT_DIR$/src/cn/ja/oo3/TestInnerClass.java" />
+        <option value="$PROJECT_DIR$/src/cn/ja/oo3/TestStaticInnerClass.java" />
+        <option value="$PROJECT_DIR$/src/cn/ja/oo3/TestUnknown.java" />
+        <option value="$PROJECT_DIR$/src/cn/ja/str/TestString.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="2" />
-    <option name="y" value="26" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-6" />
+    <option name="y" value="35" />
     <option name="width" value="1380" />
     <option name="height" value="700" />
   </component>
@@ -89,7 +88,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -121,19 +119,20 @@
               <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="cn" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="ja" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="oo3" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="str" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558932945090" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558968304944" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -159,13 +158,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TestPoly">
-    <configuration name="TestClose (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.ja.oo2.TestClose" />
+  <component name="RunManager" selected="Application.TestString">
+    <configuration name="TestInnerClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.ja.oo3.TestInnerClass" />
       <module name="pro01" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.ja.oo2.*" />
+          <option name="PATTERN" value="cn.ja.oo3.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -173,12 +172,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestClose" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.ja.oo.TestClose" />
+    <configuration name="TestInterface" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.ja.oo3.TestInterface" />
       <module name="pro01" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.ja.oo.*" />
+          <option name="PATTERN" value="cn.ja.oo3.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -199,12 +198,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestPrivate" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.ja.oo2.TestPrivate" />
+    <configuration name="TestString" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.ja.str.TestString" />
       <module name="pro01" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.ja.oo2.*" />
+          <option name="PATTERN" value="cn.ja.str.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -212,12 +211,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestSuper2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.ja.oo.TestSuper2" />
+    <configuration name="TestUnknown" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.ja.oo3.TestUnknown" />
       <module name="pro01" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.ja.oo.*" />
+          <option name="PATTERN" value="cn.ja.oo3.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -227,11 +226,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestString" />
+        <item itemvalue="Application.TestUnknown" />
+        <item itemvalue="Application.TestInnerClass" />
+        <item itemvalue="Application.TestInterface" />
         <item itemvalue="Application.TestPoly" />
-        <item itemvalue="Application.TestPrivate" />
-        <item itemvalue="Application.TestClose (1)" />
-        <item itemvalue="Application.TestClose" />
-        <item itemvalue="Application.TestSuper2" />
       </list>
     </recent_temporary>
   </component>
@@ -253,12 +252,15 @@
       <workItem from="1558705122367" duration="1967000" />
       <workItem from="1558743347815" duration="11014000" />
       <workItem from="1558828011717" duration="15196000" />
-      <workItem from="1558931847547" duration="1379000" />
+      <workItem from="1558931847547" duration="1494000" />
+      <workItem from="1558947152787" duration="3486000" />
+      <workItem from="1558965372087" duration="56000" />
+      <workItem from="1558965558141" duration="2139000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36348000" />
+    <option name="totallyTimeSpent" value="42144000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -270,9 +272,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="26" width="1380" height="700" extended-state="1" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19318181" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16792738" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -281,7 +284,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.26548672" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.38688526" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -289,7 +292,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3295082" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.39016393" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.3065574" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.1852459" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -302,6 +305,37 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Database" order="8" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20196672" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.14310955" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3295082" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.3074205" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.1852459" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Theme Preview" order="4" />
+      <window_info anchor="right" id="Maven" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Database" order="8" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -514,23 +548,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cn/ja/oo3/TestArray.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/ja/oo3/TestArray.java" />
     <entry file="file://$PROJECT_DIR$/src/cn/ja/oo3/TestAbstract.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
+        <state relative-caret-position="-2">
           <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
           <folding>
             <element signature="e#164#165#0" expanded="true" />
-            <element signature="e#200#201#0" expanded="true" />
+            <element signature="e#203#204#0" expanded="true" />
             <element signature="e#278#279#0" expanded="true" />
-            <element signature="e#314#315#0" expanded="true" />
+            <element signature="e#323#324#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/ja/oo3/MyInterafce.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+          <folding>
+            <element signature="e#160#161#0" expanded="true" />
+            <element signature="e#196#197#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/ja/oo3/TestInnerClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="18" column="9" lean-forward="true" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+          <folding>
+            <element signature="e#171#172#0" expanded="true" />
+            <element signature="e#207#208#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/ja/oo3/TestInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-604">
+          <caret line="11" column="1" selection-start-line="8" selection-end-line="11" selection-end-column="1" />
+          <folding>
+            <element signature="e#355#356#0" expanded="true" />
+            <element signature="e#391#392#0" expanded="true" />
+            <element signature="e#314#315#0" expanded="true" />
+            <element signature="e#350#351#0" expanded="true" />
+            <element signature="e#395#396#0" expanded="true" />
+            <element signature="e#431#432#0" expanded="true" />
+            <element signature="e#478#479#0" expanded="true" />
+            <element signature="e#514#515#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/ja/oo3/TestStaticInnerClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/ja/oo3/TestUnknown.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+          <folding>
+            <element signature="e#79#80#0" expanded="true" />
+            <element signature="e#100#101#0" expanded="true" />
+            <element signature="e#232#233#0" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/ja/str/TestString.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
         </state>
       </provider>
     </entry>
