@@ -3,3 +3,9 @@
 2.数组的拷贝: arraycopy(src,srcpos,dest,destpos,length)，可以自己拷贝自己，去掉某个元素
 
 3.removeElement
+
+4.不可变序列数组
+
+5.判断相等，使用equals
+
+6.stringBuild(可变字符序列，线程不安全，效率高，作为一般使用)/stringBuffer(线程安全，效率低)

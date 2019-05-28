@@ -1,0 +1,17 @@
+1.Byte/Boolean/Short/Character/Integer/Long/Float/Double
+
+2.基本数据转静态类
+    Integer a = new Integer(2);
+    Integer b = Integer.valueOf(10);
+
+3.包装类转基本
+     int c = b.intValue();
+
+4.字符串转包装类
+     Integer f = new Integer("99999");
+     Integer e = Integer.parseInt("9999");
+
+5.包装类转字符串
+     String str = f.toString();
+
+6.自动装箱与拆箱
