@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="25601f70-7f50-4ec7-be82-4b2a28bd8a32" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/cn/zsp/test/TestCalendar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/zsp/test/TestRandom.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/zsp/test/TestEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/zsp/test/TestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/zsp/test/TestFile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/zsp/test/TestFileTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -16,10 +18,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/cn/zsp/test/TestRandom.java">
+        <entry file="file://$PROJECT_DIR$/src/cn/zsp/test/TestException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="8" column="42" lean-forward="true" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+            <state relative-caret-position="109">
+              <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -52,13 +54,17 @@
         <option value="$PROJECT_DIR$/src/cn/zsp/test/TestDate.java" />
         <option value="$PROJECT_DIR$/src/cn/zsp/test/TestCalendar.java" />
         <option value="$PROJECT_DIR$/src/cn/zsp/test/TestRandom.java" />
+        <option value="$PROJECT_DIR$/src/cn/zsp/test/TestFile.java" />
+        <option value="$PROJECT_DIR$/src/cn/zsp/test/TestFileTree.java" />
+        <option value="$PROJECT_DIR$/src/cn/zsp/test/TestEnum.java" />
+        <option value="$PROJECT_DIR$/src/cn/zsp/test/TestException.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2" />
-    <option name="y" value="27" />
-    <option name="width" value="1380" />
+    <option name="x" value="113" />
+    <option name="y" value="112" />
+    <option name="width" value="1108" />
     <option name="height" value="699" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -69,7 +75,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -93,12 +98,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1559173905021" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1559313837358" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -114,9 +120,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TestRandom">
-    <configuration name="TestCalendar" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.zsp.test.TestCalendar" />
+  <component name="RunManager" selected="Application.TestException">
+    <configuration name="TestEnum" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.zsp.test.TestEnum" />
       <module name="pro03" />
       <extension name="coverage">
         <pattern>
@@ -128,8 +134,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestDate" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.zsp.test.TestDate" />
+    <configuration name="TestException" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.zsp.test.TestException" />
+      <module name="pro03" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.zsp.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestFile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.zsp.test.TestFile" />
+      <module name="pro03" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.zsp.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestFileTree" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.zsp.test.TestFileTree" />
       <module name="pro03" />
       <extension name="coverage">
         <pattern>
@@ -154,39 +186,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestString" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.zsp.test.TestString" />
-      <module name="pro03" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cn.zsp.test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestWrapperClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.zsp.test.TestWrapperClass" />
-      <module name="pro03" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cn.zsp.test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestException" />
+        <item itemvalue="Application.TestEnum" />
+        <item itemvalue="Application.TestFileTree" />
+        <item itemvalue="Application.TestFile" />
         <item itemvalue="Application.TestRandom" />
-        <item itemvalue="Application.TestCalendar" />
-        <item itemvalue="Application.TestDate" />
-        <item itemvalue="Application.TestString" />
-        <item itemvalue="Application.TestWrapperClass" />
       </list>
     </recent_temporary>
   </component>
@@ -203,17 +209,19 @@
       <workItem from="1559050412558" duration="2756000" />
       <workItem from="1559084557587" duration="1638000" />
       <workItem from="1559171364940" duration="2526000" />
+      <workItem from="1559224986289" duration="1700000" />
+      <workItem from="1559310649392" duration="3025000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6920000" />
+    <option name="totallyTimeSpent" value="11645000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="27" width="1380" height="699" extended-state="0" />
+    <frame x="113" y="112" width="1108" height="699" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25757575" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.33396947" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -222,7 +230,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.40707964" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.52920353" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -230,7 +238,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32920355" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.26725665" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32920355" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -319,7 +327,59 @@
     <entry file="file://$PROJECT_DIR$/src/cn/zsp/test/TestRandom.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
-          <caret line="8" column="42" lean-forward="true" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/zsp/test/TestFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://E:/java/jdk-11.0.1/lib/src.zip!/java.base/java/io/File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="1017" column="19" selection-start-line="1017" selection-start-column="19" selection-end-line="1017" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/zsp/test/TestFile2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="2" column="24" lean-forward="true" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/zsp/test/TestFileThree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/zsp/test/TestFileTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="13" column="34" lean-forward="true" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/zsp/test/TestEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cn/zsp/test/TestException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>

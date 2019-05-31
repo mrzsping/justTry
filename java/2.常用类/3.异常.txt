@@ -1,0 +1,5 @@
+1.exception
+
+2.面向对象方式处理异常: 抛出异常 -> 捕获异常
+
+3.分类: unchecked exception -> Error(重启) -> Throwable <- Exception <- checked exception/runtime exception <- unchecked exception

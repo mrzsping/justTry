@@ -1,0 +1,6 @@
+1.file常用方法:
+    exist: 是否存在/isDirectory: 是否是目录/isFile: 是否是文件/lastModifed: 最后修改时间/length: 大小/getName: 文件名/getPath: 目录路径
+
+2.mkdir: 有一个不存在就不能创建
+
+3.delete: 删除
