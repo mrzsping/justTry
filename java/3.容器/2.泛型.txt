@@ -1,0 +1,7 @@
+1.帮助建立类型安全的集合
+
+2.泛型本质: 数据类型的参数化，数据类型的占位符
+
+3.collection中的方法: size/isEmpt/contains/iterator: 遍历/toArray: 转化成Object数组/add/remove/clear/equals/hashCode/stream/spliterator
+
+4.两个集合的操作: containsAll: 是否包含/addAll/removeAllr/retainAll: 移除非交集

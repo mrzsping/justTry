@@ -3,3 +3,11 @@
 2.面向对象方式处理异常: 抛出异常 -> 捕获异常
 
 3.分类: unchecked exception -> Error(重启) -> Throwable <- Exception <- checked exception/runtime exception <- unchecked exception
+
+4. NullPointerExcetion: 空指针/ClassCastxception: 强制转型错误
+
+5.捕获异常先子类后父类
+
+6.自定义异常
+
+7.避免异常处理代替错误处理，不能代替简单的测试，不进行小粒度测试，往高层处理
