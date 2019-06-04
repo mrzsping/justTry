@@ -5,3 +5,5 @@
 3.collection中的方法: size/isEmpt/contains/iterator: 遍历/toArray: 转化成Object数组/add/remove/clear/equals/hashCode/stream/spliterator
 
 4.两个集合的操作: containsAll: 是否包含/addAll/removeAllr/retainAll: 移除非交集
+
+5.ArrayList: 底层是数组，查询效率高，增删效率低，线程不安全（vector: 安全），存放任意·数量，长度不受限制
