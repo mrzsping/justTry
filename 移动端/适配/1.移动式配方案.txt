@@ -1,0 +1,40 @@
+1.视口：viewport
+  设备的屏幕上能用来显示我们的网页的那一块区域
+
+2.可见视口：Visual Viewport
+  移动设备上可以被看见的部分，宽度在移动端通过window.innerWidth获得
+
+3.布局视口：Layout Viewport
+  把PC上的页面放到移动端，如果只展示为可见视口的宽度，那么页面会被压缩，所以移动浏览器就决定默认情况下把viewport设为一个较宽的值 
+
+4.理想视口：Ideal Viewport
+  设备的可见区域，和可见视口一致
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  width：布局视口的宽度
+  device-width：设备以常规CSS像素为单位时可以显示的宽度
+  scale：缩放px
+  当scale变小，由于物理像素不变，width增加
+
+5.物理像素：
+  显示器(手机屏幕)上最小的物理显示单元，在操作系统的调度下，每一个设备像素都有自己的颜色值和亮度值
+
+5.设备独立像素：
+  CSS像素，日常使用像素，浏览器内的一切长度都是以CSS像素为单位的，CSS像素的单位是px
+
+6.设备像素比：dpr
+    物理像素和设备独立像素的对应关系
+
+7.解决方案：
+
+  (1).document.documentElement.style.fontSize = window.innerWidth / 7.5 + 'px': 设备的宽度都是7.5rem，设计稿乘以0.075
+
+  (2).Flexible.js
+    根据dpr，缩放scale
+    不能与响应式布局兼容
+    对Android没有做处理，导致1px和backgroudImage还要额外做处理的问题
+  
+  (3)vw：
+    Viewport's width的简写,1vw等于window.innerWidth的1%
+
+  (4)vh：
+    1vh等于window.innerHeihgt的1%
