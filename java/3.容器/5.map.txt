@@ -3,3 +3,5 @@
 2.put/get/remove/containsKey/containsValue/size/isEmpty/putAll/clear
 
 3.键不能重复，重复则覆盖
+
+4.HashMap：底层采用了哈希表
