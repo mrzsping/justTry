@@ -1,0 +1,22 @@
+1.类型：
+
+  Native App： 本地应用程序（原生App）
+  Web App：网页应用程序（移动web）
+  Hybrid App：混合应用程序（混合App）
+  React Native App：JS+部分原生语法来实现功能
+
+2.交互：
+  (1)js调用原生
+
+    Android：addJavascriptInterface定义JSBridge -> 调用window.JSBridge.foo()
+    ios：JavaScriptCore -> window.top.foo
+
+  (2)JSBridge：通过一个固定的桥对象调用JS,JS也只通过固定的桥对象调用Native
+    原理：H5->通过某种方式触发一个url->Native捕获到url,进行分析->原生做处理->Native调用H5的JSBridge对象传递回调（返回值，id：多个回调函数中查找）
+
+3.url scheme：
+
+  (1)类似于url的链接,是为了方便app直接互相调用设计
+  (2)scheme必须原生app注册
+
+4.设计模式：https://www.cnblogs.com/dailc/p/5931324.html
