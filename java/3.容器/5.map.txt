@@ -4,4 +4,6 @@
 
 3.键不能重复，重复则覆盖
 
-4.HashMap：底层采用了哈希表
+4.HashMap：底层采用了哈希表，结构：hash key value next
+
+5.哈希原理：key对象.hashCode() -> 哈希值 -> 计算出0到length-1的数 -> 计算出哈希值 -> 存储
