@@ -14,7 +14,7 @@
     
     setTimeout(() => { // 移除，自己添加  ======MYSELF======
       document.documentElement.removeChild(messagingIframe)
-    }, 0)
+    }, 500)
 
 		//定义的回调函数集合,在原生调用完对应的方法后,会执行对应的回调函数id
 		var responseCallbacks = {};

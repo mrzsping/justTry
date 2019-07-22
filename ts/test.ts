@@ -1,17 +1,15 @@
-class Student {
-  fullName: string ;
-  constructor(public first, public middle, public last){
-    this.fullName = first + '' + middle + '' + last;
+class Student{
+  fullName: string;
+  constructor(public firstName, public middleName, public lastName) {
+    this.fullName = firstName + '' + middleName + '' + lastName
   }
 }
 interface Person{
-  first: string;
-  last: string;
+  firstName: string;
+  lastName: string;
 }
-function Per(person: Person){
-  return 'hello ' + person.first + person.last;
+function getPerson(person: Person){
+  return person.firstName + '' + person.lastName;
 }
-
-let user = new Student("Jane", "M.", "User");
-
-document.body.innerHTML = Per(user);
+let user = new Student('1', 'w', '3')
+console.log(getPerson(user))

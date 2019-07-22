@@ -1,0 +1,9 @@
+参考资料：https://blog.csdn.net/jacin1/article/details/39993935、https://segmentfault.com/a/1190000015678155
+1. Ios 机制：
+ （1）Native可直接调用Js，并可直接获取Js的返回值（这点与Android不同）
+ （2）Js不能直接调用Native，但可以通过反向调用，流程就是先将消息临时存储在Js端，然后通知Native反向调用获取消息内容
+        （实现原理是利用 shouldStartLoadWithRequest，就是Web的所有URL请求都会触发Native的行为）
+2. Android 机制：
+ （1）Native可直接调用Js，但不可直接获取Js的返回值（这点与Ios不同）
+ （2）Native注册addJavascriptInterface 后，Js 可直接调用Native的接口，并获取Native的返回值
+ （3）通过 shouldOverrideUrlLoading，也还是拦截Web的所有URL请求来达到通信的目的

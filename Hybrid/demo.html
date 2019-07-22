@@ -5,13 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <script src="./JSBridge.js"></script>
 </head>
 <body>
+  <script src="./JSBridge2.js"></script>
   <script>
-    // console.log( window.JSBridge)
-  window.JSBridge.callHandler('aaa', {name: 123}, function(res){
-  })
+    setupWebViewJavascriptBridge(function(bridge) {
+	
+	/* Initialize your app here */
+
+	// bridge.registerHandler('JS Echo', function(data, responseCallback) {
+	// 	console.log("JS Echo called with:", data)
+	// 	responseCallback(data)
+	// })
+	bridge.callHandler('ObjC Echo', {'key':'value'}, function responseCallback(responseData) {
+		console.log("JS received response:", responseData)
+	})
+})
   </script>
 </body>
 </html>
