@@ -9,7 +9,7 @@
 </head>
 <body>
   <div id="app">
-    <Box></Box>
+    <div v-for="i in dataList" :data-key="1 ? i === 1 : ''" >{{i}}</div>
   </div>
   <script>
     Vue.component('Box', {
@@ -24,6 +24,9 @@
     })
     let Vm = new Vue({
       data: {
+        dataList: [4, 2, 1, 3, 5] // [1, 2, 3, 4, 5]
+      }, mounted() {
+        console.log(document.querySelector("#app").childNodes[0].dataset.key)
       }
     })
     Vm.$mount('#app')
