@@ -1,0 +1,28 @@
+1.npm install -g create-react-app
+2.create-react-app m-proect
+3.版本：16.8.6
+4.组件化 npm install antd --save
+5.使用：
+  import { message } from 'antd';
+  // 由于 antd 组件的默认文案是英文，所以需要修改为中文
+  import zhCN from 'antd/es/locale/zh_CN';
+  import moment from 'moment';
+  import 'moment/locale/zh-cn';
+  // css过于巨大
+  // 安装react-app-rewired 按需加载
+  // 安装babel-plugin-import
+  // config-overrides.js
+
+
+
+
+
+
+
+  import 'antd/dist/antd.css';
+
+  moment.locale('zh-cn');
+
+react: 逻辑
+react.dom: 渲染
+jsx: 使用html描述js, js扩充, 编译为js对象
