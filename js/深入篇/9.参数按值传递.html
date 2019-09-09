@@ -7,8 +7,44 @@
   <title>Document</title>
 </head>
 <body>
+  <h1>参数按值传递</h1>
+  <p>把函数外的值复制给函数的参数</p>
+
+  
+  <h1>参数按引用传递</h1>
+  <p>把引用复制给函数的参数</p>
   <script>
-    
+    // 参数按值传递
+    var value = 1;
+    function foo(v) {
+      v = 2;
+      console.log(v); //2
+    }
+    foo(value);
+    console.log(value) // 1
+
+    // 参数按引用传递
+    var obj = {
+      name: 1
+    };
+    function bar(v) {
+      v.name = 2;
+      console.log(v.name); //2
+    }
+    bar(obj);
+    console.log(obj.name) // 1
+
+    // 共享传递
+    var obj2 = {
+      value: 1
+    };
+    function foo2(o) {
+      console.log(o)
+      o = 2; // 参数存储的引用改为值
+      console.log(o); //2
+    }
+    foo2(obj2); // 将obj2引用复制给参数
+    console.log(obj2.value) // 1
   </script>
 </body>
 </html>
