@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>作用域</h1>
+  <p>定义的变量区域</p>
+  <p>规定了如何查找变量（作用域链），也就是确定当前执行代码对变量的访问权限</p>
+  <p>JavaScript采用词法作用域(lexical scoping)，也就是静态作用域，定义时便已经确定好</p>
+  <p>动态作用域：判断本身是否存在，然后在调用环境中查找</p>
+  <script>
+    // 何为：静态作用域？
+    var value = 1;
+    function foo() {
+        console.log(value); // 词法作用域
+    }
+    function bar() {
+        console.log(value) // 变量提升
+        var value = 2;
+        foo();
+        console.log(value) // 作用域链
+    }
+    bar(); // 1 foo内部有无value，没有则在书写位置上一层查找  作用域链：foo内部 -> window环境
+  </script>
+</body>
+</html>

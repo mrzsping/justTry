@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // __propto__: 函数才有
+    // 重新定制proptotype需要一同定制constructor
+    function Person(){}
+    var person = new Person()
+    console.log('实例', person);
+    console.log('构造函数', Person);
+    console.log('原型', Person.prototype);
+    console.log('原型', person.__proto__); 
+    console.log('构造函数', Person.prototype.constructor);
+    console.log('原型的原型: 对象构造函数', Person.prototype.__proto__);
+    console.log('无', Person.prototype.__proto__.__proto__);
+    console.log('对象实例', Person.prototype.__proto__.constructor);
+    console.log('对象构造函数', Person.prototype.__proto__.constructor.prototype);
+    console.log('实例constructor来自原型', person.constructor, person.hasOwnProperty('constructor'));
+    console.log('__proto__来自于Object.prototype', Person.prototype.hasOwnProperty('__proto__'), Object.prototype.hasOwnProperty('__proto__'));
+  </script>
+</body>
+</html>
