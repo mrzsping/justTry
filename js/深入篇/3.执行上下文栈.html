@@ -7,8 +7,30 @@
   <title>Document</title>
 </head>
 <body>
+  <p>js代码一段一段执行，并非一行一行执行</p>
+  <p>执行上下文：执行某段代码的准备工作，全局代码、函数代码、eval，初始化作用域链、形参、函数声明、变量声明等组成的对象</p>
+  <p>执行上下文栈：管理执行上下文</p>
+  <p>全局执行上下文在栈底</p>
   <script>
-    
+    // 变量提升
+    var foo = function () {
+      console.log('foo1');
+    }
+    foo();  // foo1
+    var foo = function () {
+      console.log('foo2');
+    }
+    foo(); // foo2
+
+    // 函数提升，即会使用最后面的
+   function bar () {
+      console.log('bar1');
+    }
+    bar();  // bar2
+    function bar () {
+      console.log('bar2');
+    }
+    bar(); // bar2
   </script>
 </body>
 </html>

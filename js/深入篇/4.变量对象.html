@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>执行上下文属性</h1>
+  <p>VO变量对象：与执行上下相关的数据作用域，函数声明与变量 全局和函数</p>
+  <p>AO被激活的变量对象就是活动对象，活动对象的各种属性才能访问</p>
+  <p>作用域链</p>
+  <p>this</p>
+
+  <h1>变量对象</h1>
+  <p>形参</p>
+  <p>函数声明</p>
+  <p>变量声明</p>
+
+  <h1>函数执行上下文变化</h1>
+  <p>函数执行上下文的变量对象初始化只包括 Arguments 对象</p>
+  <p>在进入执行上下文时会给变量对象添加形参、函数声明、变量声明等初始的属性值</p>
+  <p>在代码执行阶段，会再次修改变量对象的属性值</p>
+  <script>
+    // 函数执行上下文变化
+    function foo(a) {
+      var b = 2;
+      function c() {}
+      var d = function() {};
+      b = 3;
+    }
+    foo(1);
+    // 进入时
+    AO = {
+      arguments: {
+          0: 1,
+          length: 1
+      },
+      a: 1,
+      b: undefined,
+      c: function c(){},
+      d: undefined
+    }
+    // 执行后
+    AO = {
+      arguments: {
+          0: 1,
+          length: 1
+      },
+      a: 1,
+      b: 3,
+      c: function c(){},
+      d: function () {}
+    }
+     
+    // 函数与变量
+    // 首先会处理函数声明，其次会处理变量声明，如果变量名称跟已经声明的形式参数或函数相同，则变量声明不会干扰已经存在的这类属性 
+    console.log(bar);
+    function bar(){
+        console.log("bar");
+    }
+    var bar = 1;
+  </script>
+</body>
+</html>

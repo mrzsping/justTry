@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <pre>两者不同：执行上下文进入执行上下文栈顺序不同</pre>
+  <h1>代码1</h1>
+  <code>
+    var scope = "global scope";
+    function checkscope(){
+        var scope = "local scope";
+        function f(){
+            return scope;
+        }
+        return f();
+    }
+    checkscope();
+  </code>
+  <p>
+    1.执行全局代码，创建全局执行上下文，全局上下文被压入执行上下文栈
+      ECStack = [
+          globalContext
+      ];
+
+    2.全局上下文初始化
+      globalContext = {
+        VO: [global],
+        Scope: [globalContext.VO],
+        this: globalContext.VO
+      }
+
+    2.初始化的同时，checkscope 函数被创建，保存作用域链到函数的内部属性[[scope]]
+      checkscope.[[scope]] = [
+        globalContext.VO
+      ];
+
+    3.执行 checkscope 函数，创建 checkscope 函数执行上下文，checkscope 函数执行上下文被压入执行上下文栈
+      ECStack = [
+          checkscopeContext,
+          globalContext
+      ];
+
+    4.checkscope 函数执行上下文初始化：
+      复制函数 [[scope]] 属性创建作用域链，
+      用 arguments 创建活动对象，
+      初始化活动对象，即加入形参、函数声明、变量声明，
+      将活动对象压入 checkscope 作用域链顶端。
+      同时 f 函数被创建，保存作用域链到 f 函数的内部属性[[scope]]
+      checkscopeContext = {
+        AO: {
+          arguments: {
+            length: 0
+          },
+          scope: undefined,
+          f: reference to function f(){}
+        },
+        Scope: [AO, globalContext.VO],
+        this: undefined
+      }
+
+    5.执行 f 函数，创建 f 函数执行上下文，f 函数执行上下文被压入执行上下文栈
+      ECStack = [
+        fContext,
+        checkscopeContext,
+        globalContext
+      ];
+
+    6.f 函数执行上下文初始化, 以下跟第 4 步相同：
+      复制函数 [[scope]] 属性创建作用域链
+      用 arguments 创建活动对象
+      初始化活动对象，即加入形参、函数声明、变量声明
+      将活动对象压入 f 作用域链顶端
+      fContext = {
+        AO: {
+          arguments: {
+            length: 0
+          }
+        },
+        Scope: [AO, checkscopeContext.AO, globalContext.VO],
+        this: undefined
+      }
+
+    7.f 函数执行，沿着作用域链查找 scope 值，返回 scope 值
+    
+    8.f 函数执行完毕，f 函数上下文从执行上下文栈中弹出
+      ECStack = [
+        checkscopeContext,
+        globalContext
+      ];
+
+    9.checkscope 函数执行完毕，checkscope 执行上下文从执行上下文栈中弹出
+      ECStack = [
+        globalContext
+      ];
+  </p>
+
+  <h1>代码2</h1>
+  <code>
+    var scope = "global scope";
+    function checkscope(){
+        var scope = "local scope";
+        function f(){
+            return scope;
+        }
+        return f;
+    }
+    checkscope()();
+  </code>
+  <p>
+      1.执行全局代码，创建全局执行上下文，全局上下文被压入执行上下文栈
+        ECStack = [
+            globalContext
+        ];
+  
+      2.全局上下文初始化
+        globalContext = {
+          VO: [global],
+          Scope: [globalContext.VO],
+          this: globalContext.VO
+        }
+  
+      2.初始化的同时，checkscope 函数被创建，保存作用域链到函数的内部属性[[scope]]
+        checkscope.[[scope]] = [
+          globalContext.VO
+        ];
+  
+      3.执行 checkscope 函数，创建 checkscope 函数执行上下文，checkscope 函数执行上下文被压入执行上下文栈
+        ECStack = [
+            checkscopeContext,
+            globalContext
+        ];
+  
+      4.checkscope 函数执行上下文初始化：
+        复制函数 [[scope]] 属性创建作用域链，
+        用 arguments 创建活动对象，
+        初始化活动对象，即加入形参、函数声明、变量声明，
+        将活动对象压入 checkscope 作用域链顶端。
+        同时 f 函数被创建，保存作用域链到 f 函数的内部属性[[scope]]
+        checkscopeContext = {
+          AO: {
+            arguments: {
+              length: 0
+            },
+            scope: undefined,
+            f: reference to function f(){}
+          },
+          Scope: [AO, globalContext.VO],
+          this: undefined
+        }
+
+      5.执行checkscope过程中，修改checkscope中的scope
+      checkscopeContext = {
+        AO: {
+          arguments: {
+            length: 0
+          },
+          scope: "local scope",
+          f: reference to function f(){}
+        },
+        Scope: [AO, globalContext.VO],
+        this: undefined
+      }
+
+      6.checkscope 函数执行完毕，checkscope 执行上下文从执行上下文栈中弹出
+        ECStack = [
+          globalContext
+        ];
+
+      7.执行 f 函数，创建 f 函数执行上下文，f 函数执行上下文被压入执行上下文栈
+        ECStack = [
+          fContext,
+          checkscopeContext, // 闭包
+          globalContext
+        ];
+  
+      8.f 函数执行上下文初始化, 以下跟第 4 步相同：
+        复制函数 [[scope]] 属性创建作用域链
+        用 arguments 创建活动对象
+        初始化活动对象，即加入形参、函数声明、变量声明
+        将活动对象压入 f 作用域链顶端
+        fContext = {
+          AO: {
+            arguments: {
+              length: 0
+            }
+          },
+          Scope: [AO, checkscopeContext.AO, globalContext.VO],
+          this: undefined
+        }
+  
+      9.f 函数执行，沿着作用域链查找 scope 值，返回 scope 值
+      
+      10.f 函数执行完毕，f 函数上下文从执行上下文栈中弹出
+        ECStack = [
+          checkscopeContext,
+          globalContext
+        ];
+    </p>
+  <script>
+    
+  </script>
+</body>
+</html>

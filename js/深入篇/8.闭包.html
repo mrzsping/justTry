@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>闭包</h1>
+  <p>那些能够访问自由变量的函数</p>
+  <p>从理论角度：所有的函数</p>
+  <p>从实践角度：即使创建它的上下文已经销毁，它仍然存在（比如，内部函数从父函数中返回），在代码中引用了自由变量</p>
+  <p>VO 变量对象</p>
+  <p>AO 活动对象，激活才可以访问属性</p>
+
+  <h1>经典例子</h1>
+  <p>未加闭包</p>
+  <code>
+    var data = [];
+    for(var i = 0; i < 3; i++) {
+      data[i] = function () {
+        console.log(i)
+      }
+    }
+    data[0]() // 3
+    data[1]() // 3
+    data[2]() // 3
+  </code>
+  <p>全局上下文</p>
+  <code>
+    globalContext = {
+      VO: {
+        data: [],
+        i: 3
+      }
+    }
+  </code>
+  <p>data[i]执行上下文</p>
+  <code>
+    dataContext = {
+      VO: {},
+      scope: [AO, globalContext.VO]
+    }
+  </code>
+
+  <p>添加闭包</p>
+  <code>
+    var data = [];
+    for(var i = 0; i < 3; i++) {
+      data[i] = (function(i){
+        return function () {
+          console.log(i)
+        }
+      })(i)
+    }
+    data[0]() // 0
+    data[1]() // 1
+    data[2]() // 2
+  </code>
+  <p>全局上下文</p>
+  <code>
+    globalContext = {
+      VO: {
+        data: [],
+        i: 3 // data函数执行时，for循环已经执行完毕，所以为3 
+      }
+    }
+  </code>
+  <p>匿名函数执行上下文</p>
+  <code>
+    dataContext = {
+      VO: {
+        arguments: {
+          0: 0, // 0 1 2
+          length: 1
+        },
+        i: i // 0 1 2
+      },
+      scope: [匿名函数.VO, globalContext.VO]
+    }
+  </code>
+  <p>data[i]执行上下文</p>
+  <code>
+    dataContext = {
+      VO: {},
+      scope: [AO, 匿名函数.VO, globalContext.VO]
+    }
+  </code>
+  <p>沿着作用域链，在匿名函数中可以找到i</p>
+  <script>
+  </script>
+</body>
+</html>
