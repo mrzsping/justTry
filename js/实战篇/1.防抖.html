@@ -31,7 +31,7 @@
         var con = this // 3.改变this指向
         var arg = arguments // 4.传递event对象
         var result // 返回值
-        if (t) clearTimeout(t)
+        if (t) clearTimeout(t) // 存在定时 则清除 重新定时
         if (now) { // 是否立即执行 wait秒内不触发再执行
           var doing = !t // 中间是否执行
           t = setTimeout(function(){

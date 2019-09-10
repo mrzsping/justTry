@@ -19,13 +19,22 @@
     var count = 1
     var container = document.getElementById('container');
     function getUserAction(e) {
-      console.log(this, e)
       container.innerHTML = count++;
     };
+    // 时间戳
     function debounce(fn, wait){
-      
+      var t = 0
+      return function(){
+        var con = this
+        var arg = arguments
+        var date = new Date()
+        if (date - t > wait) {
+          fn.apply(con, arg)
+          t = date
+        }
+      }
     }
-    container.onmousemove = getUserAction;
+    container.onmousemove = debounce(getUserAction, 1000);
   </script>
 </body>
 </html>
