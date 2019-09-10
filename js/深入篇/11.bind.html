@@ -7,8 +7,34 @@
   <title>Document</title>
 </head>
 <body>
+  <h1>bind介绍</h1>
+  <p>创建一个新函数。当这个新函数被调用时，bind()的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数</p>
   <script>
-    
+    // 原理
+    Function.prototype.bind2 = function (con) {
+      var self = this // 绑定函数
+      console.log(this) // 绑定函数 即 bar
+      var arg = Array.prototype.slice.call(arguments, 1) // 绑定函数传入参数
+      var fNOP = function () {}; // 空函数 作为连接绑定函数与构造函数原型桥梁
+      var fBound = function(){ // 返回新函数
+        var arg2 = Array.prototype.slice.call(arguments) // 构造函数传入参数
+        return self.apply(this instanceof fBound ? this : context, arg.concat(arg2)); // 如果是构造函数 使用 实例
+      }
+      fNOP.prototype = this.prototype; // 构造函数原型 指向 绑定函数原型 构造函数时：this失效 指向实例
+      fBound.prototype = new fNOP()
+      return fBound
+    }
+    var foo = {
+      value: 1
+    };
+
+    function bar() {
+      return this.value;
+    }
+
+    var bindFoo = bar.bind2(foo);
+
+    console.log(bindFoo()); // 1
   </script>
 </body>
 </html>

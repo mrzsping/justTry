@@ -11,20 +11,34 @@
   <p>call(this, a, b, ...)</p>
   <p>apply(this, [a, b, ...])</p>
   <script>
+    // 基本原理
+    Function.prototype.call3 = function(con){
+      console.log(this);
+      con.fn = this // 给调用对象绑定方法
+      con.fn() // 执行
+      delete con.fn // 删除
+    }
+    var obj = {
+      name: 'xiaoming'
+    }
+    function bar(){
+      console.log(this.name)
+    }
+    bar.call3(obj)
     // 第三版
   Function.prototype.call2 = function (context) {
     var context = context || window;
     context.fn = this;
     var args = [];
     for(var i = 1, len = arguments.length; i < len; i++) {
-        args.push('arguments[' + i + ']');
+        args.push('arguments[' + i + ']'); // arr[arguments[0], arguments[1], ....]
     }
 
-    var result = eval('context.fn(' + args +')');
+    var result = eval('context.fn(' + args +')'); // context.fn(arguments[0], arguments[1], ....)
 
     delete context.fn
     return result;
-}
+  }
   </script>
 </body>
 </html>

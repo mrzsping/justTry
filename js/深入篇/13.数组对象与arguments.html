@@ -7,8 +7,32 @@
   <title>Document</title>
 </head>
 <body>
+  <h1>argumnets: 类数组对象</h1>
+  <p>可遍历 有长度 可读写</p>
+  <p>不能使用数组方法</p>
+  <p>使用数组方法：call</p>
+  <p>转为数组：slice.call/splice.call/Array.from/concat.apply/es6 ...</p>
   <script>
+    // 转为数组
+    var arrayLike = {0: 'name', 1: 'age', 2: 'sex', length: 3 }
+    // 1. slice
+    Array.prototype.slice.call(arrayLike); // ["name", "age", "sex"] 
+    // 2. splice
+    Array.prototype.splice.call(arrayLike, 0); // ["name", "age", "sex"] 
+    // 3. ES6 Array.from
+    Array.from(arrayLike); // ["name", "age", "sex"] 
+    // 4. apply
+    Array.prototype.concat.apply([], arrayLike)
+    // 5. ...
     
+    // 例子
+    function arg(){
+      console.log(arguments.length, arguments.callee);
+    }
+    arg()
+
+    // 传递参数
+    // fn1.apply(fn2, arguments)
   </script>
 </body>
 </html>
