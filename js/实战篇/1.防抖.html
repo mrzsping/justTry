@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #container{
+      width: 100%; height: 200px; line-height: 200px; text-align: center; color: #fff; background-color: #444; font-size: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>防抖</h1>
+  <p>触发完事件 n 秒内不再触发事件，才执行</p>
+  <div id="container"></div>
+  <script>
+
+    // 实现
+    var count = 1;
+    var container = document.getElementById('container');
+
+    function getUserAction(e) {
+      console.log(this, e)
+      container.innerHTML = count++;
+    };
+    function debounce(fn, wait, now){
+      var t
+      var debounced = function () { // 1.返回函数
+        var con = this // 3.改变this指向
+        var arg = arguments // 4.传递event对象
+        var result // 返回值
+        if (t) clearTimeout(t)
+        if (now) { // 是否立即执行 wait秒内不触发再执行
+          var doing = !t // 中间是否执行
+          t = setTimeout(function(){
+            t = null
+          }, wait)
+          if (doing) {
+            result = fn.apply(con, arg)
+          }
+        } else {
+          t = setTimeout(function(){ // 2.确保1s内未触发时执行一次
+            fn.apply(con, arg)
+          }, wait);
+        }
+        return result
+      }
+      debounced.cancle = function(){ // now = true 取消后 触发之后立即执行
+        clearTimeout(t)
+        t = null
+      }
+      return debounced
+    }
+    container.onmousemove = debounce(getUserAction, 1000, true);
+    // container.onmousemove = getUserAction;
+  </script>
+</body>
+</html>
