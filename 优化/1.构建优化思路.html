@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <h1>1</h1>
+    来自：<a href="https://juejin.im/post/59097cd7a22b9d0065fb61d2#heading-1">https://juejin.im/post/59097cd7a22b9d0065fb61d2#heading-1</a>
+    <p>技术栈: 容器服务，后台项目会把dist文件夹里的东西都会打包成一个docker镜像，基本步骤为
+      <code>
+        npm install
+        npm run build:prod
+      </code>
+    </p>
+    <p>加速线上镜像构建的速度，我们利用taobao源 registry.npm.taobao.org 进行加速, 并且将一些常见的npm依赖打入了基础镜像，避免每次都需要重新下载</p>
+    <p>使用webpack dll 或者把那些第三方vendor单独打包 external出去，或者使用http2 可以使用AggressiveSplittingPlugin等等</p>
+</body>
+</html>
