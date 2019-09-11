@@ -8,7 +8,139 @@
 </head>
 <body>
   <script>
+    // 1.for循环 兼容性好 排除NaN 和 object
+
+    var array = [1, 1, '1', '1']
+    function unique (arr) {
+      var uniqueArr = []
+      for (var i = 0; i < arr.length; i++) {
+        for(var j = 0; j < uniqueArr.length; j++){
+          if (arr[i] === uniqueArr[j]) { // 如果相等则退出
+            break
+          }
+        }
+        if (j === uniqueArr.length) { // 不等则添加
+          uniqueArr.push(arr[i])
+        }
+      }
+      console.log(uniqueArr)
+    }
+    unique(array)
+
+
+    // 2.indexOf优化 对象和 NaN 不去重
+
+    var array = [1, 1, '1', '1']
+    function unique (arr) {
+      var uniqueArr = []
+      for (var i = 0; i < arr.length; i++) {
+        if (uniqueArr.indexOf(arr[i]) === -1) {
+          uniqueArr.push(arr[i])
+        }
+      }
+      console.log(uniqueArr)
+    }
+    unique(array)
+
+
+    // 3.sort排序 效率高于indexof 对象 NaN 数字1 不去重
+
+    var array = [1, 1, '1', '1']
+    function unique (arr) {
+      var uniqueArr = []
+      var now
+      var sortArr = arr.concat().sort()
+      for (var i = 0; i < sortArr.length; i++) {
+        if (!i || now !== sortArr[i]) { // 不是第一个 并且和上一个不同
+          uniqueArr.push(sortArr[i])
+        }
+        now = sortArr[i]
+      }
+      console.log(uniqueArr)
+    }
+    unique(array)
+
     
+    // 4.优化版本 忽略大小写
+
+    function unique(array, isSorted, iteratee) {
+      var res = [];
+      var seen = [];
+
+      for (var i = 0, len = array.length; i < len; i++) {
+        var value = array[i];
+        var computed = iteratee ? iteratee(value, i, array) : value;
+        if (isSorted) { // 是否排序
+          if (!i || seen !== computed) {
+            res.push(value)
+          }
+          seen = computed;
+        }
+        else if (iteratee) { // 是否忽略大小写
+          if (seen.indexOf(computed) === -1) {
+            seen.push(computed);
+            res.push(value);
+          }
+        }
+        else if (res.indexOf(value) === -1) {
+          res.push(value);
+        }        
+      }
+      return res;
+    }
+    console.log(unique(array3, false, function(item){
+      return typeof item == 'string' ? item.toLowerCase() : item
+    })); // [1, "a", 2]
+    
+
+    // 5.filter + indexof 对象不去重 NaN 会被忽略掉
+
+    function unique(arr){
+      var res = arr.filter((v, i) => { // 找到第一个匹配的元素索引
+        return arr.indexOf(v) === i
+      })
+      return res
+    }
+
+
+    // 6.filter + sort 对象和 NaN 不去重 数字 1 不去重
+
+    function unique(arr){
+      var res = arr.concat().sort().filter((v, i) => { // 找到第一个匹配的元素索引
+        return !i || v !== arr[i - 1]
+      })
+      return res
+    }
+
+
+    // 7.Object 键值对 将数组数值作为对象的键相关的值
+
+    // typeof v + JSON.stringify(v) 防止重复 hasOwnProperty 不区分数字和字符串
+    function unique(arr){
+      var obj = {}
+      return arr.filter((v, i) => {
+        return obj.hasOwnProperty(typeof v + JSON.stringify(v)) ? false : (obj[typeof v + JSON.stringify(v)] = true)
+      })
+    }
+
+
+    // 8.es6 Set中的成员唯一 对象不去重 NaN 去重
+
+    var array = [1, 2, 1, 1, '1'];
+    function unique(array) {
+      return Array.from(new Set(array));
+    }
+    function unique(array) {
+      return [...new Set(array)];
+    }
+
+
+    // 9.Map
+
+    function unique (arr) {
+      const seen = new Map()
+      return arr.filter((a) => !seen.has(a) && seen.set(a, 1))
+    }
   </script>
 </body>
 </html>
