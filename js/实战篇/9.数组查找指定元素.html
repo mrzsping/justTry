@@ -8,7 +8,53 @@
 </head>
 <body>
   <script>
-    
+    // 1.es6
+    var a = [1, 2, 3, 4]
+    var index = a.findIndex(function(i){
+      return i === 2
+    })
+
+    // 2.findIndex
+    function findIndex(arr, fn){
+      for (var i = 0; i < arr.length; i++) {
+        if(fn.call(null, arr[i], i)) return i
+      }
+      return -1
+    }
+    findIndex(a, function(item, i){
+      if (item === 3) return true
+    })
+
+    // 3.反向查找 即 改变循环顺序
+
+    // 4.参数不同 查找顺序不同
+
+    function createIndexFinder(dir) {
+      return function(array, predicate, context) {
+        var length = array.length;
+        var index = dir > 0 ? 0 : length - 1; // 根据正负 判定循环顺序
+        for (; index >= 0 && index < length; index += dir) {
+          if (predicate.call(context, array[index], index, array)) return index;
+        }
+        return -1;
+      }
+    }
+    var findIndex = createIndexFinder(1);
+    var findLastIndex = createIndexFinder(-1);
+
+    // 5.已排序数组 查找
+    function sortedIndex(array, obj) {
+      var low = 0, high = array.length;
+      while (low < high) { // 二分法
+        var mid = Math.floor((low + high) / 2);
+        if (array[mid] < obj) low = mid + 1;
+        else high = mid;
+      }
+      return high;
+    };
+    console.log(sortedIndex([10, 20, 30, 40, 50], 35)) // 3
+
+    console.log(index)
   </script>
 </body>
 </html>
