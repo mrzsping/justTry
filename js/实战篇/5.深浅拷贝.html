@@ -7,8 +7,58 @@
   <title>Document</title>
 </head>
 <body>
+  <h1>浅拷贝</h1>
+  <p>拷贝的数组或对象随着原数组或对象的变化而变化</p>
+  <h1>深拷贝</h1>
+  <p>完全的拷贝一个对象，即使嵌套了对象，两者也相互分离，修改一个对象的属性，也不会影响另一个</p>
   <script>
-    
+    // 1.数组的浅拷贝 并不是克隆
+    var a = [{name: 1}]
+    var b = a.concat()
+    b[0].name = 2
+    console.log(a[0].name) // 2
+    var c = a.slice()
+    c[0].name = 3
+    console.log(a[0].name) // 2
+
+    // 2.深拷贝 JSON.parse(JSON.stringify()) 无法拷贝函数项
+    var as = [{name: 1}]
+    var bs = JSON.parse(JSON.stringify(as))
+    bs[0].name = 2
+    console.log(as[0].name);
+
+    // 3.深拷贝 对象 数组 使用递归 性能优化
+    function copy(obj){
+      if (typeof obj !== 'object') return
+      var obj2 = obj instanceof Array ? [] : {}
+      for(var x in obj){ // 遍历所有属性
+        if(obj.hasOwnProperty(x)){ // 是自身属性才拷贝
+          obj2[x] = typeof obj[x] === 'object' ? copy(obj[x]) : obj[x];
+        }
+      }
+      return obj2
+    }
+
+    // 方法2
+    function copy (obj) {
+      if (Array.isArray(obj)) {
+        return obj.map(copy)
+      } else if (obj && typeof obj === 'object') {
+        var cloned = {}
+        var keys = Object.keys(obj)
+        for (var i = 0, l = keys.length; i < l; i++) {
+          var key = keys[i]
+          cloned[key] = copy(obj[key])
+        }
+        return cloned
+      } else {
+        return obj
+      }
+    }
+
+    //浅拷贝
+    let [...a] = [1,2,3]
+    let b = Array.from([1,2,3,4])
   </script>
 </body>
 </html>

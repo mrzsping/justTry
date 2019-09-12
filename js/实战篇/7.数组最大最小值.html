@@ -8,7 +8,37 @@
 </head>
 <body>
   <script>
-    
+    var a = [1, 2, 3]
+    // 1.Math.max
+    console.log(Math.max(1, 2, 3));
+
+    // 2.Math.max.apply
+    console.log(Math.max.apply(null, a));
+
+    // 3.Math.max + ...
+    console.log(Math.max(...a));
+
+    // 4.reduce
+    function maxFn (arr) {
+      if (!(arr instanceof Array)) return
+      arr.reduce(function(prev, next) {
+        return Math.max(prev, next);
+      })
+    }
+
+    // 5.sort
+      function maxFn(arr){
+        if (!(arr instanceof Array)) return
+      arr.sort(function(a,b){return a - b;});
+      return arr[arr.length - 1]
+    }
+
+    // 6.eval
+    function maxFn(arr){
+      if (!(arr instanceof Array)) return
+      var max = eval("Math.max(" + arr + ")");
+      return max
+    }
   </script>
 </body>
 </html>
