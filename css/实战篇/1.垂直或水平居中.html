@@ -133,6 +133,40 @@
         margin: auto;
         background: #ff0;
       }
+      .b10 {
+        width: 300px;
+        height: 300px;
+        border: 1px solid red;
+        position: relative;
+      }
+      .c10 {
+        width: 100px;
+        height: 100px;
+        background: blue;
+        padding: -webkit-calc((100% - 100px) / 2);
+        padding: -moz-calc((100% - 100px) / 2);
+        padding: -ms-calc((100% - 100px) / 2);
+        padding: calc((100% - 100px) / 2);
+        background-clip: content-box;
+      }
+      .b11 {
+        width: 400px;
+        height: 400px;
+        border: 1px solid red;
+        position: relative;
+      }
+      .c11, .c11_2 {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .c11 {
+        background: blue;
+        font-size: 12px;
+      }
+      .c11_2 {
+        height: 400px;
+        font-size: 0;
+      }
     </style>
     <div class="p1">
       <div class="c1">
@@ -174,9 +208,19 @@
         8
       </span>
     </div>
-   <div class="b9">
+    <div class="b9">
       <div class="p9"></div>  
-    <div class="c9">9</div>  
-   </div>
+      <div class="c9">9</div>  
+    </div>
+    <div class="b10">
+      <div class="c10">
+        10
+      </div>
+    </div>
+    <div class="b11">
+      <div class="c11">11</div>
+      <div class="c11_2">11</div>
+    </div>
+    <a href="https://juejin.im/post/5b9a4477f265da0ad82bf921#heading-9">https://juejin.im/post/5b9a4477f265da0ad82bf921#heading-9</a>
   </body>
 </html>
