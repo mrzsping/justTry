@@ -54,6 +54,24 @@
     };
     console.log(sortedIndex([10, 20, 30, 40, 50], 35)) // 3
 
+    // 2.传入对象 获取索引
+    function cb(func, context) {
+      if (context === void 0) return func;
+      return function() {
+        return func.apply(context, arguments); // 传入上下文与参数
+      };
+    }
+    function sortedIndex(array, obj, iteratee, context) {
+      iteratee = cb(iteratee, context) // 传入对象 需要绑定上下文
+      var low = 0, high = array.length;
+      while (low < high) {
+        var mid = Math.floor((low + high) / 2);
+        if (iteratee(array[mid]) < iteratee(obj)) low = mid + 1;
+        else high = mid;
+      }
+      return high;
+    };
+
     console.log(index)
   </script>
 </body>
