@@ -7,8 +7,28 @@
   <title>Document</title>
 </head>
 <body>
+  <h1>forEach</h1>
+  <p>forEach 没有办法中止或者跳出 forEach 循环，除了抛出一个异常</p>
   <script>
-    
+    // 1.
+    function each(obj, callback) {
+      var length, i = 0;
+      if (isArrayLike(obj)) { // 是否是数组
+        length = obj.length;
+        for (; i < length; i++) {
+          if (callback.call(obj[i], i, obj[i]) === false) { // 每一项判定 性能会有减少
+            break;
+          }
+        }
+      } else {
+        for (i in obj) {
+          if (callback.call(obj[i], i, obj[i]) === false) {
+            break;
+          }
+        }
+      }
+      return obj;
+    }
   </script>
 </body>
 </html>
