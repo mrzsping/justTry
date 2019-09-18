@@ -7,8 +7,34 @@
   <title>Document</title>
 </head>
 <body>
+  <h1>函数组合</h1>
+  <p>多个函数嵌套调用</p>
   <script>
-    
+    // 1.compose 从右往左执行
+    function compose() {
+      var args = arguments;
+      var start = args.length - 1;
+      return function() {
+        var i = start;
+        var result = args[start].apply(this, arguments); // 执行最里面
+        while (i--) result = args[i].call(this, result);
+        return result;
+      };
+    };
+    // 2.使用 ramda.js 找出某个用户 未完成下的 title等内容 并按时间排序
+    var fetchData = function() {
+      return Promise.resolve(data)
+    };
+    var getIncompleteTaskSummaries = function(membername) {
+      return fetchData()
+        .then(R.prop('tasks'))
+        .then(R.filter(R.propEq('username', membername)))
+        .then(R.filter(R.propEq('complete', false)))
+        .then(R.map(R.pick(['id', 'dueDate', 'title', 'priority'])))
+        .then(R.sortBy(R.prop('dueDate')))
+        .then(console.log)
+    };
+    getIncompleteTaskSummaries('Scott')
   </script>
 </body>
 </html>
