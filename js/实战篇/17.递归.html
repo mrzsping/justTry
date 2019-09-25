@@ -7,8 +7,106 @@
   <title>Document</title>
 </head>
 <body>
+  <h1>递归</h1>
+  <p>边界条件</p>
+  <p>递归前进段</p>
+  <p>递归返回段</p>
+  <p>子问题须与原始问题为同样的事，且更为简单</p>
+  <p>不能无限制地调用本身，须有个出口，化简为非递归状况处理</p>
+  <p>优化：尾调用 接返回给函数</p>
   <script>
-    
+    // 1.应用场景
+
+    // 《JavaScript 专题之数组扁平化》：
+    function flatten(arr) {
+      return arr.reduce(function(prev, next){
+        return prev.concat(Array.isArray(next) ? flatten(next) : next)
+      }, [])
+    }
+
+    // 《JavaScript 专题之深浅拷贝》：
+    var deepCopy = function(obj) {
+      if (typeof obj !== 'object') return;
+      var newObj = obj instanceof Array ? [] : {};
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key];
+        }
+      }
+      return newObj;
+    }
+
+    // JavaScript 专题之从零实现 jQuery 的 extend：
+    function extend() {
+      // 循环遍历要复制的对象们
+      for (; i < length; i++) {
+        // 获取当前对象
+        options = arguments[i];
+        // 要求不能为空 避免extend(a,,b)这种情况
+        if (options != null) {
+          for (name in options) {
+            // 目标属性值
+            src = target[name];
+            // 要复制的对象的属性值
+            copy = options[name];
+            if (deep && copy && typeof copy == 'object') {
+              // 递归调用
+              target[name] = extend(deep, src, copy);
+            }
+            else if (copy !== undefined){
+              target[name] = copy;
+            }
+          }
+        }
+      }
+    };
+
+    // 《JavaScript 专题之如何判断两个对象相等》：
+    // 属于间接调用
+    function eq(a, b, aStack, bStack) {
+      // 更复杂的对象使用 deepEq 函数进行深度比较
+      return deepEq(a, b, aStack, bStack);
+    };
+    function deepEq(a, b, aStack, bStack) {
+      // 数组判断
+      if (areArrays) {
+        length = a.length;
+        if (length !== b.length) return false;
+        while (length--) {
+          if (!eq(a[length], b[length], aStack, bStack)) return false;
+        }
+      }
+      // 对象判断
+      else {
+        var keys = Object.keys(a),
+          key;
+        length = keys.length;
+        if (Object.keys(b).length !== length) return false;
+        while (length--) {
+          key = keys[length];
+          if (!(b.hasOwnProperty(key) && eq(a[key], b[key], aStack, bStack))) return false;
+        }
+      }
+    }
+
+    // 《JavaScript 专题之函数柯里化》：
+    function curry(fn, args) {
+      length = fn.length;
+      args = args || [];
+      return function() {
+        var _args = args.slice(0), arg, i;
+        for (i = 0; i < arguments.length; i++) {
+          arg = arguments[i];
+          _args.push(arg);
+        }
+        if (_args.length < length) {
+          return curry.call(this, fn, _args);
+        }
+        else {
+          return fn.apply(this, _args);
+        }
+      }
+    }
   </script>
 </body>
 </html>

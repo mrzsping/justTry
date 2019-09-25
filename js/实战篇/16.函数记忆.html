@@ -7,8 +7,28 @@
   <title>Document</title>
 </head>
 <body>
+  <h1>函数记忆</h1>
+  <p>将上次的计算结果缓存起来，遇到相同的参数，就直接返回缓存中的数据</p>
+  <p>牺牲算法的空间复杂度以换取更优的时间复杂度</p>
+  <p>大量重复的计算，或者大量计算又依赖于之前的结果</p>
   <script>
-    
+    var memoize = function(func, hasher) {
+      var memoize = function(key) {
+        var cache = memoize.cache;
+        var address = '' + (hasher ? hasher.apply(this, arguments) : key);
+        if (!cache[address]) {
+          cache[address] = func.apply(this, arguments);
+        }
+        return cache[address];
+      };
+      memoize.cache = {};
+      return memoize;
+    };
+    var memoizedAdd = memoize(add, function(){
+      var args = Array.prototype.slice.call(arguments)
+      return JSON.stringify(args)
+    })
+
   </script>
 </body>
 </html>
