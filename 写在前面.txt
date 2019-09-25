@@ -9,11 +9,15 @@
 
 2019/9/9 --- 2019/9/15
 1.js深入系列 已完成
-2.js专题 未完成
+2.js专题 已完成
 3.ts 已完成
 
 2019/9/16 --- 2019/9/22
-1.webpack学习
-2.element-ui 未开始
-3.归纳笔记 未开始
-4.vue-element-admin 未开始
+1.webpack 进行中
+2.归纳笔记 未开始
+3.vue-element-admin 未完成
+4.mockjs 进行中
+
+2019/9/23 --- 2019/9/29
+1.vue-element-admin 进行中
+2.vuex 未开始
