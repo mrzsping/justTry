@@ -13,11 +13,11 @@
 3.ts 已完成
 
 2019/9/16 --- 2019/9/22
-1.webpack 进行中
-2.归纳笔记 未开始
-3.vue-element-admin 未完成
-4.mockjs 进行中
+1.webpack
+2.vue-element-admin 未完成
+3.mockjs
 
 2019/9/23 --- 2019/9/29
 1.vue-element-admin 进行中
-2.vuex 未开始
+2.微信小程序 进行中
+3.总结笔记 未开始
