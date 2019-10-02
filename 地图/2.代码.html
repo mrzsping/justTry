@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=76ad14404598f83633533f41a4fee483&plugin=AMap.CitySearch"></script> -->
+    <script type="text/javascript" src="https://apis.map.qq.com/tools/geolocation/min?key=IRGBZ-LZ56F-WVEJK-NB2CJ-3TZKS-6FFR5&referer=scancodekey"></script>
+  </head>
+  <body>
+    <script>
+      //获取用户所在城市信息
+      // function showCityInfo() {
+      //   //实例化城市查询类
+      //   var citysearch = new AMap.CitySearch();
+      //   //自动获取用户IP，返回当前城市
+      //   citysearch.getLocalCity(function(status, result) {
+      //     if (status === 'complete' && result.info === 'OK') {
+      //       if (result && result.city && result.bounds) {
+      //         var cityinfo = result.city;
+      //         var citybounds = result.bounds;
+      //         document.getElementById('info').innerHTML = '您当前所在城市：'+cityinfo;
+      //         //地图显示当前城市
+      //         map.setBounds(citybounds);
+      //       }
+      //     } else {
+      //       document.getElementById('info').innerHTML = result.info;
+      //     }
+      //   });
+      // }
+      // showCityInfo();
+
+      // function getLocation(){
+      //   var options={
+      //     enableHighAccuracy:true,
+      //     maximumAge:1000
+      //   }
+      //   if(navigator.geolocation && navigator.geolocation.getCurrentPosition){
+      //     navigator.geolocation.getCurrentPosition(function(res){
+      //       alert(res)
+      //     })
+      //   }else{
+      //       alert("浏览器不支持!");
+      //     }
+      //   }
+      //   getLocation()
+
+      // //   var map = new AMap.Map('container', {
+      // //     resizeEnable: true
+      // // });
+
+      // AMap.plugin('AMap.Geolocation', function() {
+      //     var geolocation = new AMap.Geolocation({
+      //         enableHighAccuracy: true,//是否使用高精度定位，默认:true
+      //         timeout: 10000,          //超过10秒后停止定位，默认：5s
+      //         buttonPosition:'RB',    //定位按钮的停靠位置
+      //         buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+      //         zoomToAccuracy: true,   //定位成功后是否自动调整地图视野到定位点
+
+      //     });
+      //     // map.addControl(geolocation);
+      //     geolocation.getCurrentPosition(function(status,result){
+      //         if(status=='complete'){
+      //             onComplete(result)
+      //         }else{
+      //             onError(result)
+      //         }
+      //     });
+      // });
+      // //解析定位结果
+      // function onComplete(data) {
+      //     document.getElementById('info').innerHTML=data.position
+      // }
+      // //解析定位错误信息
+      // function onError(data) {
+      //     document.getElementById('info').innerHTML='定位失败'
+      //     document.getElementById('info').innerHTML = '失败原因排查信息:'+data.message;
+      // }
+
+      var geolocation = new qq.maps.Geolocation();
+      geolocation.getIpLocation(function(res){
+        document.getElementById('info').innerHTML = res
+      }, function(){
+      }, {timeout: 9000});
+    </script>
+  </body>
+</html>

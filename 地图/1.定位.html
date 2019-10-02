@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <p>1.http协议下无法精确定位</p>
+
+    <p>2.http不允许navigator.geolocation.getCurrentPosition</p>
+    
+    <p>3.线上通过高德IP定位可获取缺略定位</p>
+    
+    <p>4.高德Geolocation定位失败原因：
+        Get ipLocation failed：IP精确定位失败，精确IP定位服务目前无法完全覆盖所有用户IP，失败率在5%左右；
+        sdk定位失败：请检查sdk的key是否设置好，以及webview的定位权限及应用和系统的定位权限是否开启。
+        浏览器定位失败，有多种情况：  
+          Browser not Support html5 geolocation：浏览器不支持原生定位接口，如IE较低版本的浏览器等；   
+          Geolocation permission denied：用户禁用了定位权限，需要用户开启设备和浏览器的定位权限，并在浏览器弹窗中点击“允许使用定位”选项。   
+          Geolocation permission denied：浏览器禁止了非安全域的定位请求，比如Chrome、IOS10已陆续禁止，这时候需要升级站点到HTTPS。注意Chrome不会禁止localhost等域名HTTP协议下的定位；   
+          Get geolocation time out：浏览器定位超时，包括原生的超时，可以适当增加超时属性的设定值以减少这一现象，另外还有个别浏览器（如google Chrome浏览器等）本身的定位接口是黑洞，通过其请求定位完全没有回应，也会超时返回失败。
+          Get geolocation failed：定位失败，Chrome、火狐以及部分套壳浏览器接入的定位服务在国外，有较大限制，失败率高。</p>
+    
+    <p>5.百度定位不是太精确 腾讯可定位到市</p>
+    
+    <p>6.链接</p>
+    <a href="https://lbs.amap.com/api/javascript-api/guide/services/geolocation">高德</a>
+    <a href="http://lbsyun.baidu.com/index.php?title=jspopular3.0/guide/geolocation">百度</a>
+    <a href="https://lbs.qq.com/tool/component-geolocation.html">腾讯</a>
+
+    <p>7.wifi 4g情况下ios可用腾讯地图定位到市区，wifi下安卓可定位到市区，4g下安卓因机型不同，定位到市或者省</p>
+</body>
+</html>
