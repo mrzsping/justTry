@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)https://segmentfault.com/a/1190000011516068?utm_source=tag-newest -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="renderer" content="webkit"><meta property="qc:admins" content="15317273575564615446375"><meta property="og:image" content="https://cdn.segmentfault.com/v-5d8c9d24/global/img/touch-icon.png"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><meta name="alexaVerifyID" content="LkzCRJ7rPEUwt6fVey2vhxiw1vQ"><meta name="apple-itunes-app" content="app-id=958101793, app-argument="><title>全新Chrome Devtools Performance使用指南 -  - SegmentFault 思否</title><meta name="description" content="运行时性能表现（runtime performance）指的是当你的页面在浏览器运行时的性能表现，而不是在下载页面的时候的表现。这篇指南将会告诉你怎么用Chrome DevTools Performance功能去分析运行时性能表现。在RAIL性能评估模型下，你可以在这篇指南中可以学到怎么去用这个performance功能去分析Response, Animation, 以及 Idle..."><meta name="keywords" content="chrome-devtools,chrome,前端,javascript"><link rel="search" type="application/opensearchdescription+xml" href="https://segmentfault.com/opensearch.xml" title="SegmentFault"><link rel="shortcut icon" href="https://cdn.segmentfault.com/v-5d8c9d24/global/img/favicon.ico"><link rel="apple-touch-icon" href="https://cdn.segmentfault.com/v-5d8c9d24/global/img/touch-icon.png"><meta name="msapplication-TileColor" content="#009a61"><meta name="msapplication-square150x150logo" content="https://cdn.segmentfault.com/v-5d8c9d24/global/img/touch-icon.png"><meta name="baidu_union_verify" content="bcf7fd80dca60d53d46d5b46e1b990ca"><link rel="alternate" type="application/atom+xml" title="SegmentFault 最新问题" href="https://segmentfault.com/feeds/questions"><link rel="alternate" type="application/atom+xml" title="SegmentFault 最新文章" href="https://segmentfault.com/feeds/blogs"><link rel="stylesheet" href="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/global.css"><link rel="stylesheet" href="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/blog.css"><link rel="stylesheet" href="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/responsive.css"><script src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/hm.js.下载"></script><script async="" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/analytics.js.下载"></script><script src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/osd.js.下载"></script><script src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/f(4).txt" id="google_shimpl"></script><script type="text/javascript" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/spcjs.php"></script><script type="text/javascript" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/spc.php"></script><script type="text/javascript" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/fl.js.下载"></script>
+<script async="" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/f(5).txt"></script><script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-6330872677300335",
+            enable_page_level_ads: true
+        });
+    </script><script charset="utf-8" id="ParadigmSDK" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/ParadigmSDK_v2.js.下载" data="216" defsi="594"></script><link rel="preload" href="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/f(6).txt" as="script"><script type="text/javascript" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/f(6).txt"></script><link rel="preload" href="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/f(4).txt" as="script"><script>
+    ParadigmSDK.init("46e957bd9dea4acdaa15b4b64aff728f");
+    ParadigmSDK.trackDetailPageShow();
+</script></head><!-- 推荐引擎 --><body data-mod="blog" class="blog-post "><!--[if lt IE 9]><div class="alert alert-danger topframe" role="alert">你的浏览器实在<strong>太太太太太太旧了</strong>，放学别走，升级完浏览器再说 <a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div><![endif]--><img id="icon4weChat" style="height: 0;width: 0;" data-src="https://cdn.segmentfault.com/v-5d8c9d24/global/img/touch-icon-512.png"><div id="gridMapHoverBox" style="position:absolute; border: 1px solid #009a61; z-index:99; font-size: 10px; background:#fff"></div><div class="global-nav sf-header sf-header--index"><div class="bottom-nav visible-xs visible-sm"><div class="opts"><a class="opts-group " href="https://segmentfault.com/"><i class="fa fa-home" aria-hidden="true"></i><span>首页</span></a><a class="opts-group " href="https://segmentfault.com/questions"><i class="fa fa-comments" aria-hidden="true"></i><span>问答</span></a><a class="opts-group active" href="https://segmentfault.com/blogs"><i class="fa fa-pencil-square" aria-hidden="true"></i><span>专栏</span></a><a class="opts-group " href="https://segmentfault.com/lives"><i class="fa fa-play-circle" aria-hidden="true"></i><span>讲堂</span></a><div class="opts-group"><div class="btn-group dropup"><i class="fa fa-bars dropdown hoverDropdown" data-toggle="dropdown" aria-hidden="true"><span>更多</span></i><ul class="dropdown-menu"><li><a href="https://segmentfault.com/jobs">职位</a></li><li><a href="https://segmentfault.com/events">活动</a></li><li><a href="https://segmentfault.com/tags">标签</a></li><li><a href="https://segmentfault.com/badges">徽章</a></li></ul></div></div></div></div><nav class="container nav"><div class="visible-xs visible-sm header-response"><a href="https://segmentfault.com/search" style="display:block"><i class="fa fa-search" aria-hidden="true"></i></a><div class="sf-header__logo sf-header__logo--response"><h1><a href="https://segmentfault.com/" style="height:24px; background-size: auto 24px;"></a></h1></div><a href="https://segmentfault.com/user/login" class="pull-right login-btn"><i class="fa fa-user" aria-hidden="true"></i></a></div><script>
+mobileScroll(
+    function(direction) { 
+        try {
+            if (direction === 'down') {
+                document.querySelector('.bottom-nav').classList.add('hidden')
+            } else {
+                document.querySelector('.bottom-nav').classList.remove('hidden')
+            }
+        } catch(err) {}
+    }
+);    
+function mobileScroll( fn ) {
+    var beforeScrollTop = document.documentElement.scrollTop || document.body.scrollTop,
+        fn = fn || function() {};
+    window.addEventListener("scroll", function() {
+        var afterScrollTop = document.documentElement.scrollTop || document.body.scrollTop,
+            delta = afterScrollTop - beforeScrollTop;
+        if( delta === 0 ) return false;
+        fn( delta > 0 ? "down" : "up" );
+        beforeScrollTop = afterScrollTop;
+    }, false);
+}
+</script><div class="row hidden-xs hidden-sm"><div class="col-sm-8 col-md-9 col-lg-9"><div class="sf-header__logo"><h1><a href="https://segmentfault.com/">SegmentFault</a></h1></div><div><ul class="menu list-inline pull-left hidden-xs"><li class="menu__item"><a href="https://segmentfault.com/" class="">首页</a></li><li class="menu__item"><a href="https://segmentfault.com/questions" class="">问答</a></li><li class="menu__item"><a href="https://segmentfault.com/blogs" class="active-nav">专栏</a></li><li class="menu__item"><a class=" " href="https://segmentfault.com/lives">课程</a></li><li class="menu__item"><a href="https://segmentfault.com/events" class="">活动</a></li><li class="menu__item menu__item--more dropdown"><a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest##" class="dropdown-toggle dropdownBtn" data-toggle="dropdown">
+                                        发现<i class="fa fa-caret-down" style="font-size: 14px;margin-left: 5px;" aria-hidden="true"></i></a><div class="dropdown-block hidden"><ul class="dropdown-content-menu"><li><a href="https://segmentfault.com/groups">圈子</a></li><li><a href="https://segmentfault.com/tags">标签</a></li><li><a href="https://segmentfault.com/groups?tab=jobs">酷工作</a></li><li><a href="https://segmentfault.com/users">排行榜</a></li><li><a href="https://segmentfault.com/badges">徽章</a></li><li><a href="https://segmentfault.com/notes">笔记</a></li><li><a href="https://docs.segmentfault.com/" target="_blank">开发手册<i style="line-height: 20px;font-size: 12px;color: #F5A623;" class="ml10 fa fa-external-link-square"></i></a></li><li><a href="https://business.segmentfault.com/ads?utm_source=sf-header" target="_blank">广告投放<i style="line-height: 20px;font-size: 12px;color: #F5A623;" class="ml10 fa fa-external-link-square"></i></a></li></ul></div></li><li class="menu__item visible-sm-inline-block"><a href="https://segmentfault.com/search"><span class="glyphicon glyphicon-search" style="vertical-align: middle;"></span></a></li></ul><form action="https://segmentfault.com/search" class="header-search  hidden-sm hidden-xs pull-right"><button class="btn btn-link"><span class="sr-only">搜索</span><span class="glyphicon glyphicon-search"></span></button><input id="searchBox" name="q" type="text" placeholder="搜索问题或关键字" class="form-control" value=""></form></div></div><div class="col-sm-4 col-md-3 col-lg-3 text-right"><ul class="opts list-inline hidden-xs"><li class="opts__item"><a href="https://segmentfault.com/user/login" class="SFRegister btn-signin" style="margin-bottom:2px;">立即登录</a><a href="https://segmentfault.com/user/register" class="SFLogin ml10 btn-signup" onclick="_gaq.push([&#39;_trackEvent&#39;, &#39;Button&#39;, &#39;Click&#39;, &#39;Login&#39;]);">免费注册</a></li></ul></div></div></nav></div><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_0_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/saved_resource(3).html"></iframe></ins></ins></ins>
+    
+<input id="articleId" value="1190000011516068" class="hidden">
+
+<div class="wrap" data-blogid="">
+
+    <div class="text-center block hidden-xs">
+        <script type="text/javascript">
+            OA_show(2);
+        </script><div style="line-height: 0; background: #FAFAFA">
+<div class="container text-center" style="position: relative;">
+<a href="https://segmentfault.com/user/login" class="small text-muted" style="position: absolute; top: 10px; right: 15px;">登录免广告</a><script async="" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/f(5).txt"></script>
+<!-- 导航下横幅广告（大型） -->
+<ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6330872677300335" data-ad-slot="6450634185" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:970px;background-color:transparent;"><ins id="aswift_1_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:970px;background-color:transparent;"><iframe width="970" height="90" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0px;width:970px;height:90px;" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/saved_resource(4).html"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script><div id="beacon_8b64ffbea9" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/lg.php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div></div>
+</div>
+
+    </div>
+    
+    <div class="container mt15" style="position:relative">
+        <div class="row">
+            <div class="col-xs-12 col-md-9 main ">
+                                <ol class="breadcrumb mb15">
+                    <li><a href="https://segmentfault.com/blogs">专栏</a></li>
+                                        <li class="active">文章详情</li>
+                </ol>
+                                <div class="post-topheader custom- pt0">
+                    <div class="mb20">
+                        <div class="block-for-right-border">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                
+
+                                    <div class="post-topheader__info" data-username="再见尼克" data-userslug="nichoaslee119" data-useravatar="https://avatar-static.segmentfault.com/272/992/2729925714-59f6990123d26_big64">
+
+
+                                        <div class="article__author clearfix">
+                                            <div class="article__authorleft">
+                                                <a href="https://segmentfault.com/u/nichoaslee119">
+                                                    <img class="avatar-40" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/2729925714-59f6990123d26_big64" alt="再见尼克">
+                                                </a>
+                                            </div>
+                                            <div class="article__authorright">
+                                                <div class="article__authormeta">
+                                                <a href="https://segmentfault.com/u/nichoaslee119" class="mr5"><strong>再见尼克</strong></a>
+                                        
+                                                
+                                                                                                <img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/rp.svg" class="mr5"><span style="color:#BF7158" class="mr10">683</span>
+
+                                                
+                                                
+                                                <span class="hidden-xs">
+                                                                                                                                                            <button type="button" class="btn btn-xs btn-success follow-user" data-do="follow" data-type="user" data-id="1030000005596721">关注作者
+                                                        </button>
+                                                                                                                                                    </span>
+                                                </div>
+                                                
+                                                <span style="display: block">
+                                                    2017-10-11 发布
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <h1 class="h1 post-topheader__info--title" id="articleTitle" data-id="1190000011516068">
+                                            <a href="https://segmentfault.com/a/1190000011516068"> 全新Chrome Devtools Performance使用指南</a>
+                                        </h1>
+
+                                        <div class="content__tech hidden-xs">
+                                            <a href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/" class="blog-type-common blog-type-3-before" target="_blank" data-content="
+                                                                                        翻译自 developers.google.com/web/tools/chrome-devtools/evaluate-performance/
+                                                                                        "></a>
+                                            
+                                            <ul class="taglist--inline inline-block article__title--tag mr10">
+                                                                                                    <li class="tagPopup mb5">
+                                                        <a class="tag" href="https://segmentfault.com/t/chrome-devtools/blogs" data-toggle="popover" data-img="" data-placement="top" data-original-title="chrome-devtools" data-id="1040000003984684">
+                                                                                                                      chrome-devtools
+                                                        </a>
+                                                    </li>
+                                                                                                    <li class="tagPopup mb5">
+                                                        <a class="tag" href="https://segmentfault.com/t/chrome/blogs" data-toggle="popover" data-img="https://avatar-static.segmentfault.com/125/677/1256770003-1040000000089407_big64" data-placement="top" data-original-title="chrome" data-id="1040000000089407">
+                                                                                                                    <img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/2812096638-54cb55083b2cc_small">
+                                                                                                                      chrome
+                                                        </a>
+                                                    </li>
+                                                                                                    <li class="tagPopup mb5">
+                                                        <a class="tag" href="https://segmentfault.com/t/%E5%89%8D%E7%AB%AF/blogs" data-toggle="popover" data-img="https://avatar-static.segmentfault.com/330/484/3304844401-1040000000089899_big64" data-placement="top" data-original-title="前端" data-id="1040000000089899">
+                                                                                                                      前端
+                                                        </a>
+                                                    </li>
+                                                                                                    <li class="tagPopup mb5">
+                                                        <a class="tag" href="https://segmentfault.com/t/javascript/blogs" data-toggle="popover" data-img="https://avatar-static.segmentfault.com/195/823/1958237468-1040000000089436_big64" data-placement="top" data-original-title="javascript" data-id="1040000000089436">
+                                                                                                                      javascript
+                                                        </a>
+                                                    </li>
+                                                                                            </ul>
+
+                                            <span>
+                                                29.3k 次阅读
+                                                &nbsp;·&nbsp;
+                                                读完需要 13 分钟
+                                                                                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end .post-topheader -->
+
+                <div class="visible-lg">
+                    <div class="side-widget">
+                        <div class="stream__item-zan btn btn-default mt0 mb15 ml0 mr0 pt0 pb0 pl0 pr0 " id="side-widget-votes-btn">
+                            <span class="stream__item-zan-icon"></span>
+                            <span class="stream__item-zan-number" id="side-widget-votes-num">118</span>
+                        </div>
+
+                        <i class="fa fa-bookmark item " id="side-widget-bookmarks-btn"></i>
+                        <i class="fa fa-weibo item"></i>
+                        <i class="fa fa-weixin item" data-toggle="popover" data-placement="right" data-original-title="" title=""></i>
+                        <i class="fa fa-twitter item"></i>
+                        <i class="fa fa-facebook item"></i>
+                        <i class="fa fa-arrow-up item hidden"></i>
+                    </div>
+                </div>
+
+                
+                <div class="article fmt article__content" data-id="1190000011516068" data-license="">
+                    
+<p>运行时性能表现（runtime performance）指的是当你的页面在浏览器运行时的性能表现，而不是在下载页面的时候的表现。这篇指南将会告诉你怎么用Chrome DevTools Performance功能去分析运行时性能表现。在RAIL性能评估模型下，你可以在这篇指南中可以学到怎么去用这个performance功能去分析Response, Animation, 以及 Idle 这三个性能指标。</p>
+<h1 id="articleHeader0">让我们开始吧</h1>
+<p>在这篇指南中，我们会用Performance工具去分析一个现有的在线DEMO，然后教会你怎么去分析，从而找到性能瓶颈。</p>
+<ol>
+<li>打开Chrome的匿名模式。匿名模式可以保证Chrome在一个相对干净的环境下运行。比如说，你安装了许多chrome插件，这些插件可能会影响我们分析性能表现。</li>
+<li>在匿名模式下打开右边这个链接，<a href="https://googlechrome.github.io/devtools-samples/jank/" rel="nofollow noreferrer" target="_blank">DEMO</a>，这个网页就是我们要用来分析的DEMO。这个页面里都是很多上下移动的蓝色小方块。</li>
+<li>按下Command+Opiton+I（Mac）或者Control+shift+I (Windows, Linux) 来打开Devtools</li>
+</ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWtZF?w=2316&amp;h=1626" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWtZF" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<h2 id="articleHeader1">模拟移动设备的CPU</h2>
+<p>移动设备的CPU一般比台式机和笔记本弱很多。当你想分析页面的时候，可以用CPU控制器（CPU Throttling）来模拟移动端设备CPU。</p>
+<ol>
+<li>在DevTools中，点击 Performance 的 tab。</li>
+<li>确保 Screenshots checkbox 被选中</li>
+<li>点击 Capture Settings（⚙️）按钮，DevTools会展示很多设置，来模拟各种状况</li>
+<li>对于模拟CPU，选择2x slowdown，于是Devtools就开始模拟两倍低速CPU</li>
+</ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWtZL?w=5166&amp;h=3409" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWtZL" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<h2 id="articleHeader2">设置DEMO</h2>
+<p>为了使得这个DEMO有相对统一的运行表现（不同的读者，机器的性能千差万别）。这个DEMO提供了自定义功能，用来确保这个DEMO的统一表现。</p>
+<ol>
+<li>一直点击 Add 10 这个按钮直到你能很明显看到蓝色小方块移动变慢，在性能比较好的机器上，大概要点击20次左右。</li>
+<li>点击 Optimize按钮，你会发现蓝色小方块会变的很快而且动画变得平滑。</li>
+<li>点击 un-optimize 按钮，蓝色小方块又会变成之前的模样。</li>
+</ol>
+<h2 id="articleHeader3">记录运行时性能表现</h2>
+<p>在之前的DEMO中，当你运行优化模式的时候，蓝色小方块移动地非常快。为什么呢？明明两个模式都是移动了同样数量的小方块而且移动的时间也一样。那么现在我们在Performance界面下录制下发生的一切，并且学习如何分析这个记录，从而找到非优化模式下的性能瓶颈。</p>
+<ol><li>在DevTools中，点击 Record 。这时候Devtools就开始录制各种性能指标</li></ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWtZX?w=1238&amp;h=816" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWtZX" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<ol>
+<li>等待几分钟</li>
+<li>点击Stop按钮，Devtools停止录制，处理数据，然后显示性能报告</li>
+</ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWtZ1?w=1238&amp;h=1376" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWtZ1" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>wow，看起来有非常多的数据，别害怕，我们一个一个来介绍</p>
+<h1 id="articleHeader4">分析报告</h1>
+<p>一旦你得到了页面的性能表现报告，那么就可以用它来分析页面的性能，从而找到性能瓶颈。</p>
+<h2 id="articleHeader5">分析每一秒的帧</h2>
+<p>FPS（frames per second）是用来分析动画的一个主要性能指标。能保持在60的FPS的话，那么用户体验就是不错的。</p>
+<ol><li>观察FPS图表，如果你发现了一个红色的长条，那么就说明这些帧存在严重问题，有可能导致非常差的用户体验。一般来说，绿色的长条越高，说明FPS越高，用户体验越好。</li></ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWtZ2?w=5166&amp;h=3425" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWtZ2" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<ol><li>就在FPS图表下方，你会看到CPU图表。在CPU图表中的各种颜色与Summary面板里的颜色是相互对应的，Summary面板就在Performance面板的下方。CPU图表中的各种颜色代表着在这个时间段内，CPU在各种处理上所花费的时间。如果你看到了某个处理占用了大量的时间，那么这可能就是一个可以找到性能瓶颈的线索。</li></ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWtZ5?w=5166&amp;h=5741" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWtZ5" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<ol><li>把鼠标移动到FPS，CPU或者NET图表之上，DevToos就会展示这个时间点界面的截图。左右移动鼠标，可以重发当时的屏幕录像。这被称为scrubbing, 他可以用来分析动画的各个细节。</li></ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWtZ6?w=1297&amp;h=856" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWtZ6" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<ol><li>在Frames图表中，把鼠标移动到绿色条状图上，Devtools会展示这个帧的FPS。每个帧可能都在60以下，都没有达到60的标准。</li></ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWt0c?w=1328&amp;h=900" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWt0c" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>当然这个对于DEMO，可以相当容易观察到性能的问题。但是在现实使用场景下，就不是那么容易观察到了。所以要把常常使用这些工具来分析页面。</p>
+<p>小功能：显示实时FPS面板</p>
+<p>另外一个好用的小工具就是实时FPS面板，它可以实时展示页面的FPS指标</p>
+<ol>
+<li>按下 Command+Shift+P（Mac）或者 Control+Shift+P(Windows, Linux) 打开命令菜单</li>
+<li>输入Rendering，点选Show Rendering</li>
+<li>在Rendering面板里，激活FPS Meter。FPS实时面板就出现在页面的右上方。</li>
+</ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWt0h?w=1114&amp;h=826" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWt0h" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<ol><li>关闭FPS Meter只要按下Escape就可以了。这篇指南里暂时用不上这个功能。</li></ol>
+<h2 id="articleHeader6">定位瓶颈</h2>
+<p>现在已经确定到这个页面的动画性能表现不太好，那么下一步就是找到为什么</p>
+<ol><li>注意Summary面板，你会发现CPU花费了大量的时间在rendering上。因为提高性能就是一门做减法的艺术，你的目标就是减少rendering的时间</li></ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWt0k?w=5166&amp;h=4625" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWt0k" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<ol><li>展开Main图表，Devtools展示了主线程运行状况。X轴代表着时间。每个长条代表着一个event。长条越长就代表这个event花费的时间越长。Y轴代表了调用栈（call stack）。在栈里，上面的event调用了下面的event。</li></ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWt0l?w=5367&amp;h=4442" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWt0l" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<ol><li>在性能报告中，有很多的数据。可以通过双击，拖动等等动作来放大缩小报告范围，从各种时间段来观察分析报告。</li></ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWt0m?w=1238&amp;h=962" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWt0m" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<ol>
+<li>在事件长条的右上角出，如果出现了红色小三角，说明这个事件是存在问题的，需要特别注意。</li>
+<li>双击这个带有红色小三角的的事件。在Summary面板会看到详细信息。注意reveal这个链接，双击它会让高亮触发这个事件的event。如果点击了app.js:94这个链接，就会跳转到对应的代码处。</li>
+</ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWt0t?w=1238&amp;h=1270" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWt0t" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<ol>
+<li>在app.update这个事件的长条下方，有很多被触发的紫色长条。如果放大这些事件长条，你会看到它们每个都带有红色小三角。点击其中一个紫色事件长条，Devtools在Summary面板里展示了更多关于这个事件的信息。确实，这里有很多reflow的警告。</li>
+<li>在summary面板里点击app.js:70链接，Devtools会跳转到需要优化的代码处</li>
+</ol>
+<p><span class="img-wrap"><img referrerpolicy="no-referrer" data-src="/img/bVWt0w?w=1238&amp;h=794" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/bVWt0w" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>OK！Devtools里面还有很多很多指标需要你去探索，但是，对于怎么用Devtools去分析网页的运行时性能表现，你现在已经有了一个基本的概念。</p>
+<p><strong>PS：笔者最近开源一款由IBM主导开发设计的叫做Carvue.js的组件库，欢迎有兴趣的朋友一起开发。</strong><a href="https://github.com/nicholaslee119/carbon-components-vue" rel="nofollow noreferrer" target="_blank">Carvue.js</a></p>
+<p><a href="https://nicholaslee119.github.io/2017/10/04/Chrome-Devtool-Performance%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" rel="nofollow noreferrer" target="_blank">译者博客</a><br><a href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/" rel="nofollow noreferrer" target="_blank">原文链接</a></p>
+
+                </div>
+                                                
+                <div class="clearfix mt10">
+                    <ul class="article-operation list-inline pull-left mt15"><li><a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img class="mb5" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/creativecommons-cc.svg" height="20"></a></li><li class="hidden-xs"><a href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/" target="_blank">阅读原文</a></li><li class="dropdown js__content-ops hidden-xs" data-module="article" data-id="1190000011516068" data-typetext="文章"><a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a><ul class="dropdown-menu dropdown-menu-left"><li><a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" data-toggle="modal" data-target="#911" data-action="report">举报</a></li></ul></li></ul>
+                    <div class="pull-right mt-10 hidden-xs">
+                        <div class="widget-share__full" data-text="全新Chrome Devtools Performance使用指南" data-url="https://segmentfault.com/a/1190000011516068" data-shorturl="http://sfau.lt/b5Wt1c"><div class="widget-share-network sharer-0" style="display: block;"><ul class="sn-inline"><li data-network="weibo"><a href="javascript:void(0);" class="entypo-weibo icon-sn-weibo share-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至新浪微博">新浪微博</a></li><li data-network="wechart"><a href="javascript:void(0);" class="entypo-wechart icon-sn-weixin share-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至微信">微信</a></li><li data-network="twitter"><a href="javascript:void(0);" class="entypo-twitter icon-sn-twitter share-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Twitter">Twitter</a></li><li data-network="facebook"><a href="javascript:void(0);" class="entypo-facebook icon-sn-facebook share-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Facebook">Facebook</a></li></ul></div><a type="button" class="btn btn-sm shareMore btn-sn-more" data-toggle="popover" data-placement="top" data-url="https://segmentfault.com/a/1190000011516068" data-shorturl="http://sfau.lt/b5Wt1c"><span class="icon-sn-dotted" data-original-title="" title=""></span><strong class="visible-xs-inline">•••</strong></a></div>
+
+
+                    </div>
+                </div>
+                <div class="mt10 text-center mb30"><button type="button" id="mainLike" data-id="1190000011516068" class="btn btn-success btn-lg mr15 "><span id="mainLikeText">赞</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;
+                                <span id="mainLikeNum">118 </span></button><button type="button" id="mainBookmark" data-type="article" data-id="1190000011516068" class="btn btn-default btn-lg "><span id="mainBookmarkText">收藏</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;<span id="mainBookmarkNum">130</span></button></div>                
+                <script type="text/javascript">
+                    OA_show(3);
+                </script><div style="text-align: center; line-height: 0; background: #FAFAFA"><script async="" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/f(5).txt"></script>
+<!-- 中部横幅广告位 -->
+<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-6330872677300335" data-ad-slot="5598290435" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent;"><iframe width="728" height="90" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0px;width:728px;height:90px;" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/saved_resource(5).html"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script><div id="beacon_ed8e47602a" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/lg(1).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div></div>
+
+
+                <h4 class="pt20 mb15 mt0 border-top">你可能感兴趣的</h4>
+
+                                <div id="paradigm-article-related"><div class="recommend-post mb30"><ul class="widget-links"><li><a href="http://segmentfault.com/a/1190000004541353" title="前端碎语（6）" target="_blank">前端碎语（6）</a><span class="text-muted">Levon</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%89%8D%E7%AB%AF">前端</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000012243560" title="网页性能分析不完全指南" target="_blank">网页性能分析不完全指南</a><span class="text-muted">mengera88</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E4%BC%98%E5%8C%96">优化</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E6%B5%8B%E8%AF%95">测试</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E6%80%A7%E8%83%BD">性能</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%89%8D%E7%AB%AF">前端</a></li><li><a href="http://segmentfault.com/a/1190000008608538" title="Chrome DevTools â€” Timeline" target="_blank">Chrome DevTools â€” Timeline</a><span class="text-muted">无名小贝勒</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/chrome-devtools">chrome-devtools</a></li><li><a href="http://segmentfault.com/a/1190000011827677" title="前端工作流中，如何更好的与上下游沟通" target="_blank">前端工作流中，如何更好的与上下游沟通</a><span class="text-muted">前端老李</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%89%8D%E7%AB%AF">前端</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E6%B2%9F%E9%80%9A">沟通</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E8%AE%BE%E8%AE%A1">设计</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86">产品经理</a></li><li><a href="http://segmentfault.com/a/1190000002784785" title="【翻译】Chrome 43 部分更新：现在 DOM 的属性将会在原型链上" target="_blank">【翻译】Chrome 43 部分更新：现在 DOM 的属性将会在原型链上</a><span class="text-muted">XGHeaven</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/dom">dom</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/chrome">chrome</a></li><li><a href="http://segmentfault.com/a/1190000009092441" title="体验jaivascript之美第二课 全局对象、外部环境、声明提升" target="_blank">体验jaivascript之美第二课 全局对象、外部环境、声明提升</a><span class="text-muted">会点前端的大彬哥</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/es6">es6</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/es5">es5</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%89%8D%E7%AB%AF">前端</a></li><li><a href="http://segmentfault.com/a/1190000005015030" title="简单聊聊网页的资源加载优化" target="_blank">简单聊聊网页的资源加载优化</a><span class="text-muted">MuffinDots</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96">前端优化</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%89%8D%E7%AB%AF">前端</a></li><li><a href="http://segmentfault.com/a/1190000004053696" title="「译」高效的 “box-shadow” 动画" target="_blank">「译」高效的 “box-shadow” 动画</a><span class="text-muted">MockingBird</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%89%8D%E7%AB%AF">前端</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css3%E5%8A%A8%E7%94%BB">css3动画</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css3">css3</a></li></ul></div></div>
+
+                
+        <div class="comments--news comments--default comments--article 
+    " data-id="1190000011516068" data-user-id="" data-author-id="1030000005596721 " data-is-admin="null" id="goToReplyArea">
+                    <div class="mb10 clearfix">
+                <strong class="comments-stat pull-left mr10">12 条评论</strong>
+
+                                                    <div class="btn-group btn-group-xs pull-right comments-sort btn-group-menu" role="menu">
+                        <a href="javascript:;" class="btn btn-default active" data-sort="default">默认排序</a>
+                        <a href="javascript:;" class="btn btn-default" data-sort="desc">时间排序</a>
+                    </div>
+                            </div>
+                <div class="comments-container">
+                                <div class="comments-list">
+                <div class="comments-item" data-id="1050000011521694">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/clrr" target="_blank"><img class="avatar-32 " src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/3066257950-58eee5bbded1b_big64" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    <div class="pull-right comment-option">
+                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-action="report" data-action-text="举报" data-module="comment" data-id="1050000011521694" data-typetext="评论" data-placement="top" title="举报"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span></a>
+                                            </div>
+                    <strong><a target="_blank" href="https://segmentfault.com/u/clrr">Jenny</a></strong>
+                    <span class="comments-isAuthor hide"></span>
+                    <span class="comments-date">  ·  2017年10月12日</span>
+                </div>
+
+                <div class="fmt mb10"><p>Hi，博主，如果是翻译的文章建议把文章标签打成“翻译”~</p></div>
+
+                <form action="https://segmentfault.com/api/comment/1050000011521694/edit">
+                    <div class="form-group">
+                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">Hi，博主，如果是翻译的文章建议把文章标签打成“翻译”~</textarea>
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    <span class="pull-right editBtns hidden">
+                      <button class="btn btn-link btn-xs cancel" type="button">取消</button>
+                      <button class="btn btn-primary btn-xs edit ml10" type="button">保存</button>
+                    </span>
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011523396">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    <span class="comments-zan-value comment-showhide
+                                         islike0-10
+                                        ">
+                                        0
+                                    </span>
+                                    <i class="fa fa-thumbs-up comment-showhide ml5" aria-hidden="true"></i>
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>谢谢提醒，已修正</p></div>
+                                <form action="https://segmentfault.com/api/comment/1050000011523396/edit">
+                                    <div class="form-group">
+                                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">谢谢提醒，已修正</textarea>
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    <span class="pull-right commentTools ml15">
+                                                                                                                                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-module="comment" data-id="1050000011523396" data-action="report" data-typetext="评论" data-placement="top" title="举报">
+                                            <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                        </a>
+                                    </span>
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/nichoaslee119">
+                                            <strong>再见尼克</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年10月12日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000012109369">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/thosenone" target="_blank"><img class="avatar-32 " src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/3209302909-59bb509249ee3_big64" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    <div class="pull-right comment-option">
+                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-action="report" data-action-text="举报" data-module="comment" data-id="1050000012109369" data-typetext="评论" data-placement="top" title="举报"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span></a>
+                                            </div>
+                    <strong><a target="_blank" href="https://segmentfault.com/u/thosenone">thechosenone</a></strong>
+                    <span class="comments-isAuthor hide"></span>
+                    <span class="comments-date">  ·  2017年11月22日</span>
+                </div>
+
+                <div class="fmt mb10"><p>感谢博主翻译，想问一下google提供这个接口吗？我想获取这些时间的数据，或者博主知道怎么获得首屏时间，加载时间这些数据的方法吗？（不是指在网页源码嵌入js代码，而是指监控的形式）</p></div>
+
+                <form action="https://segmentfault.com/api/comment/1050000012109369/edit">
+                    <div class="form-group">
+                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">感谢博主翻译，想问一下google提供这个接口吗？我想获取这些时间的数据，或者博主知道怎么获得首屏时间，加载时间这些数据的方法吗？（不是指在网页源码嵌入js代码，而是指监控的形式）</textarea>
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    <span class="pull-right editBtns hidden">
+                      <button class="btn btn-link btn-xs cancel" type="button">取消</button>
+                      <button class="btn btn-primary btn-xs edit ml10" type="button">保存</button>
+                    </span>
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000012267984">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    <span class="comments-zan-value comment-showhide
+                                         islike0-10
+                                        ">
+                                        0
+                                    </span>
+                                    <i class="fa fa-thumbs-up comment-showhide ml5" aria-hidden="true"></i>
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>这位朋友应该需要的是 navigation timing API ？<br><a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigation_timing_API" rel="nofollow noreferrer">https://developer.mozilla.org...</a><br>这些 API 可以用来监控各种浏览器的 performance timing</p></div>
+                                <form action="https://segmentfault.com/api/comment/1050000012267984/edit">
+                                    <div class="form-group">
+                                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">这位朋友应该需要的是 navigation timing API ？
+https://developer.mozilla.org/en-US/docs/Web/API/Navigation_timing_API
+这些 API 可以用来监控各种浏览器的 performance timing</textarea>
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    <span class="pull-right commentTools ml15">
+                                                                                                                                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-module="comment" data-id="1050000012267984" data-action="report" data-typetext="评论" data-placement="top" title="举报">
+                                            <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                        </a>
+                                    </span>
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/nichoaslee119">
+                                            <strong>再见尼克</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年12月04日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000012270690">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    <span class="comments-zan-value comment-showhide
+                                         islike0-10
+                                        ">
+                                        0
+                                    </span>
+                                    <i class="fa fa-thumbs-up comment-showhide ml5" aria-hidden="true"></i>
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p><a href="https://segmentfault.com/u/nichoaslee119">@再见尼克</a> 感谢你的回复，已经根据这个api实现了，确实是这个api</p></div>
+                                <form action="https://segmentfault.com/api/comment/1050000012270690/edit">
+                                    <div class="form-group">
+                                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">@再见尼克[nichoaslee119] 感谢你的回复，已经根据这个api实现了，确实是这个api</textarea>
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    <span class="pull-right commentTools ml15">
+                                                                                                                                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-module="comment" data-id="1050000012270690" data-action="report" data-typetext="评论" data-placement="top" title="举报">
+                                            <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                        </a>
+                                    </span>
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/thosenone">
+                                            <strong>thechosenone</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor hide">
+                                            
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年12月04日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000013377042">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/iwsr" target="_blank"><img class="avatar-32 " src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/2907008102-5796b97f5be8e_big64" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    <div class="pull-right comment-option">
+                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-action="report" data-action-text="举报" data-module="comment" data-id="1050000013377042" data-typetext="评论" data-placement="top" title="举报"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span></a>
+                                            </div>
+                    <strong><a target="_blank" href="https://segmentfault.com/u/iwsr">iwsr</a></strong>
+                    <span class="comments-isAuthor hide"></span>
+                    <span class="comments-date">  ·  2018年02月26日</span>
+                </div>
+
+                <div class="fmt mb10"><p>牛逼牛逼 眼前一亮 感谢译者帮我打开新世界 过会立刻去chrome开发者那边找原文看看</p></div>
+
+                <form action="https://segmentfault.com/api/comment/1050000013377042/edit">
+                    <div class="form-group">
+                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">牛逼牛逼 眼前一亮 感谢译者帮我打开新世界 过会立刻去chrome开发者那边找原文看看</textarea>
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    <span class="pull-right editBtns hidden">
+                      <button class="btn btn-link btn-xs cancel" type="button">取消</button>
+                      <button class="btn btn-primary btn-xs edit ml10" type="button">保存</button>
+                    </span>
+                </p>
+
+                <div class="reply-list reply-list--empty">
+
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000015251350">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/albertyu8467" target="_blank"><img class="avatar-32 " src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/user-64.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    <div class="pull-right comment-option">
+                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-action="report" data-action-text="举报" data-module="comment" data-id="1050000015251350" data-typetext="评论" data-placement="top" title="举报"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span></a>
+                                            </div>
+                    <strong><a target="_blank" href="https://segmentfault.com/u/albertyu8467">AlbertYu8467</a></strong>
+                    <span class="comments-isAuthor hide"></span>
+                    <span class="comments-date">  ·  2018年06月11日</span>
+                </div>
+
+                <div class="fmt mb10"><p>感谢博主，又学到新知识了</p></div>
+
+                <form action="https://segmentfault.com/api/comment/1050000015251350/edit">
+                    <div class="form-group">
+                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">感谢博主，又学到新知识了</textarea>
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    <span class="pull-right editBtns hidden">
+                      <button class="btn btn-link btn-xs cancel" type="button">取消</button>
+                      <button class="btn btn-primary btn-xs edit ml10" type="button">保存</button>
+                    </span>
+                </p>
+
+                <div class="reply-list reply-list--empty">
+
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000015696933">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/birenbucai" target="_blank"><img class="avatar-32 " src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/user-64.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    <div class="pull-right comment-option">
+                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-action="report" data-action-text="举报" data-module="comment" data-id="1050000015696933" data-typetext="评论" data-placement="top" title="举报"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span></a>
+                                            </div>
+                    <strong><a target="_blank" href="https://segmentfault.com/u/birenbucai">小生不才_</a></strong>
+                    <span class="comments-isAuthor hide"></span>
+                    <span class="comments-date">  ·  2018年07月19日</span>
+                </div>
+
+                <div class="fmt mb10"><p>牛逼大佬。让我对chrom刮目相看！！！牛逼牛逼牛逼，博主也是牛逼。</p></div>
+
+                <form action="https://segmentfault.com/api/comment/1050000015696933/edit">
+                    <div class="form-group">
+                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">牛逼大佬。让我对chrom刮目相看！！！牛逼牛逼牛逼，博主也是牛逼。</textarea>
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    <span class="pull-right editBtns hidden">
+                      <button class="btn btn-link btn-xs cancel" type="button">取消</button>
+                      <button class="btn btn-primary btn-xs edit ml10" type="button">保存</button>
+                    </span>
+                </p>
+
+                <div class="reply-list reply-list--empty">
+
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000017306596">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/nannongrousong" target="_blank"><img class="avatar-32 " src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/user-64.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    <div class="pull-right comment-option">
+                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-action="report" data-action-text="举报" data-module="comment" data-id="1050000017306596" data-typetext="评论" data-placement="top" title="举报"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span></a>
+                                            </div>
+                    <strong><a target="_blank" href="https://segmentfault.com/u/nannongrousong">南农肉松</a></strong>
+                    <span class="comments-isAuthor hide"></span>
+                    <span class="comments-date">  ·  2018年12月08日</span>
+                </div>
+
+                <div class="fmt mb10"><p>大佬 请问一下最后一张图片  左侧那个耗时时间这个怎么显示的？    我这边跳转进去只看到了  代码，没看到时间..</p></div>
+
+                <form action="https://segmentfault.com/api/comment/1050000017306596/edit">
+                    <div class="form-group">
+                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">大佬 请问一下最后一张图片  左侧那个耗时时间这个怎么显示的？    我这边跳转进去只看到了  代码，没看到时间..</textarea>
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    <span class="pull-right editBtns hidden">
+                      <button class="btn btn-link btn-xs cancel" type="button">取消</button>
+                      <button class="btn btn-primary btn-xs edit ml10" type="button">保存</button>
+                    </span>
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000018507581">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    <span class="comments-zan-value comment-showhide
+                                         islike0-10
+                                        ">
+                                        0
+                                    </span>
+                                    <i class="fa fa-thumbs-up comment-showhide ml5" aria-hidden="true"></i>
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>我也遇到了同样的问题，你是怎么解决的？</p></div>
+                                <form action="https://segmentfault.com/api/comment/1050000018507581/edit">
+                                    <div class="form-group">
+                                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">我也遇到了同样的问题，你是怎么解决的？</textarea>
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    <span class="pull-right commentTools ml15">
+                                                                                                                                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-module="comment" data-id="1050000018507581" data-action="report" data-typetext="评论" data-placement="top" title="举报">
+                                            <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                        </a>
+                                    </span>
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/qingfeng_5902d27f7c63e">
+                                            <strong>清风</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor hide">
+                                            
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  3月14日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000019401919">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    <span class="comments-zan-value comment-showhide
+                                         islike0-10
+                                        ">
+                                        0
+                                    </span>
+                                    <i class="fa fa-thumbs-up comment-showhide ml5" aria-hidden="true"></i>
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p><a href="https://segmentfault.com/u/qingfeng_5902d27f7c63e">@清风</a> 跑一下performance后，再看resource就有了</p></div>
+                                <form action="https://segmentfault.com/api/comment/1050000019401919/edit">
+                                    <div class="form-group">
+                                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">@清风[qingfeng_5902d27f7c63e] 跑一下performance后，再看resource就有了</textarea>
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    <span class="pull-right commentTools ml15">
+                                                                                                                                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-module="comment" data-id="1050000019401919" data-action="report" data-typetext="评论" data-placement="top" title="举报">
+                                            <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                        </a>
+                                    </span>
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/geminy">
+                                            <strong>Geminy</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor hide">
+                                            
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  6月5日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000018664741">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/wen006" target="_blank"><img class="avatar-32 " src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/user-64.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    <div class="pull-right comment-option">
+                                                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#911" class="ml10" data-toggle="modal" data-target="#911" data-action="report" data-action-text="举报" data-module="comment" data-id="1050000018664741" data-typetext="评论" data-placement="top" title="举报"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span></a>
+                                            </div>
+                    <strong><a target="_blank" href="https://segmentfault.com/u/wen006">Wen006</a></strong>
+                    <span class="comments-isAuthor hide"></span>
+                    <span class="comments-date">  ·  3月26日</span>
+                </div>
+
+                <div class="fmt mb10"><p>在搞react框架，看到这个我可以安静的找瓶颈了。谢谢</p></div>
+
+                <form action="https://segmentfault.com/api/comment/1050000018664741/edit">
+                    <div class="form-group">
+                        <textarea class="editTextarea mono form-control mb10 hidden" rows="1" name="text" style="height: 28px; overflow: hidden; word-wrap: break-word;">在搞react框架，看到这个我可以安静的找瓶颈了。谢谢</textarea>
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    <span class="pull-right editBtns hidden">
+                      <button class="btn btn-link btn-xs cancel" type="button">取消</button>
+                      <button class="btn btn-primary btn-xs edit ml10" type="button">保存</button>
+                    </span>
+                </p>
+
+                <div class="reply-list reply-list--empty">
+
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+            </div>
+    <div class="comments-loading hide">载入中...</div>
+        <div class="comments-more hide"><a href="javascript:;">显示更多评论</a></div>
+    
+
+                                    <div class="comments-box" id="goToReplyEditor">
+                <div class="pull-left">
+                    <img class="avatar-32 " src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/user-128.png" alt="">
+                </div>
+                <div class="comments-box-content">
+                    <form action="https://segmentfault.com/api/article/1190000011516068/comments/add">
+                        <div class="form-group mb0">
+                            <textarea name="text" rows="3" class="form-control" placeholder="文明社会，理性评论"></textarea>
+                            <div class="mt15 text-right">
+                                <button type="button" class="hide"></button>
+                                <button class=" btn btn-primary" type="button">发布评论</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                                                        </div>
+    </div>
+
+
+                                    
+                
+                
+
+            </div><!-- /.main -->
+
+
+            <div class="col-md-3 side hidden-sm hidden-xs mt30" style="height: 14596px;">
+                                                
+                <div class="mb25 hidden-md hidden-sm hidden-xs">
+    <img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/20191009.png" alt="Planets" usemap="#gridsMap" width="255" height="136">
+    <map name="gridsMap" id="gridsMap"><area shape="rect" target="_blank" onmouseover="SFGridAd.d(this)" onmouseout="SFGridAd.e(this)" onclick="SFGridAd.c(1750000020264806)" coords="85,68,153,85" href="https://www.fundebug.com/?utm_source=sf_ad" stitle="一行代码搞定BUG监控"><area shape="rect" target="_blank" onmouseover="SFGridAd.d(this)" onmouseout="SFGridAd.e(this)" onclick="SFGridAd.c(1750000020616113)" coords="85,17,221,51" href="http://ipv4.me/segmentfault" stitle="ADSL秒变专线，公网IP盒子了解一下？"></map>
+    <div style="text-align: center;"><a style="text-align:center; color:#9E9E9E; font-size:12px" href="https://segmentfault.com/sponsor">广告位促销，月曝光三千万，10 元/天</a></div>
+            <script async="" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/20191009.js.下载"></script>
+    </div>
+
+                                <style>
+                    .job-recommend-area a:not(:last-of-type) {margin-bottom:10px; display: block}
+                    .job-recommend-area a:hover {text-decoration: none;}
+                </style>
+                <div class="hidden-md">
+                    <div class="job-recommend">
+                      <h3 class="job-title">推广链接</h3>
+                      <div class="job-recommend-area">
+                        <script type="text/javascript">
+                            OA_show(7);
+                            OA_show(9);
+                            OA_show(10);
+                            OA_show(15);
+                            OA_show(16);
+                        </script><a href="https://sponsor.segmentfault.com/ck.php?oaparams=2__bannerid=53__zoneid=7__cb=16909256e7__oadest=https%3A%2F%2Fsegmentfault.com%2Fls%2F1650000016424063" target="_blank"><strong>iView 实战系列课程</strong><br>
+<small style="color: #999"><span style="color: #F7A700">[限时优惠]</span> 知名开源组件库作者讲授</small></a><div id="beacon_16909256e7" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/lg(2).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div>
+<a href="https://sponsor.segmentfault.com/ck.php?oaparams=2__bannerid=56__zoneid=9__cb=7215ef15ac__oadest=https%3A%2F%2Fsegmentfault.com%2Fls%2F1650000011318558" target="_blank"><strong>大神的PHP 进阶之路</strong><br>
+<small style="color: #999">亿级 PV 项目的架构梳理，性能提升实战</small></a><div id="beacon_7215ef15ac" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/lg(3).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div>
+<a href="https://sponsor.segmentfault.com/ck.php?oaparams=2__bannerid=57__zoneid=10__cb=7b91e90a3c__oadest=https%3A%2F%2Fsegmentfault.com%2Fls%2F1650000011387052" target="_blank"><strong> Java 微服务实践课</strong><br>
+<small style="color: #999">上千人学习过的微服务实栈课</small></a><div id="beacon_7b91e90a3c" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/lg(4).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div>
+<a href="https://sponsor.segmentfault.com/ck.php?oaparams=2__bannerid=47__zoneid=15__cb=fb9f109cd2__oadest=https%3A%2F%2Fsegmentfault.com%2Fls%2F1650000016221751" target="_blank"><strong>Vue 技术栈开发实战</strong><br>
+<small style="color: #999">iView 核心开发者带你掌握 Vue 精髓</small></a><div id="beacon_fb9f109cd2" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/lg(5).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div>
+<div id="beacon_ecafc683a2" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/lg(6).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div>
+
+                      </div>
+                    </div>
+                    <style>
+                    .job-recommend {margin-bottom: 30px;}
+                    .job-title {
+                        font-size: 14px;
+                        color: #017E66;
+                        font-weight: 500;
+                        background: #BFE6D7;
+                        margin: 0;
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        text-align: center;
+                    }
+                    .job-recommend-area {
+                      padding: 13px;
+                      border: 3px solid #EBF7F3;
+                      border-top: none;
+                    }
+                    </style>
+                </div>
+
+                                
+                <div class="hidden-md ad-should-be-fixed stuckMenu" style="display: block; position: relative; top: 0px;">
+                    <div class="mb25 block">
+                        <script type="text/javascript">
+                            OA_show(1);
+                        </script><script async="" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/f(5).txt"></script>
+<!-- 侧栏矩形 -->
+<ins class="adsbygoogle" style="display:inline-block;width:255px;height:213px" data-ad-client="ca-pub-6330872677300335" data-ad-slot="9674628595" data-adsbygoogle-status="done"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:213px;margin:0;padding:0;position:relative;visibility:visible;width:255px;background-color:transparent;"><ins id="aswift_3_anchor" style="display:block;border:none;height:213px;margin:0;padding:0;position:relative;visibility:visible;width:255px;background-color:transparent;"><iframe width="255" height="213" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;border:0px;width:255px;height:213px;" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/saved_resource(6).html"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script><div id="beacon_90ce8d6341" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/lg(7).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div>
+
+                    </div>
+                </div>
+                <div class="post-nav hidden-xs side-outline hidden-sm" style="display: block; position: sticky; top: 238px; margin-top: 0px;">
+                    <div class="panel panel-default widget-outline">
+                        <div class="panel-heading">目录</div>
+                        <div class="panel-body">
+                            <div class="nav-body" style="overflow: scroll; top: 0px; height: 419px;">
+                                <div class="highlight-title" style="display: block; top: 0px; height: 26px;"></div>
+                                <ul class="articleIndex"><li class="active"><a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#articleHeader0">让我们开始吧</a></li><li style="list-style:none;"><ul><li class=""><a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#articleHeader1">模拟移动设备的CPU</a></li><li class=""><a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#articleHeader2">设置DEMO</a></li><li class=""><a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#articleHeader3">记录运行时性能表现</a></li></ul></li><li class=""><a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#articleHeader4">分析报告</a></li><li style="list-style:none;"><ul><li class=""><a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#articleHeader5">分析每一秒的帧</a></li><li class=""><a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#articleHeader6">定位瓶颈</a></li></ul></li></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div><!-- /.side -->
+        </div>
+    </div>
+</div>
+
+<div id="shareToWeiboModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">分享</h4>
+            </div>
+            <div class="modal-body">
+                <p class="sfModal-content">
+                    分享到微博？
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default dont-likeweibo" data-dismiss="modal">取消</button>
+                <a href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest" id="shareLink" class="btn btn-primary done-btn" target="_blank" onclick="$(&#39;#shareToWeiboModal&#39;).modal(&#39;hide&#39;)">分享</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal widget-911" id="911" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">×</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title"><span data-model="action"></span><span data-model="type"></span></h4>
+      </div>
+      <div class="modal-body">
+        <form id="reportForm">
+          <!-- 后台返回信息 -->
+          <p class="alert alert-warning" data-model="returnMsg"></p>
+          <div data-role="base">
+            <p>
+              <strong class="required">我要<span data-model="action"></span>该<span data-model="type"></span>，理由是：</strong>
+            </p>
+            <ul class="list-unstyled" data-model="list"></ul>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default pull-left" type="button" data-role="back" style="display:none">返回重选</button>
+                <button class="btn btn-default" data-dismiss="modal" type="button">取消</button>
+        <button class="btn btn-primary" data-role="submit" type="button">提交</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal widget-seo" id="seo" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title"><span data-model="action"></span><span data-model="type"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form id="seoForm">
+                    <!-- 后台返回信息 -->
+                    <p class="alert alert-warning" data-model="returnMsg" style="display: none;"></p>
+                    <div data-role="base">
+                        <div class="form-group">
+                            <label>SEO标题：</label><textarea style="min-height: 35px; width: 100%; max-height: 132px; overflow: hidden; overflow-wrap: break-word; height: 32px;" name="title" class="form-control" rows="1" placeholder="请输入SEO标题"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>SEO描述：</label><textarea style="min-height: 35px; max-height: 132px; overflow: hidden; overflow-wrap: break-word; height: 32px;" name="desc" class="form-control" rows="1" placeholder="请输入SEO描述"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>SEO keywords：</label><textarea style="min-height: 35px; max-height: 132px; overflow: hidden; overflow-wrap: break-word; height: 32px;" name="keywords" class="form-control" rows="1" placeholder="请输入SEO keywords"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal" type="button">取消</button>
+                <button class="btn btn-primary" data-role="submit" type="button">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+    <div id="loginBanner" class="hidden-sm hidden-xs loginBanner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-7">
+                <h1 class="title">在 SegmentFault，学习技能、解决问题</h1>
+                <p class="desc">每个月，我们帮助 1000 万的开发者解决各种各样的技术问题。并助力他们在技术能力、职业生涯、影响力上获得提升。</p>
+            </div>
+            <div class="col-lg-3 col-lg-offset-3 col-md-4 col-md-offset-1">
+                <form class="register-form clearfix" action="https://segmentfault.com/api/user/phone/register">
+
+                    
+                    <a href="https://segmentfault.com/user/register" class="SFLogin btn btn-lg btn-primary mr15">免费注册</a>
+                    <a href="https://segmentfault.com/user/login" class="SFRegister btn btn-lg btn-primary">立即登录</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    OA_show(4);
+</script><div id="beacon_5c93c0a6e6" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/lg(8).php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div>
+
+
+<footer id="footer">
+    <div class="container">
+        <div class="row hidden-xs">
+            <dl class="col-sm-2 site-link">
+                <dt>产品</dt>
+                                <dd><a href="https://segmentfault.com/questions/hottest?utm_source=sf-footer" target="_blank">热门问答</a></dd>
+                                <dd><a href="https://segmentfault.com/blogs/hottest?utm_source=sf-footer" target="_blank">热门专栏</a></dd>
+                                <dd><a href="https://segmentfault.com/lives?utm_source=sf-footer" target="_blank">热门课程</a></dd>
+                                <dd><a href="https://segmentfault.com/events?utm_source=sf-footer" target="_blank">最新活动</a></dd>
+                                <dd><a href="https://segmentfault.com/groups?utm_source=sf-footer" target="_blank">技术圈</a></dd>
+                                <dd><a href="https://segmentfault.com/groups?tab=jobs&amp;utm_source=sf-footer" target="_blank">酷工作</a></dd>
+                                <dd><a href="https://segmentfault.com/app?utm_source=sf-footer" target="_blank">移动客户端</a></dd>
+                            </dl>
+            
+            <dl class="col-sm-2 site-link">
+                <dt>课程</dt>
+                                <dd><a href="https://segmentfault.com/lives/edu?tag=java&amp;sort=hottest&amp;utm_source=sf-footer" target="_blank">Java 开发课程</a></dd>
+                                <dd><a href="https://segmentfault.com/lives/edu?tag=php&amp;sort=hottest&amp;utm_source=sf-footer" target="_blank">PHP 开发课程</a></dd>
+                                <dd><a href="https://segmentfault.com/lives/edu?tag=python&amp;sort=hottest&amp;utm_source=sf-footer" target="_blank">Python 开发课程</a></dd>
+                                <dd><a href="https://segmentfault.com/lives/edu?category=1&amp;sort=hottest&amp;utm_source=sf-footer" target="_blank">前端开发课程</a></dd>
+                                <dd><a href="https://segmentfault.com/lives/study?category=3&amp;sort=hottest&amp;utm_source=sf-footer" target="_blank">移动开发课程</a></dd>
+                            </dl>
+
+            <dl class="col-sm-2 site-link">
+                <dt>资源</dt>
+                                <dd><a href="https://segmentfault.com/weekly?utm_source=sf-footer" target="_blank">每周精选</a></dd>
+                                <dd><a href="https://segmentfault.com/users?utm_source=sf-footer" target="_blank">用户排行榜</a></dd>
+                                <dd><a href="https://segmentfault.com/badges?utm_source=sf-footer" target="_blank">徽章</a></dd>
+                                <dd><a href="https://segmentfault.com/faq?utm_source=sf-footer" target="_blank">帮助中心</a></dd>
+                                <dd><a href="https://segmentfault.com/repu?utm_source=sf-footer" target="_blank">声望与权限</a></dd>
+                                <dd><a href="https://segmentfault.com/community?utm_source=sf-footer" target="_blank">社区服务中心</a></dd>
+                            </dl>
+            
+            <dl class="col-sm-2 site-link">
+                <dt>合作</dt>
+                                <dd><a href="https://about.segmentfault.com/?utm_source=sf-footer" target="_blank">关于我们</a></dd>
+                                <dd><a href="https://business.segmentfault.com/ads?utm_source=sf-footer" target="_blank">广告投放</a></dd>
+                                <dd><a href="https://segmentfault.com/groups?tab=jobs&amp;utm_source=sf-footer" target="_blank">职位发布</a></dd>
+                                <dd><a href="https://segmentfault.com/lives/apply?utm_source=sf-footer" target="_blank">讲师招募</a></dd>
+                                <dd><a href="https://about.segmentfault.com/contact.html?utm_source=sf-footer" target="_blank">联系我们</a></dd>
+                            </dl>
+
+            <dl class="col-sm-2 site-link">
+                <dt>关注</dt>
+                                <dd><a href="https://segmentfault.com/blog/segmentfault?utm_source=sf-footer" target="_blank">产品技术日志</a></dd>
+                                <dd><a href="https://segmentfault.com/blog/community_admin?utm_source=sf-footer" target="_blank">社区运营日志</a></dd>
+                                <dd><a href="https://segmentfault.com/blog/segmentfault_news?utm_source=sf-footer" target="_blank">市场运营日志</a></dd>
+                                <dd><a href="https://segmentfault.com/blog/segmentfault_team?utm_source=sf-footer" target="_blank">团队日志</a></dd>
+                                <dd><a href="https://segmentfault.com/blog/interview?utm_source=sf-footer" target="_blank">社区访谈</a></dd>
+                                <dd>
+                    <ul class="sn-inline">
+                        <li>
+                            <a class="entypo-wechart icon-sn-weixin weixin-popover-qrcode" data-toggle="popover" data-placement="top" data-content="" data-original-title="" title="">微信</a>
+                        </li>
+                        <li>
+                            <a href="http://weibo.com/segmentfault" target="_blank" class="entypo-weibo icon-sn-weibo">新浪微博</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/SegmentFault" target="_blank" class="entypo-facebook icon-sn-github">Github</a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/segment_fault" target="_blank" class="entypo-twitter icon-sn-twitter">Twitter</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+
+            <dl class="col-sm-2 site-link" id="license">
+                <dt>条款</dt>
+                                <dd><a href="https://segmentfault.com/tos?utm_source=sf-footer" target="_blank">服务条款</a></dd>
+                                <dd><a href="https://segmentfault.com/privacy?utm_source=sf-footer" target="_blank">隐私政策</a></dd>
+                                <dd>
+                    <a href="https://segmentfault.com/app" class="clearfix mt10 block"><img src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/appQrcode.png" class="app-qrcode"></a>
+                    <div class="app-download-desc">
+                        <p>扫一扫下载 App</p>
+                    </div>
+                    
+                </dd>
+            </dl>
+        </div>
+        <div class="copyright">
+            Copyright © 2011-2019 SegmentFault. 当前呈现版本 19.02.27<br>
+            <a href="http://beian.miit.gov.cn/" rel="nofollow">浙ICP备 15005796号-2</a> &nbsp;
+            <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010602002000" rel="nofollow">浙公网安备 33010602002000号</a>
+            <span class="ml5">杭州堆栈科技有限公司版权所有</span>
+            <p class="mt30">CDN 存储服务由 <a target="_blank" href="https://www.upyun.com/?utm_source=segmentfault&amp;utm_medium=link&amp;utm_campaign=upyun&amp;md=segmentfault">又拍云</a> 赞助提供 </p>
+        </div>
+        <p class="text-center">
+            <a class="js__view--selector hidden-sm hidden-md hidden-lg" data-action="mobile" href="javascript:;">移动版</a>
+            <a class="js__view--selector hidden-sm hidden-md hidden-lg" data-action="desktop" href="javascript:;">桌面版</a>
+        </p>
+    </div>
+</footer>
+
+<div id="fixedTools" class="hidden-xs hidden-sm">
+    <a id="backtop" class="border-bottom hidden" href="https://segmentfault.com/a/1190000011516068?utm_source=tag-newest#">回顶部</a>
+</div>
+
+    <script id="loginModal" type="text/template">
+    <div class="row bg-white login-modal">
+        <div class="col-md-12 login-wrap">
+            <form action="/api/user/login" method="POST" role="form" class="mt15">
+                <div class="form-group hidden">
+                                        <input type="text" class="form-control" name="remember" value="1"
+                           autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="username" class="control-label">手机号 或 Email</label>
+                    <input type="text" class="form-control" name="username" tabindex="1" required placeholder="11 位手机号 或 Email"
+                           autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">密码</label><span class="pull-right"><a
+                                href="/user/forgot" tabindex="4">忘记密码</a></span>
+                    <input type="password" class="form-control" name="password" tabindex="2" required placeholder="请输入密码">
+                </div>
+                <div class="form-group">
+                    <a
+                            
+                                                    href="/user/phoneLogin"
+                            class="phoneLogin"
+                                            >手机验证码登录</a>
+                </div>
+                <div class="form-group clearfix">
+                    <button type="submit" class="btn-block btn btn-primary pull-right pl20 pr20" tabindex="3"
+                            onclick='ga("send", "event", "email login button", "clicked", "login modal");'>登录
+                    </button>
+                </div>
+            </form>
+            <div class="text-muted text-center more-login-area">
+    <span class="more-login-words">更多登录方式</span>
+</div>
+<div class="widget-login mb15 text-center">
+    <a href="/user/oauth/google" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "google"});'><span
+                class="icon-sn-google"></span></a>
+    <a href="/user/oauth/github" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "github"});");'><span
+                class="icon-sn-github"></span></a>
+    <a href="/user/oauth/weibo" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "weibo"});'><span
+                class="icon-sn-weibo"></span></a>
+    <a href="/user/oauth/qq" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "qq"});'><span
+                class="icon-sn-qq"></span></a>
+    <a href="/user/oauth/weixin" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "qq"});'><span
+                class="icon-sn-weixin"></span></a>
+    <a href="/user/oauth/linkedin" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "linkedin"});'><span
+                class="icon-sn-linkedin"></span></a>
+    <span id="loginShowMore" style="cursor: pointer" class="mb5"><span class="icon-sn-dotted"></span></span>
+    <a href="/user/oauth/twitter" class=" hidden"
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "twitter"});'><span
+                class="icon-sn-twitter"></span></a>
+    <a href="/user/oauth/facebook" class=" hidden"
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "facebook"});'><span
+                class="icon-sn-facebook"></span></a>
+    <a href="/user/oauth/douban" class=" hidden"
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "douban"});'><span
+                class="icon-sn-douban"></span></a>
+</div>
+<div class="form-group clearfix">
+    <a class="btn-block btn btn-default pull-right pl20 pr20 
+                        SFLogin
+             "
+
+            
+        onclick='ga("send", "event", "email login button", "clicked", "login modal");'>
+                    注册新账号
+            </a>
+</div>
+<p class="text-muted text-center mb15">继续即表示你同意<a href="/tos" target="_blank">《服务条款》</a>和<a href="/privacy" target="_blank">《隐私政策》</a></p>        </div>
+    </div>
+</script>
+    <script id="registerModal" type="text/template">
+    <div class="row bg-white login-modal">
+        <div class="col-md-12 login-wrap">
+            
+            <form action="/api/user/register" method="POST" role="form" class="mt15">
+                <div class="form-group">
+                    <label for="name" class="control-label">你的名字</label>
+                    <input type="text" class="form-control" name="name" required placeholder="真实姓名或常用昵称">
+                </div>
+                
+                <div class="form-group">
+                    <label for="mail" class="control-label">手机号</label>
+                    <input type="text" class="form-control" id="login-name" name="mail" required placeholder="11 位手机号">
+                </div>
+                
+                <input type="text" class="hidden" name="register_type" value="mail">
+
+                <div class="form-group">
+                    <div class="captchaInput mb10">
+                        <input type="text" class="form-control" name="cap" placeholder="右侧的验证码" style="width:50%; display: inline; margin-right: 15px;">
+                        <span class="mt10">
+                                <a id="loginReloadCaptcha" href="javascript:void(0)">
+                                <img src="/user/captcha?w=135&h=34" class="cap" width="135" height="34"/></a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="phone-register-only hidden">
+                        <div class="input-group">
+                            <input name="code" type="text" class="form-control js-user-login__phone-code-value" placeholder="短信验证码">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default js-user-login__phone-vaild-btn" style="width:96px;" type="button">
+                                获取验证码</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="control-label">密码</label>
+                    <input type="password" class="form-control" name="password" required placeholder="不少于 6 位的密码">
+                </div>
+                <div class="form-group clearfix">
+                    <button type="submit" class="btn-block btn btn-primary pl20 pr20 pull-right"
+                            onclick='ga("send", "event", "email register button", "clicked", "login modal");'>注册
+                    </button>
+                </div>
+                                <div class="text-muted text-center more-login-area">
+    <span class="more-login-words">更多登录方式</span>
+</div>
+<div class="widget-login mb15 text-center">
+    <a href="/user/oauth/google" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "google"});'><span
+                class="icon-sn-google"></span></a>
+    <a href="/user/oauth/github" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "github"});");'><span
+                class="icon-sn-github"></span></a>
+    <a href="/user/oauth/weibo" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "weibo"});'><span
+                class="icon-sn-weibo"></span></a>
+    <a href="/user/oauth/qq" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "qq"});'><span
+                class="icon-sn-qq"></span></a>
+    <a href="/user/oauth/weixin" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "qq"});'><span
+                class="icon-sn-weixin"></span></a>
+    <a href="/user/oauth/linkedin" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "linkedin"});'><span
+                class="icon-sn-linkedin"></span></a>
+    <span id="loginShowMore" style="cursor: pointer" class="mb5"><span class="icon-sn-dotted"></span></span>
+    <a href="/user/oauth/twitter" class=" hidden"
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "twitter"});'><span
+                class="icon-sn-twitter"></span></a>
+    <a href="/user/oauth/facebook" class=" hidden"
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "facebook"});'><span
+                class="icon-sn-facebook"></span></a>
+    <a href="/user/oauth/douban" class=" hidden"
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "douban"});'><span
+                class="icon-sn-douban"></span></a>
+</div>
+<div class="form-group clearfix">
+    <a class="btn-block btn btn-default pull-right pl20 pr20 
+                        SFRegister
+             "
+
+            
+        onclick='ga("send", "event", "email login button", "clicked", "login modal");'>
+                    已有账号登录
+            </a>
+</div>
+<p class="text-muted text-center mb15">继续即表示你同意<a href="/tos" target="_blank">《服务条款》</a>和<a href="/privacy" target="_blank">《隐私政策》</a></p>            </form>
+        </div>
+    </div>
+</script>
+    <script id="phoneLoginModal" type="text/template">
+
+    <div class="row bg-white login-modal phonelogin-modal">
+        <div class="col-md-12 login-wrap">
+            <form action="/api/user/phonelogin" method="POST" role="form" class="mt15">
+                <div class="form-group">
+                    <label for="phone" class="control-label required">手机号</label>
+                    <input type="text" class="form-control phonelogin--phone" name="phone" tabindex="1" required placeholder="11 位手机号"
+                           autocomplete="off">
+                    <span class="help-block"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="authCode" class="control-label required">验证码</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control bindphone--code" name="authCode" placeholder="短信验证码">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default user-bind__phone-vaild-btn" type="button">获取验证码</button>
+                        </span>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+
+                <div class="form-group">
+                    <a 
+                                                            href="/user/login"
+                                class="SFRegister"
+                                                >密码登录（手机号或 Email）</a>
+                </div>
+                <div class="form-group clearfix">
+                    <button type="submit" class="btn-block btn btn-primary pull-right pl20 pr20" tabindex="3"
+                            onclick='ga("send", "event", "email login button", "clicked", "login modal");'>登录
+                    </button>
+                </div>
+            </form>
+            <div class="text-muted text-center more-login-area">
+    <span class="more-login-words">更多登录方式</span>
+</div>
+<div class="widget-login mb15 text-center">
+    <a href="/user/oauth/google" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "google"});'><span
+                class="icon-sn-google"></span></a>
+    <a href="/user/oauth/github" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "github"});");'><span
+                class="icon-sn-github"></span></a>
+    <a href="/user/oauth/weibo" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "weibo"});'><span
+                class="icon-sn-weibo"></span></a>
+    <a href="/user/oauth/qq" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "qq"});'><span
+                class="icon-sn-qq"></span></a>
+    <a href="/user/oauth/weixin" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "qq"});'><span
+                class="icon-sn-weixin"></span></a>
+    <a href="/user/oauth/linkedin" class=""
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "linkedin"});'><span
+                class="icon-sn-linkedin"></span></a>
+    <span id="loginShowMore" style="cursor: pointer" class="mb5"><span class="icon-sn-dotted"></span></span>
+    <a href="/user/oauth/twitter" class=" hidden"
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "twitter"});'><span
+                class="icon-sn-twitter"></span></a>
+    <a href="/user/oauth/facebook" class=" hidden"
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "facebook"});'><span
+                class="icon-sn-facebook"></span></a>
+    <a href="/user/oauth/douban" class=" hidden"
+       onclick='ga("send", "event", "3rd login button", "clicked", "login modal", {media: "douban"});'><span
+                class="icon-sn-douban"></span></a>
+</div>
+<div class="form-group clearfix">
+    <a class="btn-block btn btn-default pull-right pl20 pr20 
+                        SFLogin
+             "
+
+            
+        onclick='ga("send", "event", "email login button", "clicked", "login modal");'>
+                    注册新账号
+            </a>
+</div>
+<p class="text-muted text-center mb15">继续即表示你同意<a href="/tos" target="_blank">《服务条款》</a>和<a href="/privacy" target="_blank">《隐私政策》</a></p>        </div>
+    </div>
+</script>
+<script id="bindPhoneModal" type="text/template">
+    <div class="bg-white bindphone-model">
+        <div class="alert alert-warning" role="alert">
+            为了保证账号安全，请先绑定手机
+        </div>
+        <div>
+            <form class="form-horizontal form__bindphone-apply" style="background-color:#fff;padding:0;">
+                <div class="form-group ">
+                    <label for="phoneNumber" class="col-sm-3 control-label required" >手机号码</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control bindphone--phone" id="phoneNumber" name="phone" placeholder="仅只支持大陆手机号">
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+                <div class="form-group">
+                    <label for="authCode" class="col-sm-3 control-label required">验证码</label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control bindphone--code" name="code" placeholder="短信验证码">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default user-bind__phone-vaild-btn" type="button">获取验证码</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</script>
+
+
+<script>
+    window.serverTime = 1570605485000;
+</script>
+
+<script>
+    (function (w) {
+        w.SF = {
+            staticUrl: "https://cdn.segmentfault.com/v-5d8c9d24"
+        };
+        w.SF.token = (function () {
+    var _MQD = //'pYt'
+'4'+'631'//'NP'
++//'O'
+'271'+'00'//'z'
++'d'//'3Im'
++//'r'
+'559'+//'qH'
+'qH'+''///*'I'*/'I'
++//'L'
+'c2'+'10'//'Wo'
++'7'//'dei'
++'9b2'//'pU'
++'973'//'R8'
++'0'//'F'
++'3'//'byQ'
++//'m0'
+'d3d'+''///*'p5'*/'p5'
++'5f3'//'PJ'
+, _OJhjO = [[13,15]];
+
+    for (var i = 0; i < _OJhjO.length; i ++) {
+        _MQD = _MQD.substring(0, _OJhjO[i][0]) + _MQD.substring(_OJhjO[i][1]);
+    }
+
+    return _MQD;
+})();;
+    })(window);
+
+                var lock = {
+        type: "",
+        text: '',
+        table: {"ban_post":[1,"\u4f60\u5df2\u7ecf\u88ab\u7981\u8a00, \u65e0\u6cd5\u8fdb\u884c\u6b64\u64cd\u4f5c, \u5982\u6709\u7591\u4e49\u8bf7\u63d0\u4ea4\u7533\u8bc9, \u6216\u8005\u53d1\u90ae\u4ef6\u5230pr@segmentfault.com"]}
+    };
+
+        var ddosMode = false;
+    
+    //     (function (currentUrl) {
+    //     if (typeof URL != 'undefined') {
+    //         var baseUrl = new URL('https://segmentfault.com');
+
+    //         if (baseUrl.protocol != currentUrl.protocol
+    //             || baseUrl.host != currentUrl.host) {
+    //             window.location.href = baseUrl.protocol + '//' + baseUrl.host
+    //                 + currentUrl.pathname + currentUrl.search + currentUrl.hash;
+    //         }
+    //     }
+    // })(window.location);
+    </script>
+
+             <script crossorigin="" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/assets.js.下载"></script><iframe id="google_osd_static_frame_8406046750331" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/saved_resource(7).html"></iframe>
+                 
+        <script crossorigin="" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/post.min.js.下载"></script>
+            
+
+<script>
+if (!!navigator.userAgent.match(/MicroMessenger/i)) {
+    require.config({
+        paths: { weixin_jsapi: '//res.wx.qq.com/open/js/jweixin-1.2.0' }
+    });
+
+    require(['weixin_jsapi'], function (wx) {
+        var share = {"title":"\u5168\u65b0Chrome Devtools Performance\u4f7f\u7528\u6307\u5357","desc":"\u8fd0\u884c\u65f6\u6027\u80fd\u8868\u73b0\uff08runtime performance\uff09\u6307\u7684\u662f\u5f53\u4f60\u7684\u9875\u9762\u5728\u6d4f\u89c8\u5668\u8fd0\u884c\u65f6\u7684\u6027\u80fd\u8868\u73b0\uff0c\u800c\u4e0d\u662f\u5728\u4e0b\u8f7d\u9875\u9762\u7684\u65f6\u5019\u7684\u8868\u73b0\u3002\u8fd9\u7bc7\u6307\u5357\u5c06\u4f1a\u544a\u8bc9\u4f60\u600e\u4e48\u7528Chrome DevTools Performance\u529f\u80fd\u53bb\u5206\u6790\u8fd0\u884c\u65f6\u6027\u80fd\u8868\u73b0\u3002\u5728RAIL\u6027\u80fd\u8bc4\u4f30\u6a21\u578b\u4e0b\uff0c\u4f60\u53ef\u4ee5\u5728\u8fd9\u7bc7\u6307\u5357\u4e2d\u53ef\u4ee5\u5b66\u5230\u600e\u4e48\u53bb\u7528\u8fd9\u4e2aperformance\u529f\u80fd\u53bb\u5206\u6790Response, Animation, \u4ee5\u53ca Idle...","link":"https:\/\/segmentfault.com\/a\/1190000011516068","imgUrl":"https:\/\/segmentfault.com\/img\/bVWtZF?w=2316&amp;h=1626"};
+        share.title += ' - SegmentFault 思否';
+
+        $.getJSON('/api/util/weixin/jsapi', function (o) {
+            methods = o.data.jsApiList.slice();
+
+            wx.config(o.data);
+            wx.error(console.error);
+            wx.ready(function () {
+                methods.forEach(function (method) {
+                    wx[method](share);
+                });
+            });
+        });
+    });
+}
+</script>
+
+<script src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/ads.min.js.下载" type="text/javascript"></script><div id="UGTKzPZbRoOS" style="display: none;"></div>
+
+<script>
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-918487-8']);
+    _gaq.push(['_trackPageview']);
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                
+        
+
+                
+
+    ga('create', 'UA-918487-8', 'auto', {
+        'userID'
+    : 0,
+        'createdTime'
+    : 0,
+        'now'
+    : 1570605486,
+        'allowLinker'
+    : true });
+    ga('require', 'linker');
+    ga('linker:autoLink', ['docs.segmentfault.com'] );
+    ga('set', 'dimension1', 'guest');
+    ga('send', 'pageview');
+
+        if(document.getElementById('UGTKzPZbRoOS')){
+        UGTKzPZbRoOS='No';
+    } else {
+        UGTKzPZbRoOS='Yes';
+    }
+
+    if(typeof ga !=='undefined'){
+        ga('send','event','Blocking Ads',UGTKzPZbRoOS,{'nonInteraction':1});
+    } else if(typeof _gaq !=='undefined'){
+        _gaq.push(['_trackEvent','Blocking Ads',UGTKzPZbRoOS,undefined,undefined,true]);
+    }
+
+</script>
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?e23800c454aa573c0ccb16b52665ac26";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+<iframe id="p_analyse_iframe" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/saved_resource(8).html" style="display: none;"></iframe><div id="atwho-container"><div id="atwho-ground-3914e6301570605486531"><div class="atwho-view" id="at-view-64"><ul class="atwho-view-ul"></ul></div></div></div></body><iframe id="google_esf" name="google_esf" src="./全新Chrome Devtools Performance使用指南 - - SegmentFault 思否_files/zrt_lookup.html" data-ad-client="ca-pub-6330872677300335" style="display: none;"></iframe></html>
