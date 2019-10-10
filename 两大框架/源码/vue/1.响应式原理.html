@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+</head>
+<body>
+  <div id="app">{{name}}{{obj}}</div>
+  <img src="./data.png" alt="" width="400">
+  1.使用 Object.defineProperty 将初始化的属性 转化为 setter getter
+
+  2.getter setter 不可见，但是 watcher 实例在 getter 中 把属性当做依赖收集起来
+
+  3.当更改数据时触发 setter，setter 通知 watcher 变更，触发组件重新渲染
+
+  4.在嵌套对象添加响应式属性 Vue.$set 
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        name: '123',
+        obj: {}
+      }
+    })
+    Vue.set(vm.obj, 'b', 12) // 触发更新
+    Object.assign(vm.obj, {c: 123}) // 并非响应式
+    vm.obj = Object.assign({}, vm.obj, {c: 123}) // 可触发更新
+  </script>
+</body>
+</html>
