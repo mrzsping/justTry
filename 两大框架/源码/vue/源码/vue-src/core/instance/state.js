@@ -30,7 +30,7 @@ const sharedPropertyDefinition = {
   set: noop
 }
 
-/*通过proxy函数将_data（或者_props等）上面的数据代理到vm上，这样就可以用app.text代替app._data.text了。*/
+/*使用Object.defineProperty 通过proxy函数将_data（或者_props等）上面的数据代理到vm上，这样就可以用app.text代替app._data.text了。*/
 export function proxy (target: Object, sourceKey: string, key: string) {
   sharedPropertyDefinition.get = function proxyGetter () {
     return this[sourceKey][key]
@@ -127,7 +127,7 @@ function initProps (vm: Component, propsOptions: Object) {
 /*初始化data*/
 function initData (vm: Component) {
 
-  /*得到data数据*/
+  /*得到data数据 是否是组件 data为对象或者对象*/
   let data = vm.$options.data
   data = vm._data = typeof data === 'function'
     ? getData(data, vm)

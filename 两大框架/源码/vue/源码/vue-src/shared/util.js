@@ -15,7 +15,7 @@ export function isTrue (v: any): boolean %checks {
 }
 
 /**
- * Check if value is primitive
+ * Check if value is primitive 判断基本类型
  */
 export function isPrimitive (value: any): boolean %checks {
   return typeof value === 'string' || typeof value === 'number'
@@ -25,6 +25,7 @@ export function isPrimitive (value: any): boolean %checks {
  * Quick object check - this is primarily used to tell
  * Objects from primitive values when we know the value
  * is a JSON-compliant type.
+ * 是否为对象
  */
 export function isObject (obj: mixed): boolean %checks {
   return obj !== null && typeof obj === 'object'
@@ -40,7 +41,7 @@ const _toString = Object.prototype.toString
 export function isPlainObject (obj: any): boolean {
   return _toString.call(obj) === '[object Object]'
 }
-
+// 判断是否为正则
 export function isRegExp (v: any): boolean {
   return _toString.call(v) === '[object RegExp]'
 }
@@ -53,7 +54,7 @@ export function toString (val: any): string {
   return val == null
     ? ''
     : typeof val === 'object'
-      ? JSON.stringify(val, null, 2)
+      ? JSON.stringify(val, null, 2) // 处理的值 处理函数 空格
       : String(val)
 }
 
@@ -108,6 +109,7 @@ export const isBuiltInTag = makeMap('slot,component', true)
 
 /**
  * Remove an item from an array
+ * 从数组中移除
  */
 export function remove (arr: Array<any>, item: any): Array<any> | void {
   if (arr.length) {
@@ -120,6 +122,7 @@ export function remove (arr: Array<any>, item: any): Array<any> | void {
 
 /**
  * Check whether the object has the property.
+ * 检查对象是否有该属性
  */
 const hasOwnProperty = Object.prototype.hasOwnProperty
 export function hasOwn (obj: Object | Array<*>, key: string): boolean {
@@ -128,6 +131,7 @@ export function hasOwn (obj: Object | Array<*>, key: string): boolean {
 
 /**
  * Create a cached version of a pure function.
+ * 闭包缓存数据
  */
  /*根据str得到fn(str)的结果，但是这个结果会被闭包中的cache缓存起来，下一次如果是同样的str则不需要经过fn(str)重新计算，而是直接得到结果*/
 export function cached<F: Function> (fn: F): F {
@@ -141,7 +145,9 @@ export function cached<F: Function> (fn: F): F {
 /**
  * Camelize a hyphen-delimited string.
  */
- /*将原本用-连接的字符串变成驼峰 aaa-bbb-ccc => aaaBbbCcc*/
+ /*将原本用-连接的字符串变成驼峰 aaa-bbb-ccc => aaaBbbCcc
+ /* replace 第一个参数 为字符串或者正则 第二个为 字符串 函数 或者$等等
+ */
 const camelizeRE = /-(\w)/g
 export const camelize = cached((str: string): string => {
   return str.replace(camelizeRE, (_, c) => c ? c.toUpperCase() : '')
@@ -212,7 +218,7 @@ export function extend (to: Object, _from: ?Object): Object {
 /**
  * Merge an Array of Objects into a single Object.
  */
- /*合并Array数组中的每一个对象到一个新的Object中*/
+ /*合并对象数组中的每一个对象到一个新的Object中*/
 export function toObject (arr: Array<any>): Object {
   const res = {}
   for (let i = 0; i < arr.length; i++) {
@@ -279,6 +285,7 @@ export function looseIndexOf (arr: Array<mixed>, val: mixed): number {
 
 /**
  * Ensure a function is called only once.
+ * 方法只被调用一次
  */
 export function once (fn: Function): Function {
   let called = false

@@ -169,7 +169,7 @@ export function defineReactive (
   /*在闭包中定义一个dep对象*/
   const dep = new Dep()
 
-  const property = Object.getOwnPropertyDescriptor(obj, key)
+  const property = Object.getOwnPropertyDescriptor(obj, key) // 方法返回指定对象上一个自有属性对应的属性描述
   if (property && property.configurable === false) {
     return
   }
@@ -179,7 +179,7 @@ export function defineReactive (
   const getter = property && property.get
   const setter = property && property.set
 
-  /*对象的子对象递归进行observe并返回子节点的Observer对象*/
+  /*递归 对象的子对象递归进行observe并返回子节点的Observer对象*/
   let childOb = observe(val)
   Object.defineProperty(obj, key, {
     enumerable: true,
