@@ -13,7 +13,7 @@ function Vue (options) {
   /*初始化*/
   this._init(options)
 }
-
+// 为vue添加属性或挂载方法
 initMixin(Vue)
 stateMixin(Vue)
 eventsMixin(Vue)

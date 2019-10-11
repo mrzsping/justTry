@@ -275,7 +275,7 @@ function normalizeDirectives (options: Object) {
  * Merge two option objects into a new one.
  * Core utility used in both instantiation and inheritance.
  */
- /*合并两个option对象到一个新的对象中*/
+ /*合并两个option对象到一个新的对象中 经常使用在继承或者初始化中*/
 export function mergeOptions (
   parent: Object,
   child: Object,
