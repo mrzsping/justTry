@@ -1,7 +1,9 @@
 /* @flow */
 
 import Dep from './dep'
-import { arrayMethods } from './array'
+import {
+  arrayMethods
+} from './array'
 import {
   def,
   isObject,
@@ -16,11 +18,11 @@ const arrayKeys = Object.getOwnPropertyNames(arrayMethods)
 
 /**
  * By default, when a reactive property is set, the new value is
- * also converted to become reactive. However when passing down props,
+ * also converted to become reactive. However when passing down props, 传承
  * we don't want to force conversion because the value may be a nested value
  * under a frozen data structure. Converting it would defeat the optimization.
  */
- /*默认情况下，当一个无效的属性被设置时，新的值也会被转换成无效的。不管怎样当传递props时，我们不需要进行强制转换*/
+/*默认情况下，当一个无效的属性被设置时，新的值也会被转换成无效的。不管怎样当传递props时，我们不需要进行强制转换*/
 export const observerState = {
   shouldConvert: true,
   isSettingProps: false
@@ -32,7 +34,7 @@ export const observerState = {
  * object's property keys into getter/setters that
  * collect dependencies and dispatches updates.
  */
- /*
+/*
     每个被观察到对象被附加上观察者实例，一旦被添加，观察者将为目标对象加上getter\setter属性，进行依赖收集以及调度更新。
 */
 export class Observer {
@@ -40,7 +42,7 @@ export class Observer {
   dep: Dep;
   vmCount: number; // number of vms that has this object as root $data
 
-  constructor (value: any) {
+  constructor(value: any) {
     this.value = value
     this.dep = new Dep()
     this.vmCount = 0
@@ -53,9 +55,9 @@ export class Observer {
           如果是数组，将修改后可以截获响应的数组方法替换掉该数组的原型中的原生方法，达到监听数组数据变化响应的效果。
           这里如果当前浏览器支持__proto__属性，则直接覆盖当前数组对象原型上的原生数组方法，如果不支持该属性，则直接覆盖数组对象的原型。
       */
-      const augment = hasProto
-        ? protoAugment  /*直接覆盖原型的方法来修改目标对象*/
-        : copyAugment   /*定义（覆盖）目标对象或数组的某一个方法*/
+      const augment = hasProto ?
+        protoAugment /*直接覆盖原型的方法来修改目标对象*/ :
+        copyAugment /*定义（覆盖）目标对象或数组的某一个方法*/
       augment(value, arrayMethods, arrayKeys)
 
       /*如果是数组则需要遍历数组的每一个成员进行observe*/
@@ -71,10 +73,10 @@ export class Observer {
    * getter/setters. This method should only be called when
    * value type is Object.
    */
-   /*
-      遍历每一个对象并且在它们上面绑定getter与setter。这个方法只有在value的类型是对象的时候才能被调用
-   */
-  walk (obj: Object) {
+  /*
+     遍历每一个对象并且在它们上面绑定getter与setter。这个方法只有在value的类型是对象的时候才能被调用
+  */
+  walk(obj: Object) {
     const keys = Object.keys(obj)
     /*walk方法会遍历对象的每一个属性进行defineReactive绑定*/
     for (let i = 0; i < keys.length; i++) {
@@ -85,8 +87,8 @@ export class Observer {
   /**
    * Observe a list of Array items.
    */
-   /*对一个数组的每一个成员进行observe*/
-  observeArray (items: Array<any>) {
+  /*对一个数组的每一个成员进行observe*/
+  observeArray(items: Array < any > ) {
     for (let i = 0, l = items.length; i < l; i++) {
       /*数组需要遍历每一个成员进行observe*/
       observe(items[i])
@@ -100,8 +102,8 @@ export class Observer {
  * Augment an target Object or Array by intercepting
  * the prototype chain using __proto__
  */
- /*直接覆盖原型的方法来修改目标对象或数组*/
-function protoAugment (target, src: Object) {
+/*直接覆盖原型的方法来修改目标对象或数组*/
+function protoAugment(target, src: Object) {
   /* eslint-disable no-proto */
   target.__proto__ = src
   /* eslint-enable no-proto */
@@ -113,7 +115,7 @@ function protoAugment (target, src: Object) {
  */
 /* istanbul ignore next */
 /*定义（覆盖）目标对象或数组的某一个方法*/
-function copyAugment (target: Object, src: Object, keys: Array<string>) {
+function copyAugment(target: Object, src: Object, keys: Array < string > ) {
   for (let i = 0, l = keys.length; i < l; i++) {
     const key = keys[i]
     def(target, key, src[key])
@@ -125,10 +127,10 @@ function copyAugment (target: Object, src: Object, keys: Array<string>) {
  * returns the new observer if successfully observed,
  * or the existing observer if the value already has one.
  */
-  /*
+/*
  尝试创建一个Observer实例（__ob__），如果成功创建Observer实例则返回新的Observer实例，如果已有Observer实例则返回现有的Observer实例。
  */
-export function observe (value: any, asRootData: ?boolean): Observer | void {
+export function observe(value: any, asRootData: ? boolean): Observer | void {
   if (!isObject(value)) {
     return
   }
@@ -150,7 +152,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
     ob = new Observer(value)
   }
   if (asRootData && ob) {
-     /*如果是根数据则计数，后面Observer中的observe的asRootData非true*/
+    /*如果是根数据则计数，后面Observer中的observe的asRootData非true*/
     ob.vmCount++
   }
   return ob
@@ -159,12 +161,12 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
 /**
  * Define a reactive property on an Object.
  */
- /*为对象defineProperty上在变化时通知的属性*/
-export function defineReactive (
+/*为对象defineProperty上在变化时通知的属性*/
+export function defineReactive(
   obj: Object,
   key: string,
   val: any,
-  customSetter?: Function
+  customSetter ? : Function
 ) {
   /*在闭包中定义一个dep对象*/
   const dep = new Dep()
@@ -184,7 +186,7 @@ export function defineReactive (
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
-    get: function reactiveGetter () {
+    get: function reactiveGetter() {
       /*如果原本对象拥有getter方法则执行*/
       const value = getter ? getter.call(obj) : val
       if (Dep.target) {
@@ -201,7 +203,7 @@ export function defineReactive (
       }
       return value
     },
-    set: function reactiveSetter (newVal) {
+    set: function reactiveSetter(newVal) {
       /*通过getter方法获取当前值，与新值进行比较，一致则不需要执行下面的操作*/
       const value = getter ? getter.call(obj) : val
       /* eslint-disable no-self-compare */
@@ -231,7 +233,7 @@ export function defineReactive (
  * triggers change notification if the property doesn't
  * already exist.
  */
-export function set (target: Array<any> | Object, key: any, val: any): any {
+export function set(target: Array < any > | Object, key: any, val: any): any {
   /*如果传入数组则在指定位置插入val*/
   if (Array.isArray(target) && typeof key === 'number') {
     target.length = Math.max(target.length, key)
@@ -245,7 +247,7 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
     return val
   }
   /*获得target的Oberver实例*/
-  const ob = (target : any).__ob__
+  const ob = (target: any).__ob__
   /*
     _isVue 一个防止vm实例自身被观察的标志位 ，_isVue为true则代表vm实例，也就是this
     vmCount判断是否为根节点，存在则代表是data的根节点，Vue 不允许在已经创建的实例上动态添加新的根级响应式属性(root-level reactive property)
@@ -274,12 +276,12 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
 /**
  * Delete a property and trigger change if necessary.
  */
-export function del (target: Array<any> | Object, key: any) {
+export function del(target: Array < any > | Object, key: any) {
   if (Array.isArray(target) && typeof key === 'number') {
     target.splice(key, 1)
     return
   }
-  const ob = (target : any).__ob__
+  const ob = (target: any).__ob__
   if (target._isVue || (ob && ob.vmCount)) {
     process.env.NODE_ENV !== 'production' && warn(
       'Avoid deleting properties on a Vue instance or its root $data ' +
@@ -301,7 +303,7 @@ export function del (target: Array<any> | Object, key: any) {
  * Collect dependencies on array elements when the array is touched, since
  * we cannot intercept array element access like property getters.
  */
-function dependArray (value: Array<any>) {
+function dependArray(value: Array < any > ) {
   for (let e, i = 0, l = value.length; i < l; i++) {
     e = value[i]
     /*通过对象上的观察者进行依赖收集*/
