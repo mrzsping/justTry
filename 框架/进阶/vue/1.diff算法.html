@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://www.cnblogs.com/wind-lanyan/p/9061684.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="前言 我的目标是写一个非常详细的关于diff的干货，所以本文有点长。也会用到大量的图片以及代码举例，目的让看这篇文章的朋友一定弄明白diff的边边角角。 先来了解几个点... 1. 当数据发生变化时，">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>详解vue的diff算法 - _wind - 博客园</title>
+    
+    <link rel="stylesheet" href="./1.diff算法_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./1.diff算法_files/bundle-thinkinside.min.css">
+    <link type="text/css" rel="stylesheet" href="./1.diff算法_files/custom.css">
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./1.diff算法_files/bundle-thinkinside-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/wind-lanyan/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/wind-lanyan/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/wind-lanyan/wlwmanifest.xml">
+    <script src="./1.diff算法_files/amp4ads-host-v0.js.下载"></script><script src="./1.diff算法_files/pubads_impl_rendering_2019100701.js.下载"></script><script async="" src="./1.diff算法_files/analytics.js.下载"></script><script type="text/javascript" src="./1.diff算法_files/encoder.js.下载"></script><script src="./1.diff算法_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./1.diff算法_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 296366;
+        var currentBlogApp = 'wind-lanyan';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+    </script>
+    
+    
+    
+<link rel="preload" href="./1.diff算法_files/f.txt" as="script"><script type="text/javascript" src="./1.diff算法_files/f.txt"></script><script src="./1.diff算法_files/pubads_impl_2019100701.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-35/html/container.html"></head>
+<body>
+    <a name="top"></a>
+    
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/wind-lanyan/"><img id="blogLogo" src="./1.diff算法_files/logo.gif" alt="返回主页"></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/wind-lanyan/">_wind</a>
+</h1>
+<h2>
+
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/wind-lanyan/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/_wind">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/wind-lanyan/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			
+			<span id="stats_post_count">随笔 - 
+24&nbsp; </span>
+<span id="stats_article_count">文章 - 
+0&nbsp; </span>
+<span id="stats-comment_count">评论 - 
+46</span>
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/wind-lanyan/p/9061684.html">详解vue的diff算法</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <h2 class="heading" data-id="heading-0">前言</h2>
+<p>我的目标是写一个非常详细的关于diff的干货，所以本文有点长。也会用到大量的图片以及代码举例，目的让看这篇文章的朋友一定弄明白diff的边边角角。</p>
+<p>先来了解几个点...</p>
+<h3 class="heading" data-id="heading-1">1. 当数据发生变化时，vue是怎么更新节点的？</h3>
+<p>要知道渲染真实DOM的开销是很大的，比如有时候我们修改了某个数据，如果直接渲染到真实dom上会引起整个dom树的重绘和重排，有没有可能我们只更新我们修改的那一小块dom而不要更新整个dom呢？diff算法能够帮助我们。</p>
+<p>我们先根据真实DOM生成一颗<code>virtual DOM</code>，当<code>virtual DOM</code>某个节点的数据改变后会生成一个新的<code>Vnode</code>，然后<code>Vnode</code>和<code>oldVnode</code>作对比，发现有不一样的地方就直接修改在真实的DOM上，然后使<code>oldVnode</code>的值为<code>Vnode</code>。</p>
+<p>diff的过程就是调用名为<code>patch</code>的函数，比较新旧节点，一边比较一边给<strong>真实的DOM</strong>打补丁。</p>
+<h3 class="heading" data-id="heading-2">2. virtual DOM和真实DOM的区别？</h3>
+<p>virtual DOM是将真实的DOM的数据抽取出来，以对象的形式模拟树形结构。比如dom是这样的：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span>123<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>对应的virtual DOM（伪代码）：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> Vnode =<span style="color: #000000;"> {
+    tag: </span>'div'<span style="color: #000000;">,
+    children: [
+        { tag: </span>'p', text: '123'<span style="color: #000000;"> }
+    ]
+};</span></pre>
+</div>
+<p>（温馨提示：<code>VNode</code>和<code>oldVNode</code>都是对象，一定要记住）</p>
+<h3 class="heading" data-id="heading-3">3. diff的比较方式？</h3>
+<p>在采取diff算法比较新旧节点的时候，比较只会在同层级进行, 不会跨层级比较。</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./1.diff算法_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span>123<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>
+
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">span</span><span style="color: #0000ff;">&gt;</span>456<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">span</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./1.diff算法_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>上面的代码会分别比较同一层的两个div以及第二层的p和span，但是不会拿div和span作比较。在别处看到的一张很形象的图：</p>
+<p><img src="./1.diff算法_files/998023-20180519212338609-1617459354.png" alt=""></p>
+<p>&nbsp;</p>
+<h2 class="heading" data-id="heading-4">diff流程图</h2>
+<p>当数据发生改变时，set方法会让调用<code>Dep.notify</code>通知所有订阅者Watcher，订阅者就会调用<code>patch</code>给真实的DOM打补丁，更新相应的视图。</p>
+<p><img src="./1.diff算法_files/998023-20180519212357826-1474719173.png" alt=""></p>
+<p>&nbsp;</p>
+<h2 class="heading" data-id="heading-5">具体分析</h2>
+<h3 class="heading" data-id="heading-6">patch</h3>
+<p>来看看<code>patch</code>是怎么打补丁的（代码只保留核心部分）</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./1.diff算法_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">function</span><span style="color: #000000;"> patch (oldVnode, vnode) {
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> some code</span>
+    <span style="color: #0000ff;">if</span><span style="color: #000000;"> (sameVnode(oldVnode, vnode)) {
+        patchVnode(oldVnode, vnode)
+    } </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {
+        const oEl </span>= oldVnode.el <span style="color: #008000;">//</span><span style="color: #008000;"> 当前oldVnode对应的真实元素节点</span>
+        let parentEle = api.parentNode(oEl)  <span style="color: #008000;">//</span><span style="color: #008000;"> 父元素</span>
+        createEle(vnode)  <span style="color: #008000;">//</span><span style="color: #008000;"> 根据Vnode生成新元素</span>
+        <span style="color: #0000ff;">if</span> (parentEle !== <span style="color: #0000ff;">null</span><span style="color: #000000;">) {
+            api.insertBefore(parentEle, vnode.el, api.nextSibling(oEl)) </span><span style="color: #008000;">//</span><span style="color: #008000;"> 将新元素添加进父元素</span>
+            api.removeChild(parentEle, oldVnode.el)  <span style="color: #008000;">//</span><span style="color: #008000;"> 移除以前的旧元素节点</span>
+            oldVnode = <span style="color: #0000ff;">null</span><span style="color: #000000;">
+        }
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> some code </span>
+    <span style="color: #0000ff;">return</span><span style="color: #000000;"> vnode
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./1.diff算法_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>patch函数接收两个参数<code>oldVnode</code>和<code>Vnode</code>分别代表新的节点和之前的旧节点</p>
+<ul>
+<li>判断两节点是否值得比较，值得比较则执行<code>patchVnode</code></li>
+</ul>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./1.diff算法_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">function</span><span style="color: #000000;"> sameVnode (a, b) {
+  </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> (
+    a.key </span>=== b.key &amp;&amp;  <span style="color: #008000;">//</span><span style="color: #008000;"> key值</span>
+    a.tag === b.tag &amp;&amp;  <span style="color: #008000;">//</span><span style="color: #008000;"> 标签名</span>
+    a.isComment === b.isComment &amp;&amp;  <span style="color: #008000;">//</span><span style="color: #008000;"> 是否为注释节点</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;"> 是否都定义了data，data包含一些具体信息，例如onclick , style</span>
+    isDef(a.data) === isDef(b.data) &amp;&amp;<span style="color: #000000;">  
+    sameInputType(a, b) </span><span style="color: #008000;">//</span><span style="color: #008000;"> 当标签是&lt;input&gt;的时候，type必须相同</span>
+<span style="color: #000000;">  )
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./1.diff算法_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<ul>
+<li>不值得比较则用<code>Vnode</code>替换<code>oldVnode</code></li>
+</ul>
+<p>如果两个节点都是一样的，那么就深入检查他们的子节点。如果两个节点不一样那就说明<code>Vnode</code>完全被改变了，就可以直接替换<code>oldVnode</code>。</p>
+<p>虽然这两个节点不一样但是他们的子节点一样怎么办？别忘了，diff可是逐层比较的，如果第一层不一样那么就不会继续深入比较第二层了。（我在想这算是一个缺点吗？相同子节点不能重复利用了...）</p>
+<h3 class="heading" data-id="heading-7">patchVnode</h3>
+<p>当我们确定两个节点值得比较之后我们会对两个节点指定<code>patchVnode</code>方法。那么这个方法做了什么呢？</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./1.diff算法_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #000000;">patchVnode (oldVnode, vnode) {
+    const el </span>= vnode.el =<span style="color: #000000;"> oldVnode.el
+    let i, oldCh </span>= oldVnode.children, ch =<span style="color: #000000;"> vnode.children
+    </span><span style="color: #0000ff;">if</span> (oldVnode === vnode) <span style="color: #0000ff;">return</span>
+    <span style="color: #0000ff;">if</span> (oldVnode.text !== <span style="color: #0000ff;">null</span> &amp;&amp; vnode.text !== <span style="color: #0000ff;">null</span> &amp;&amp; oldVnode.text !==<span style="color: #000000;"> vnode.text) {
+        api.setTextContent(el, vnode.text)
+    }</span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {
+        updateEle(el, vnode, oldVnode)
+        </span><span style="color: #0000ff;">if</span> (oldCh &amp;&amp; ch &amp;&amp; oldCh !==<span style="color: #000000;"> ch) {
+            updateChildren(el, oldCh, ch)
+        }</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span><span style="color: #000000;"> (ch){
+            createEle(vnode) </span><span style="color: #008000;">//</span><span style="color: #008000;">create el's children dom</span>
+        }<span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span><span style="color: #000000;"> (oldCh){
+            api.removeChildren(el)
+        }
+    }
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./1.diff算法_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>这个函数做了以下事情：</p>
+<ul>
+<li>找到对应的真实dom，称为<code>el</code></li>
+<li>判断<code>Vnode</code>和<code>oldVnode</code>是否指向同一个对象，如果是，那么直接<code>return</code></li>
+<li>如果他们都有文本节点并且不相等，那么将<code>el</code>的文本节点设置为<code>Vnode</code>的文本节点。</li>
+<li>如果<code>oldVnode</code>有子节点而<code>Vnode</code>没有，则删除<code>el</code>的子节点</li>
+<li>如果<code>oldVnode</code>没有子节点而<code>Vnode</code>有，则将<code>Vnode</code>的子节点真实化之后添加到<code>el</code></li>
+<li>如果两者都有子节点，则执行<code>updateChildren</code>函数比较子节点，这一步很重要</li>
+</ul>
+<p>其他几个点都很好理解，我们详细来讲一下updateChildren</p>
+<h3 class="heading" data-id="heading-8">updateChildren</h3>
+<p>代码量很大，不方便一行一行的讲解，所以下面结合一些示例图来描述一下。</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./1.diff算法_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #000000;">updateChildren (parentElm, oldCh, newCh) {
+    let oldStartIdx </span>= 0, newStartIdx = 0<span style="color: #000000;">
+    let oldEndIdx </span>= oldCh.length - 1<span style="color: #000000;">
+    let oldStartVnode </span>= oldCh[0<span style="color: #000000;">]
+    let oldEndVnode </span>=<span style="color: #000000;"> oldCh[oldEndIdx]
+    let newEndIdx </span>= newCh.length - 1<span style="color: #000000;">
+    let newStartVnode </span>= newCh[0<span style="color: #000000;">]
+    let newEndVnode </span>=<span style="color: #000000;"> newCh[newEndIdx]
+    let oldKeyToIdx
+    let idxInOld
+    let elmToMove
+    let before
+    </span><span style="color: #0000ff;">while</span> (oldStartIdx &lt;= oldEndIdx &amp;&amp; newStartIdx &lt;=<span style="color: #000000;"> newEndIdx) {
+        </span><span style="color: #0000ff;">if</span> (oldStartVnode == <span style="color: #0000ff;">null</span>) {   <span style="color: #008000;">//</span><span style="color: #008000;"> 对于vnode.key的比较，会把oldVnode = null</span>
+            oldStartVnode = oldCh[++<span style="color: #000000;">oldStartIdx] 
+        }</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> (oldEndVnode == <span style="color: #0000ff;">null</span><span style="color: #000000;">) {
+            oldEndVnode </span>= oldCh[--<span style="color: #000000;">oldEndIdx]
+        }</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> (newStartVnode == <span style="color: #0000ff;">null</span><span style="color: #000000;">) {
+            newStartVnode </span>= newCh[++<span style="color: #000000;">newStartIdx]
+        }</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> (newEndVnode == <span style="color: #0000ff;">null</span><span style="color: #000000;">) {
+            newEndVnode </span>= newCh[--<span style="color: #000000;">newEndIdx]
+        }</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span><span style="color: #000000;"> (sameVnode(oldStartVnode, newStartVnode)) {
+            patchVnode(oldStartVnode, newStartVnode)
+            oldStartVnode </span>= oldCh[++<span style="color: #000000;">oldStartIdx]
+            newStartVnode </span>= newCh[++<span style="color: #000000;">newStartIdx]
+        }</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span><span style="color: #000000;"> (sameVnode(oldEndVnode, newEndVnode)) {
+            patchVnode(oldEndVnode, newEndVnode)
+            oldEndVnode </span>= oldCh[--<span style="color: #000000;">oldEndIdx]
+            newEndVnode </span>= newCh[--<span style="color: #000000;">newEndIdx]
+        }</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span><span style="color: #000000;"> (sameVnode(oldStartVnode, newEndVnode)) {
+            patchVnode(oldStartVnode, newEndVnode)
+            api.insertBefore(parentElm, oldStartVnode.el, api.nextSibling(oldEndVnode.el))
+            oldStartVnode </span>= oldCh[++<span style="color: #000000;">oldStartIdx]
+            newEndVnode </span>= newCh[--<span style="color: #000000;">newEndIdx]
+        }</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span><span style="color: #000000;"> (sameVnode(oldEndVnode, newStartVnode)) {
+            patchVnode(oldEndVnode, newStartVnode)
+            api.insertBefore(parentElm, oldEndVnode.el, oldStartVnode.el)
+            oldEndVnode </span>= oldCh[--<span style="color: #000000;">oldEndIdx]
+            newStartVnode </span>= newCh[++<span style="color: #000000;">newStartIdx]
+        }</span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {
+           </span><span style="color: #008000;">//</span><span style="color: #008000;"> 使用key时的比较</span>
+            <span style="color: #0000ff;">if</span> (oldKeyToIdx ===<span style="color: #000000;"> undefined) {
+                oldKeyToIdx </span>= createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx) <span style="color: #008000;">//</span><span style="color: #008000;"> 有key生成index表</span>
+<span style="color: #000000;">            }
+            idxInOld </span>=<span style="color: #000000;"> oldKeyToIdx[newStartVnode.key]
+            </span><span style="color: #0000ff;">if</span> (!<span style="color: #000000;">idxInOld) {
+                api.insertBefore(parentElm, createEle(newStartVnode).el, oldStartVnode.el)
+                newStartVnode </span>= newCh[++<span style="color: #000000;">newStartIdx]
+            }
+            </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {
+                elmToMove </span>=<span style="color: #000000;"> oldCh[idxInOld]
+                </span><span style="color: #0000ff;">if</span> (elmToMove.sel !==<span style="color: #000000;"> newStartVnode.sel) {
+                    api.insertBefore(parentElm, createEle(newStartVnode).el, oldStartVnode.el)
+                }</span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {
+                    patchVnode(elmToMove, newStartVnode)
+                    oldCh[idxInOld] </span>= <span style="color: #0000ff;">null</span><span style="color: #000000;">
+                    api.insertBefore(parentElm, elmToMove.el, oldStartVnode.el)
+                }
+                newStartVnode </span>= newCh[++<span style="color: #000000;">newStartIdx]
+            }
+        }
+    }
+    </span><span style="color: #0000ff;">if</span> (oldStartIdx &gt;<span style="color: #000000;"> oldEndIdx) {
+        before </span>= newCh[newEndIdx + 1] == <span style="color: #0000ff;">null</span> ? <span style="color: #0000ff;">null</span> : newCh[newEndIdx + 1<span style="color: #000000;">].el
+        addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx)
+    }</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> (newStartIdx &gt;<span style="color: #000000;"> newEndIdx) {
+        removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx)
+    }
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./1.diff算法_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>先说一下这个函数做了什么</p>
+<ul>
+<li>将<code>Vnode</code>的子节点<code>Vch</code>和<code>oldVnode</code>的子节点<code>oldCh</code>提取出来</li>
+<li><code>oldCh</code>和<code>vCh</code>各有两个头尾的变量<code>StartIdx</code>和<code>EndIdx</code>，它们的2个变量相互比较，一共有4种比较方式。如果4种比较都没匹配，如果设置了<code>key</code>，就会用<code>key</code>进行比较，在比较的过程中，变量会往中间靠，一旦<code>StartIdx&gt;EndIdx</code>表明<code>oldCh</code>和<code>vCh</code>至少有一个已经遍历完了，就会结束比较。</li>
+</ul>
+<h4 class="heading" data-id="heading-9">图解updateChildren</h4>
+<p>终于来到了这一部分，上面的总结相信很多人也看得一脸懵逼，下面我们好好说道说道。（这都是我自己画的，求推荐好用的画图工具...）</p>
+<p>&nbsp;</p>
+<p>粉红色的部分为oldCh和vCh</p>
+<p><img src="./1.diff算法_files/998023-20180519211756656-545182812.png" alt=""></p>
+<p>&nbsp;</p>
+<p>我们将它们取出来并分别用s和e指针指向它们的头child和尾child</p>
+<p><img src="./1.diff算法_files/998023-20180519211809225-1140464542.png" alt=""></p>
+<p>&nbsp;</p>
+<p>现在分别对<code>oldS、oldE、S、E</code>两两做<code>sameVnode</code>比较，有四种比较方式，当其中两个能匹配上那么真实dom中的相应节点会移到Vnode相应的位置，这句话有点绕，打个比方</p>
+<ul>
+<li>如果是oldS和E匹配上了，那么真实dom中的第一个节点会移到最后</li>
+<li>如果是oldE和S匹配上了，那么真实dom中的最后一个节点会移到最前，匹配上的两个指针向中间移动</li>
+<li>如果四种匹配没有一对是成功的，那么遍历<code>oldChild</code>，<code>S</code>挨个和他们匹配，匹配成功就在真实dom中将成功的节点移到最前面，如果依旧没有成功的，那么将<code>S对应的节点</code>插入到dom中对应的<code>oldS</code>位置，<code>oldS</code>和<code>S</code>指针向中间移动。</li>
+</ul>
+<p>再配个图</p>
+<p><img src="./1.diff算法_files/998023-20180519213155724-1596106357.png" alt=""></p>
+<ul>
+<li>第一步</li>
+</ul>
+<div class="cnblogs_code">
+<pre>oldS = a, oldE =<span style="color: #000000;"> d；
+S </span>= a, E = b;</pre>
+</div>
+<p><code>oldS</code>和<code>S</code>匹配，则将dom中的a节点放到第一个，已经是第一个了就不管了，此时dom的位置为：a b d</p>
+<ul>
+<li>第二步</li>
+</ul>
+<div class="cnblogs_code">
+<pre>oldS = b, oldE =<span style="color: #000000;"> d；
+S </span>= c, E = b;</pre>
+</div>
+<p><code>oldS</code>和<code>E</code>匹配，就将原本的b节点移动到最后，因为<code>E</code>是最后一个节点，他们位置要一致，这就是上面说的：<strong>当其中两个能匹配上那么真实dom中的相应节点会移到Vnode相应的位置</strong>，此时dom的位置为：a d b</p>
+<ul>
+<li>第三步</li>
+</ul>
+<div class="cnblogs_code">
+<pre>oldS = d, oldE =<span style="color: #000000;"> d；
+S </span>= c, E = d;</pre>
+</div>
+<p><code>oldE</code>和<code>E</code>匹配，位置不变此时dom的位置为：a d b</p>
+<ul>
+<li>第四步</li>
+</ul>
+<div class="cnblogs_code">
+<pre>oldS++<span style="color: #000000;">;
+oldE</span>--<span style="color: #000000;">;
+oldS </span>&gt; oldE;</pre>
+</div>
+<p>遍历结束，说明<code>oldCh</code>先遍历完。就将剩余的<code>vCh</code>节点根据自己的的index插入到真实dom中去，此时dom位置为：a c d b</p>
+<p>一次模拟完成。</p>
+<p>这个匹配过程的结束有两个条件：</p>
+<ul>
+<li><code>oldS &gt; oldE</code>表示<code>oldCh</code>先遍历完，那么就将多余的<code>vCh</code>根据index添加到dom中去（如上图）</li>
+<li><code>S &gt; E</code>表示vCh先遍历完，那么就在真实dom中将区间为<code>[oldS, oldE]</code>的多余节点删掉</li>
+</ul>
+<p><img src="./1.diff算法_files/998023-20180519213058181-48547172.png" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>下面再举一个例子，可以像上面那样自己试着模拟一下</p>
+<p>&nbsp;<img src="./1.diff算法_files/998023-20180519213116477-1550894853.png" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>当这些节点<code>sameVnode</code>成功后就会紧接着执行<code>patchVnode</code>了，可以看一下上面的代码</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">if</span><span style="color: #000000;"> (sameVnode(oldStartVnode, newStartVnode)) {
+    patchVnode(oldStartVnode, newStartVnode)
+}</span></pre>
+</div>
+<p>就这样层层递归下去，直到将oldVnode和Vnode中的所有子节点比对完。也将dom的所有补丁都打好啦。那么现在再回过去看updateChildren的代码会不会容易很多呢？</p>
+<h2 class="heading" data-id="heading-10">总结</h2>
+<p>以上为diff算法的全部过程，放上一张文章开始就发过的总结图，可以试试看着这张图回忆一下diff的过程。</p>
+<p>&nbsp;<img src="./1.diff算法_files/998023-20180519213134497-676744027.png" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>欢迎在评论区多多交流。&nbsp;</p>
+<blockquote>
+<p>参考文章</p>
+<p><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Faooy%2Fblog%2Fissues%2F2" rel="nofollow noopener noreferrer" target="_blank">解析vue2.0的diff算法</a></p>
+<p><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fanswershuto%2FlearnVue%2Fblob%2Fmaster%2Fdocs%2FVirtualDOM%25E4%25B8%258Ediff(Vue%25E5%25AE%259E%25E7%258E%25B0).MarkDown" rel="nofollow noopener noreferrer" target="_blank">VirtualDOM与diff(Vue实现)</a></p>
+</blockquote>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/wind-lanyan/category/1219705.html" target="_blank">vue</a></div>
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/vue/">vue</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(9061684,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;f84c2f89-2352-e611-9fc1-ac853d9f53cc&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./1.diff算法_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./1.diff算法_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/wind-lanyan/" target="_blank"><img src="./1.diff算法_files/20180428151202.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/wind-lanyan/">_wind</a><br>
+            <a href="https://home.cnblogs.com/u/wind-lanyan/followees/">关注 - 7</a><br>
+            <a href="https://home.cnblogs.com/u/wind-lanyan/followers/">粉丝 - 46</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;f84c2f89-2352-e611-9fc1-ac853d9f53cc&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(9061684,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">32</span>
+    </div>
+    <div class="buryit" onclick="votePost(9061684,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/wind-lanyan/p/9044130.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/wind-lanyan/p/9044130.html" title="发布于 2018-05-16 08:32">5种方式实现数组扁平化</a>
+    <br>
+    <a href="https://www.cnblogs.com/wind-lanyan/p/9173755.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/wind-lanyan/p/9173755.html" title="发布于 2018-06-12 16:32">前端优化之图片懒加载</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2018-05-19 21:25</span>&nbsp;<a href="https://www.cnblogs.com/wind-lanyan/">_wind</a> 阅读(<span id="post_view_count">25307</span>) 评论(<span id="post_comment_count">9</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=9061684" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(9061684); return false;">收藏</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script src="./1.diff算法_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 296366, cb_blogApp = 'wind-lanyan', cb_blogUserGuid = 'f84c2f89-2352-e611-9fc1-ac853d9f53cc';
+    var cb_entryId = 9061684, cb_entryCreatedDate = '2018-05-19 21:25', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder">
+
+<div id="comment_pager_top">
+    
+</div>
+
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"><div class="feedbackNoItems"></div></div>	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#3977980" class="layer">#1楼</a>
+<a name="3977980" id="comment_anchor_3977980"></a>
+
+ 
+<span class="comment_date">2018-05-19 21:28</span>
+
+ 
+
+            <a id="a_comment_author_3977980" href="https://www.cnblogs.com/cmt/" target="_blank">博客园团队</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_3977980" class="blog_comment_body">
+    您好，文中的最后几张图片在 Safari 中无法显示，麻烦您上传一下图片
+</div>
+        <div class="comment_vote">
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(&#39;3977980&#39;, &#39;Digg&#39;, this);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(&#39;3977980&#39;, &#39;Bury&#39;, this);">
+                反对(1)
+            </a>
+        </div>
+        <span id="comment_3977980_avatar" style="display:none">
+            https://pic.cnblogs.com/face/35695/20140318223943.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#3977981" class="layer">#2楼</a>
+<a name="3977981" id="comment_anchor_3977981"></a>
+[<span class="louzhu">楼主</span>]
+ 
+<span class="comment_date">2018-05-19 21:29</span>
+
+ 
+
+            <a id="a_comment_author_3977981" href="https://www.cnblogs.com/wind-lanyan/" target="_blank">_wind</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_3977981" class="blog_comment_body">
+    <a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#3977980" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3977980);">@</a>
+博客园团队<br>好的
+</div>
+        <div class="comment_vote">
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(&#39;3977981&#39;, &#39;Digg&#39;, this);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(&#39;3977981&#39;, &#39;Bury&#39;, this);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_3977981_avatar" style="display:none">
+            https://pic.cnblogs.com/face/998023/20180428151202.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#4124184" class="layer">#3楼</a>
+<a name="4124184" id="comment_anchor_4124184"></a>
+
+ 
+<span class="comment_date">2018-11-27 18:56</span>
+
+ 
+
+            <a id="a_comment_author_4124184" href="https://www.cnblogs.com/suihang/" target="_blank">一只菜鸟攻城狮啊</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4124184" class="blog_comment_body">
+    学习，大佬，给你点个赞好吧
+</div>
+        <div class="comment_vote">
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(&#39;4124184&#39;, &#39;Digg&#39;, this);">
+                支持(2)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(&#39;4124184&#39;, &#39;Bury&#39;, this);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4124184_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1459059/20190902233347.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#4161763" class="layer">#4楼</a>
+<a name="4161763" id="comment_anchor_4161763"></a>
+
+ 
+<span class="comment_date">2019-01-13 14:38</span>
+
+ 
+
+            <a id="a_comment_author_4161763" href="https://home.cnblogs.com/u/1370911/" target="_blank">rosie1024</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4161763" class="blog_comment_body">
+    学习了
+</div>
+        <div class="comment_vote">
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(&#39;4161763&#39;, &#39;Digg&#39;, this);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(&#39;4161763&#39;, &#39;Bury&#39;, this);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#4180498" class="layer">#5楼</a>
+<a name="4180498" id="comment_anchor_4180498"></a>
+
+ 
+<span class="comment_date">2019-02-15 15:30</span>
+
+ 
+
+            <a id="a_comment_author_4180498" href="https://home.cnblogs.com/u/1579217/" target="_blank">笠笠笠灬</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4180498" class="blog_comment_body">
+    给大佬点赞
+</div>
+        <div class="comment_vote">
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(&#39;4180498&#39;, &#39;Digg&#39;, this);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(&#39;4180498&#39;, &#39;Bury&#39;, this);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#4257770" class="layer">#6楼</a>
+<a name="4257770" id="comment_anchor_4257770"></a>
+
+ 
+<span class="comment_date">2019-05-16 22:27</span>
+
+ 
+
+            <a id="a_comment_author_4257770" href="https://www.cnblogs.com/me-data/" target="_blank">偏灬爱</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4257770" class="blog_comment_body">
+    有个地方说一下其实api.insert不是真的插入 而是使用了nextTick方法 还有的就是 虚拟dom如何和真正dom如何建立的引用啊
+</div>
+        <div class="comment_vote">
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(&#39;4257770&#39;, &#39;Digg&#39;, this);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(&#39;4257770&#39;, &#39;Bury&#39;, this);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#4258791" class="layer">#7楼</a>
+<a name="4258791" id="comment_anchor_4258791"></a>
+
+ 
+<span class="comment_date">2019-05-18 13:42</span>
+
+ 
+
+            <a id="a_comment_author_4258791" href="https://www.cnblogs.com/me-data/" target="_blank">偏灬爱</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4258791" class="blog_comment_body">
+    在插入dom的时候不获取属性 浏览器就会一次性flush 但是有一个问题 虚拟dom和fragment相比存在的意义是什么啊 还有就是虚拟dom有对真实dom的引用<br>那么如何生成新的虚拟dom啊
+</div>
+        <div class="comment_vote">
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(&#39;4258791&#39;, &#39;Digg&#39;, this);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(&#39;4258791&#39;, &#39;Bury&#39;, this);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#4282210" class="layer">#8楼</a>
+<a name="4282210" id="comment_anchor_4282210"></a>
+
+ 
+<span class="comment_date">2019-06-18 10:54</span>
+
+ 
+
+            <a id="a_comment_author_4282210" href="https://www.cnblogs.com/whmgo/" target="_blank">时间旅行箱</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4282210" class="blog_comment_body">
+    在各位大佬的指引下越变越强
+</div>
+        <div class="comment_vote">
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(&#39;4282210&#39;, &#39;Digg&#39;, this);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(&#39;4282210&#39;, &#39;Bury&#39;, this);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4282210_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1041238/20180828220757.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#4341660" class="layer">#9楼</a>
+<a name="4341660" id="comment_anchor_4341660"></a>
+
+        <span id="comment-maxId" style="display:none">4341660</span>
+        <span id="comment-maxDate" style="display:none">2019/9/2 上午12:04:32</span>
+ 
+<span class="comment_date">2019-09-02 00:04</span>
+
+ 
+
+            <a id="a_comment_author_4341660" href="https://www.cnblogs.com/3532gll/" target="_blank">3532</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4341660" class="blog_comment_body">
+    您好，请问倒数第三张图中，第二步和第三步是不是画反了？
+</div>
+        <div class="comment_vote">
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(&#39;4341660&#39;, &#39;Digg&#39;, this);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(&#39;4341660&#39;, &#39;Bury&#39;, this);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4341660_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1307675/20180731151910.png
+        </span>
+
+			</div>
+		</div>
+
+<div id="comment_pager_bottom">
+    
+</div>
+
+
+</div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://www.jdcloud.com/cn/activity/year-end?utm_source=DMT_cnblogs&amp;utm_medium=CH&amp;utm_campaign=q4vm&amp;utm_term=Virtual-Machines" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-京东云&#39;)">【活动】京东云服务器_云主机低于1折，低价高性能产品备战双11</a><br><a href="https://www.ctyun.cn/activity/#/enterprise2?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-1008-0%E5%85%83%E4%B8%8A%E4%BA%91&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=?track=|cp:cz_blog|tgdy:46860|ttjh:shouyedingbuyoucefenlan|key:czkk1|pf:pc" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-添加云&#39;)">【推荐】天翼云新用户专享，0元体验数十款云产品，立即开通</a><br><a href="https://www.huodongxing.com/event/1514061072200" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-魔程&#39;)">【活动】魔程社区技术沙龙—移动测试应用专场等你报名</a><br><a href="https://www.cnblogs.com/cmt/p/11612966.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-华为云-AI有奖训练营&#39;)">【福利】学AI有奖：博客园&amp;华为云&nbsp;Modelarts 有奖训练营</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./1.diff算法_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block">
+        <div id="div-gpt-ad-1546353474406-0" style="height:250px; width:300px;" data-google-query-id="COzh8_fAleUCFZN1YAodazwAMQ"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C1_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C1_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; vertical-align: bottom;" data-google-container-id="1" data-load-complete="true" src="./1.diff算法_files/saved_resource.html"></iframe></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="vue的diff算法" href="https://www.cnblogs.com/kelly-sunshine/p/10763972.html" target="_blank" onclick="clickRecomItmem(10763972)">vue的diff算法</a><br>·  <a title="浅析vue2.0的diff算法" href="https://www.cnblogs.com/chengxs/p/10392310.html" target="_blank" onclick="clickRecomItmem(10392310)">浅析vue2.0的diff算法</a><br>·  <a title="详解vue的diff算法" href="https://www.cnblogs.com/wind-lanyan/p/9061684.html" target="_blank" onclick="clickRecomItmem(9061684)">详解vue的diff算法</a><br>·  <a title="vuediff算法patch" href="https://www.cnblogs.com/mengfangui/p/9984135.html" target="_blank" onclick="clickRecomItmem(9984135)">vuediff算法patch</a><br>·  <a title="说说VNode节点(Vue.js实现)" href="https://www.cnblogs.com/answershuto/p/7502452.html" target="_blank" onclick="clickRecomItmem(7502452)">说说VNode节点(Vue.js实现)</a><br></div></div>
+    <div id="cnblogs_c2" class="c_ad_block">
+        <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;" data-google-query-id="CLr79PfAleUCFZN1YAodazwAMQ">
+            
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C2_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C2_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; vertical-align: bottom;" data-google-container-id="2" data-load-complete="true" src="./1.diff算法_files/saved_resource(1).html"></iframe></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/642062/" target="_blank">微软不允许用户卸载 Chromium Edge&nbsp;浏览器</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/642061/" target="_blank">美司法部对谷歌26亿美元收购Looker展开反垄断审查</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/642060/" target="_blank">科学家对进入银河系的气体要多于排出的气体这一现象感到费解</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/642059/" target="_blank">贸易谈判利好美股大涨 苹果市值超微软重回第一</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/642058/" target="_blank">PCIe 5.0首秀！PCIe 4.0刚出生就落伍了？</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<div id="sidebar_news" class="newsItem"><!--done-->
+<h3 class="catListTitle">公告</h3>
+
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/wind-lanyan/">
+            _wind
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/wind-lanyan/" title="入园时间：2016-07-25">
+            3年2个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/wind-lanyan/followers/">
+            46
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/wind-lanyan/followees/">
+            7
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;f84c2f89-2352-e611-9fc1-ac853d9f53cc&#39;)">+加关注</a></div>
+        <script>getFollowStatus('f84c2f89-2352-e611-9fc1-ac853d9f53cc');</script>
+    </div>
+</div>
+
+</div>
+
+			<div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/09/12&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年10月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/11/12&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                        <td class="" align="center">
+                            3
+                        </td>
+                        <td class="" align="center">
+                            4
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        5
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            6
+                        </td>
+                            <td class="" align="center">
+                                7
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                        <td class="CalTodayDay" align="center">
+                            12
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            13
+                        </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            19
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            20
+                        </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                            <td class="" align="center">
+                                24
+                            </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            26
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            27
+                        </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                            <td class="" align="center">
+                                30
+                            </td>
+                            <td class="" align="center">
+                                31
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            2
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            3
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                8
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            9
+                        </td>
+                </tr>
+    </tbody>
+</table></div><script>loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    <div class="catListLink">
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+		<li>
+
+<a href="https://www.cnblogs.com/wind-lanyan/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/wind-lanyan/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/wind-lanyan/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/wind-lanyan/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/wind-lanyan/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    <div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+
+        <li>
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/js/">js</a>(8)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/javascript/">javascript</a>(4)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/vue/">vue</a>(2)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/%E9%97%AD%E5%8C%85/">闭包</a>(2)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/%E5%AF%B9%E8%B1%A1/">对象</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/">事件委托</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/%E5%8E%9F%E5%9E%8B/">原型</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/webpack/">webpack</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/wind-lanyan/tag/wechat/">wechat</a>(1)
+        </li>
+            <li>
+                <a href="https://www.cnblogs.com/wind-lanyan/tag/">更多</a>
+            </li>
+
+</ul>
+</div>
+
+
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+        <div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+            <h3 class="catListTitle">
+                
+
+随笔分类
+
+
+
+            </h3>
+
+
+            <ul>
+
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/category/1016576.html" rel="" target="">
+    css(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/category/1113944.html" rel="" target="">
+    hexo(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/category/859058.html" rel="" target="">
+    JavaScript(16)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/category/1113783.html" rel="" target="">
+    Node(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/category/1219705.html" rel="" target="">
+    vue(2)
+</a>
+ 
+
+                        </li>
+
+            </ul>
+
+
+        </div>
+        <div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+            <h3 class="catListTitle">
+                
+
+随笔档案
+
+
+
+            </h3>
+
+
+            <ul>
+
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2018/08.html" rel="" target="">
+    2018年8月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2018/06.html" rel="" target="">
+    2018年6月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2018/05.html" rel="" target="">
+    2018年5月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2018/04.html" rel="" target="">
+    2018年4月(3)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2018/03.html" rel="" target="">
+    2018年3月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2018/02.html" rel="" target="">
+    2018年2月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2018/01.html" rel="" target="">
+    2018年1月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2017/11.html" rel="" target="">
+    2017年11月(3)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2017/09.html" rel="" target="">
+    2017年9月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2017/07.html" rel="" target="">
+    2017年7月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2017/06.html" rel="" target="">
+    2017年6月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2017/03.html" rel="" target="">
+    2017年3月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2017/02.html" rel="" target="">
+    2017年2月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2016/11.html" rel="" target="">
+    2016年11月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/wind-lanyan/archive/2016/07.html" rel="" target="">
+    2016年7月(2)
+</a>
+ 
+
+                        </li>
+
+            </ul>
+
+
+        </div>
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/wind-lanyan/p/7899428.html#4347607">1. Re:Vue之自定义组件的v-model</a></li>
+                    <li class="recent_comment_body">写的很好，只是还是不太明白为什么自定义组件不可以用v-model做双向绑定呀?</li>
+                    <li class="recent_comment_author">--hngdlxy143</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/wind-lanyan/p/6978084.html#4347518">2. Re:css中单位em和rem的区别</a></li>
+                    <li class="recent_comment_body">@ 大雷鬼田野博主这些的例子里，元素的字体大小已经被重新声明了...</li>
+                    <li class="recent_comment_author">--Heaanc</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html#4341660">3. Re:详解vue的diff算法</a></li>
+                    <li class="recent_comment_body">您好，请问倒数第三张图中，第二步和第三步是不是画反了？</li>
+                    <li class="recent_comment_author">--3532</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/wind-lanyan/p/6978084.html#4321764">4. Re:css中单位em和rem的区别</a></li>
+                    <li class="recent_comment_body">em 是根据当前元素的字体大小来定的。。。当前元素的字体大小也是继承了父元素的，别误导</li>
+                    <li class="recent_comment_author">--大雷鬼田野</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/wind-lanyan/p/7899428.html#4309482">5. Re:Vue之自定义组件的v-model</a></li>
+                    <li class="recent_comment_body">你给的例子测试通过了。<br>只是看官网有更简单的例子，可惜没跑起来。<br>还得慢慢理解了。</li>
+                    <li class="recent_comment_author">--金色海洋（jyk）阳光男孩</li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    <div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/wind-lanyan/p/6978084.html">
+                            1. css中单位em和rem的区别(27847)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/wind-lanyan/p/7899428.html">
+                            2. Vue之自定义组件的v-model(27653)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html">
+                            3. 详解vue的diff算法(25308)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/wind-lanyan/p/5718245.html">
+                            4. Javascript之DOM的三大节点及部分用法(9469)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/wind-lanyan/p/wind-lanyan.html">
+                            5. Javascript之全局变量和局部变量部分讲解(8781)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    <div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html">
+                            1. 详解vue的diff算法(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/wind-lanyan/p/6978084.html">
+                            2. css中单位em和rem的区别(7)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/wind-lanyan/p/6370814.html">
+                            3. Javascript之深入浅出prototype(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/wind-lanyan/p/6080160.html">
+                            4. Javascript之深入理解闭包(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/wind-lanyan/p/8365185.html">
+                            5. 微信小程序版2048(5)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/wind-lanyan/p/9061684.html">
+                                1. 详解vue的diff算法(32)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/wind-lanyan/p/6978084.html">
+                                2. css中单位em和rem的区别(23)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/wind-lanyan/p/9211037.html">
+                                3. 从头到尾谈一下HTTPS(11)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/wind-lanyan/p/9173755.html">
+                                4. 前端优化之图片懒加载(5)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/wind-lanyan/p/wind-lanyan.html">
+                                5. Javascript之全局变量和局部变量部分讲解(5)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright © 2019 _wind
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+
+
+</body></html>

@@ -1,0 +1,6 @@
+#div_digg {
+      position: fixed;
+    z-index: 999;
+    top: 500px;
+    right: 50px;
+}
