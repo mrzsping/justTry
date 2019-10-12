@@ -14,6 +14,8 @@
   <p>2.getter setter 不可见，但是 watcher 实例在 getter 中 把属性当做依赖收集起来</p>
   <p>3.当更改数据时触发 setter，setter 通知 watcher 变更，触发组件重新渲染</p>
   <p>4.在嵌套对象添加响应式属性 Vue.$set </p>
+
+  <p>将对象属性转化为访问器属性 -> 在watcher中访问时触发get -> dep对象收集依赖的watcher对象 -> 改变数值触发set -> 调用dep中的通知函数 -> 数据改变</p>
   <script>
     let vm = new Vue({
       el: '#app',

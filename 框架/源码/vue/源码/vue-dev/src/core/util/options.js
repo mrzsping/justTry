@@ -24,7 +24,7 @@ import {
 /**
  * Option overwriting strategies are functions that handle
  * how to merge a parent option value and a child option
- * value into the final value.
+ * value into the final value. 合并父子对象选项的策略对象
  */
 const strats = config.optionMergeStrategies
 
@@ -44,14 +44,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 /**
- * Helper that recursively merges two data objects together.
+ * Helper that recursively/递归 merges two data objects together.
  */
 function mergeData (to: Object, from: ?Object): Object {
   if (!from) return to
   let key, toVal, fromVal
 
   const keys = hasSymbol
-    ? Reflect.ownKeys(from)
+    ? Reflect.ownKeys(from) // 返回一个包含所有自身属性（不包含继承属性）的数组
     : Object.keys(from)
 
   for (let i = 0; i < keys.length; i++) {
@@ -168,7 +168,7 @@ function dedupeHooks (hooks) {
   }
   return res
 }
-
+// 生命周期添加合并策略函数
 LIFECYCLE_HOOKS.forEach(hook => {
   strats[hook] = mergeHook
 })
@@ -194,7 +194,7 @@ function mergeAssets (
     return res
   }
 }
-
+// 指令、组件、过滤器合并策略函数
 ASSET_TYPES.forEach(function (type) {
   strats[type + 's'] = mergeAssets
 })
@@ -451,7 +451,7 @@ export function resolveAsset (
     return
   }
   const assets = options[type]
-  // check local registration variations first
+  // check local registration variations // 变量复数 first
   if (hasOwn(assets, id)) return assets[id]
   const camelizedId = camelize(id)
   if (hasOwn(assets, camelizedId)) return assets[camelizedId]

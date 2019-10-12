@@ -25,6 +25,7 @@ Vue.prototype.$mount = function (
   el = el && query(el)
 
   /* istanbul ignore if */
+  // 禁止挂载到 body 或 html
   if (el === document.body || el === document.documentElement) {
     process.env.NODE_ENV !== 'production' && warn(
       `Do not mount Vue to <html> or <body> - mount to normal elements instead.`
@@ -38,7 +39,7 @@ Vue.prototype.$mount = function (
   if (!options.render) {
     let template = options.template
     /*template存在的时候取template，不存在的时候取el的outerHTML*/
-    if (template) {
+    if (template) { // 处理template
       /*当template是字符串的时候*/
       if (typeof template === 'string') {
         if (template.charAt(0) === '#') {
@@ -76,7 +77,7 @@ Vue.prototype.$mount = function (
         shouldDecodeNewlines,
         delimiters: options.delimiters
       }, this)
-      options.render = render
+      options.render = render // 挂载
       options.staticRenderFns = staticRenderFns
 
       /* istanbul ignore if */
@@ -86,7 +87,7 @@ Vue.prototype.$mount = function (
       }
     }
   }
-  /*调用const mount = Vue.prototype.$mount保存下来的不带编译的mount*/
+  /*判断是否有reander 调用runtime/index.js中的mount*/
   return mount.call(this, el, hydrating)
 }
 

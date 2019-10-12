@@ -39,7 +39,7 @@ Vue.prototype.$mount = function ( // 添加$mount方法
   hydrating?: boolean
 ): Component {
   el = el && inBrowser ? query(el) : undefined
-  return mountComponent(this, el, hydrating)
+  return mountComponent(this, el, hydrating) // 挂载
 }
 
 // devtools global hook

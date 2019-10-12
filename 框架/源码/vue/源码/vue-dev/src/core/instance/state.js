@@ -109,7 +109,7 @@ function initProps (vm: Component, propsOptions: Object) {
   toggleObserving(true)
 }
 
-function initData (vm: Component) {
+function initData (vm: Component) { // 数据相应相关
   let data = vm.$options.data
   data = vm._data = typeof data === 'function'
     ? getData(data, vm)
@@ -144,7 +144,7 @@ function initData (vm: Component) {
         vm
       )
     } else if (!isReserved(key)) {
-      proxy(vm, `_data`, key)
+      proxy(vm, `_data`, key) // 数据劫持 代理 vm._data.a === vm.a
     }
   }
   // observe data
@@ -342,7 +342,7 @@ export function stateMixin (Vue: Class<Component>) {
   Vue.prototype.$set = set
   Vue.prototype.$delete = del
 
-  Vue.prototype.$watch = function (
+  Vue.prototype.$watch = function ( // $watch 与 Watch
     expOrFn: string | Function,
     cb: any,
     options?: Object

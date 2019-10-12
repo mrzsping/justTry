@@ -24,6 +24,7 @@ export function def (obj: Object, key: string, val: any, enumerable?: boolean) {
 
 /**
  * Parse simple path.
+ * 分割求值 c = {a: {b: 1}} => c[a][b]
  */
 const bailRE = /[^\w.$]/
 export function parsePath (path: string): any {

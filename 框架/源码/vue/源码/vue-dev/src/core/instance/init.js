@@ -29,11 +29,11 @@ export function initMixin (Vue: Class<Component>) {
     // a flag to avoid this being observed
     vm._isVue = true // 标识是否为vue对象
     // merge options
-    if (options && options._isComponent) {
-      // optimize internal component instantiation since dynamic options merging is pretty slow, and none of the internal component options needs special treatment.
+    if (options && options._isComponent) { // _isComponent vue内部使用
+      // optimize/优化 internal component instantiation since dynamic options merging is pretty slow, and none of the internal component options needs special treatment.
       initInternalComponent(vm, options)
     } else {
-      vm.$options = mergeOptions( // 添加$options属性，用于Vue实例初始化
+      vm.$options = mergeOptions( // 策略对象合并参数 添加$options属性，用于Vue实例初始化
         resolveConstructorOptions(vm.constructor), // Vue.options
         options || {},
         vm
@@ -70,12 +70,12 @@ export function initMixin (Vue: Class<Component>) {
     }
     // expose real self
     vm._self = vm
-    initLifecycle(vm)
+    initLifecycle(vm) // 添加属性
     initEvents(vm)
     initRender(vm)
     callHook(vm, 'beforeCreate')
     initInjections(vm) // resolve injections before data/props
-    initState(vm)
+    initState(vm) // 添加data
     initProvide(vm) // resolve provide after data/props
     callHook(vm, 'created')
 
@@ -86,7 +86,7 @@ export function initMixin (Vue: Class<Component>) {
       measure(`vue ${vm._name} init`, startTag, endTag)
     }
 
-    if (vm.$options.el) {
+    if (vm.$options.el) { // 不添加 el 需要手动挂载
       vm.$mount(vm.$options.el)
     }
   }

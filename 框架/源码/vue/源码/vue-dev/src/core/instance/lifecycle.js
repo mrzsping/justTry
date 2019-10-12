@@ -64,7 +64,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
     vm._vnode = vnode
     // Vue.prototype.__patch__ is injected in entry points
     // based on the rendering backend used.
-    if (!prevVnode) {
+    if (!prevVnode) { // 首次渲染
       // initial render
       vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
     } else {
@@ -187,14 +187,18 @@ export function mountComponent (
     }
   } else {
     updateComponent = () => {
-      vm._update(vm._render(), hydrating)
+      vm._update(vm._render(), hydrating) // _render src/core/instance/render.js
+      // 依赖变量变化 -> 回调函数执行 -> 新值变化 -> 调用observe -> 需要重新执行一遍 -> re-render
+      // render 返回 vNode
     }
   }
 
   // we set this to vm._watcher inside the watcher's constructor
   // since the watcher's initial patch may call $forceUpdate (e.g. inside child
   // component's mounted hook), which relies on vm._watcher being already defined
-  new Watcher(vm, updateComponent, noop, {
+  // 我们将其设置为观察者构造函数中的vm._watcher，因为观察者的初始补丁可能会调用$ forceUpdate（例如，在子组件的已挂接钩子内部），这取决于已经定义的vm._watcher
+
+  new Watcher(vm, updateComponent, noop, { // vm实例 监听属性 cb
     before () {
       if (vm._isMounted && !vm._isDestroyed) {
         callHook(vm, 'beforeUpdate')
@@ -205,6 +209,7 @@ export function mountComponent (
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
+  // 第一次触发 mount 则触发 mounted
   if (vm.$vnode == null) {
     vm._isMounted = true
     callHook(vm, 'mounted')

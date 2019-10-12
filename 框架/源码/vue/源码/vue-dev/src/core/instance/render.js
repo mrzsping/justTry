@@ -24,6 +24,7 @@ export function initRender (vm: Component) {
   const renderContext = parentVnode && parentVnode.context
   vm.$slots = resolveSlots(options._renderChildren, renderContext)
   vm.$scopedSlots = emptyObject
+  // 绑定createElement函数 保证执行上下文正确
   // bind the createElement fn to this instance
   // so that we get proper render context inside it.
   // args order: tag, data, children, normalizationType, alwaysNormalize
@@ -33,7 +34,7 @@ export function initRender (vm: Component) {
   // user-written render functions.
   vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
 
-  // $attrs & $listeners are exposed for easier HOC creation.
+  // $attrs & $listeners are exposed/暴露 for easier HOC/高阶组件 creation.
   // they need to be reactive so that HOCs using them are always updated
   const parentData = parentVnode && parentVnode.data
 
@@ -59,7 +60,7 @@ export function setCurrentRenderingInstance (vm: Component) {
 }
 
 export function renderMixin (Vue: Class<Component>) {
-  // install runtime convenience helpers
+  // install runtime convenience helpers 安装运行时助手
   installRenderHelpers(Vue.prototype)
 
   Vue.prototype.$nextTick = function (fn: Function) {
@@ -88,7 +89,19 @@ export function renderMixin (Vue: Class<Component>) {
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
       currentRenderingInstance = vm
-      vnode = render.call(vm._renderProxy, vm.$createElement)
+      vnode = render.call(vm._renderProxy, vm.$createElement) // 执行runder
+
+      //render 函数
+      // function anonymous() {
+      //     with(this){ // 扩展作用域
+      //       return _c('ul', { 
+      //           attrs: {"id": "app"}
+      //       },[
+      //           _c('li', [_v(_s(a))])
+      //       ])
+      //   }
+      // }
+
     } catch (e) {
       handleError(e, vm, `render`)
       // return error render result,
