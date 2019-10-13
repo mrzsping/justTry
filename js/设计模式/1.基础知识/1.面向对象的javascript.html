@@ -1,35 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>动态语言类型</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>动态语言类型</title>
 </head>
-    <body>
-        <script>
-            // 鸭子模型， 使用对象方法或属性，无需确认是哪个对象
-            let duck = {
-                sound: function () {
-                    console.log('鸭子');
-                }
-            };
-            let chicken = {
-                sound: function () {
-                    console.log('鸡');
-                }
-            } ;
-            let arr = [];
-            function join(v){
-                if(v && typeof v.sound === 'function'){
-                    arr.push(v);
-                    console.log('添加成功');
-                }
-                window.arr = arr;
-            }
-            join(duck);
-            join(chicken);
-            console.log(arr);
-        </script>
-    </body>
+
+<body>
+  <script>
+    // 鸭子模型， 使用对象方法或属性，无需确认是哪个对象
+    // 面向接口编程 有就行 不用考虑是否为同一个
+    let duck = {
+      sound: function () {
+        console.log('鸭子');
+      }
+    };
+    let chicken = {
+      sound: function () {
+        console.log('鸡');
+      }
+    };
+    let arr = [];
+    function join(v) {
+      if (v && typeof v.sound === 'function') {
+        arr.push(v);
+        console.log('添加成功');
+      }
+      window.arr = arr;
+    }
+    join(duck);
+    join(chicken);
+    console.log(arr);
+
+    // 多态
+    // 不同对象 使用同一个操作 结果不同
+    // 公共代码隔离出来 传入不同对象
+    let makeSound = function (a) {
+      a.sound();
+    }
+    let Duck = function () {};
+    let Chicken = function () {};
+
+    Duck.prototype.sound = function () {
+      console.log("鸭子叫")
+    }
+    Chicken.prototype.sound = function () {
+      console.log("鸡叫")
+    }
+    let duck = new Duck();
+    let chicken = new Chicken()
+    makeSound(duck)
+    makeSound(chicken)
+
+    // 封装
+  </script>
+</body>
+
 </html>
