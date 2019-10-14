@@ -48,7 +48,7 @@ export function proxy (target: Object, sourceKey: string, key: string) {
 export function initState (vm: Component) {
   vm._watchers = []
   const opts = vm.$options
-  if (opts.props) initProps(vm, opts.props)
+  if (opts.props) initProps(vm, opts.props) // 早于data 可用来初始化data
   if (opts.methods) initMethods(vm, opts.methods)
   if (opts.data) {
     initData(vm)
@@ -109,7 +109,7 @@ function initProps (vm: Component, propsOptions: Object) {
   toggleObserving(true)
 }
 
-function initData (vm: Component) { // 数据相应相关
+function initData (vm: Component) { // 数据响应相关 http://caibaojian.com/vue-design/art/7vue-reactive.html#%E5%AE%8C%E6%95%B4%E7%9B%AE%E5%BD%95
   let data = vm.$options.data
   data = vm._data = typeof data === 'function'
     ? getData(data, vm)

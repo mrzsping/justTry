@@ -207,7 +207,7 @@ export function createComponent (
 
 export function createComponentInstanceForVnode (
   vnode: any, // we know it's MountedComponentVNode but flow doesn't
-  parent: any, // activeInstance in lifecycle state
+  parent: any, // activeInstance in lifecycle state components下注册的子组件的父实例
 ): Component {
   const options: InternalComponentOptions = {
     _isComponent: true,

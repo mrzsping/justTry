@@ -60,9 +60,9 @@ function mergeData (to: Object, from: ?Object): Object {
     if (key === '__ob__') continue
     toVal = to[key]
     fromVal = from[key]
-    if (!hasOwn(to, key)) {
+    if (!hasOwn(to, key)) { // 如果 from 对象中的 key 不在 to 对象中，则使用 set 函数为 to 对象设置 key 及相应的值
       set(to, key, fromVal)
-    } else if (
+    } else if ( // 如果 from 对象中的 key 也在 to 对象中，且这两个属性的值都是纯对象则递归进行深度合并
       toVal !== fromVal &&
       isPlainObject(toVal) &&
       isPlainObject(fromVal)
@@ -81,7 +81,7 @@ export function mergeDataOrFn (
   childVal: any,
   vm?: Component
 ): ?Function {
-  if (!vm) {
+  if (!vm) { // 处理子组件时 三种情况
     // in a Vue.extend merge, both should be functions
     if (!childVal) {
       return parentVal
@@ -94,13 +94,14 @@ export function mergeDataOrFn (
     // merged result of both functions... no need to
     // check if parentVal is a function here because
     // it has to be a function to pass previous merges.
+    // 父子同时存在 并且父一定为函数
     return function mergedDataFn () {
       return mergeData(
         typeof childVal === 'function' ? childVal.call(this, this) : childVal,
         typeof parentVal === 'function' ? parentVal.call(this, this) : parentVal
       )
     }
-  } else {
+  } else { // 处理非子组件时
     return function mergedInstanceDataFn () {
       // instance merge
       const instanceData = typeof childVal === 'function'
@@ -123,7 +124,7 @@ strats.data = function (
   childVal: any,
   vm?: Component
 ): ?Function {
-  if (!vm) {
+  if (!vm) { // 没有 vm 参数时，说明处理的是子组件的选项 子组件中的 data 必须是一个返回对象的函数
     if (childVal && typeof childVal !== 'function') {
       process.env.NODE_ENV !== 'production' && warn(
         'The "data" option should be a function ' +
@@ -142,6 +143,7 @@ strats.data = function (
 
 /**
  * Hooks and props are merged as arrays.
+ * 生命周期合并策略
  */
 function mergeHook (
   parentVal: ?Array<Function>,
@@ -150,7 +152,7 @@ function mergeHook (
   const res = childVal
     ? parentVal
       ? parentVal.concat(childVal)
-      : Array.isArray(childVal)
+      : Array.isArray(childVal) // 生命周期可以是数组
         ? childVal
         : [childVal]
     : parentVal
@@ -204,6 +206,7 @@ ASSET_TYPES.forEach(function (type) {
  *
  * Watchers hashes should not overwrite one
  * another, so we merge them as arrays.
+ * 可能是函数或数组
  */
 strats.watch = function (
   parentVal: ?Object,
@@ -212,6 +215,7 @@ strats.watch = function (
   key: string
 ): ?Object {
   // work around Firefox's Object.prototype.watch...
+  // firefox 自带watch
   if (parentVal === nativeWatch) parentVal = undefined
   if (childVal === nativeWatch) childVal = undefined
   /* istanbul ignore if */
@@ -225,7 +229,7 @@ strats.watch = function (
   for (const key in childVal) {
     let parent = ret[key]
     const child = childVal[key]
-    if (parent && !Array.isArray(parent)) {
+    if (parent && !Array.isArray(parent)) { // 存在parent 转化为数组
       parent = [parent]
     }
     ret[key] = parent
@@ -247,16 +251,17 @@ strats.computed = function (
   vm?: Component,
   key: string
 ): ?Object {
+  // 存在子 非生产环境 判断是否为纯对象
   if (childVal && process.env.NODE_ENV !== 'production') {
     assertObjectType(key, childVal, vm)
   }
   if (!parentVal) return childVal
   const ret = Object.create(null)
-  extend(ret, parentVal)
+  extend(ret, parentVal) // 混合父子属性
   if (childVal) extend(ret, childVal)
   return ret
 }
-strats.provide = mergeDataOrFn
+strats.provide = mergeDataOrFn // 与data合并策略 相同 返回一个值是对象的函数
 
 /**
  * Default strategy.
@@ -293,7 +298,7 @@ export function validateComponentName (name: string) {
 
 /**
  * Ensure all props option syntax are normalized into the
- * Object-based format.
+ * Object-based format. 规范化props
  */
 function normalizeProps (options: Object, vm: ?Component) {
   const props = options.props
@@ -394,14 +399,14 @@ export function mergeOptions (
     checkComponents(child)
   }
 
-  if (typeof child === 'function') { // 允许合并vue实例构造者
+  if (typeof child === 'function') { // 允许合并vue实例构造者 vue.extend
     child = child.options
   }
 
   // 规范化选项
   normalizeProps(child, vm)
-  normalizeInject(child, vm)
-  normalizeDirectives(child)
+  normalizeInject(child, vm) // 父子组件通信规范
+  normalizeDirectives(child) // 规范局部指令
 
   // Apply extends and mixins on the child options,
   // but only if it is a raw options object that isn't
@@ -409,11 +414,11 @@ export function mergeOptions (
   // Only merged options has the _base property.
   if (!child._base) { // 合并extends/mixins
     if (child.extends) {
-      parent = mergeOptions(parent, child.extends, vm)
+      parent = mergeOptions(parent, child.extends, vm) // extend 对象
     }
     if (child.mixins) {
       for (let i = 0, l = child.mixins.length; i < l; i++) {
-        parent = mergeOptions(parent, child.mixins[i], vm)
+        parent = mergeOptions(parent, child.mixins[i], vm) // mixin 数组
       }
     }
   }
@@ -467,3 +472,15 @@ export function resolveAsset (
   }
   return res
 }
+
+// http://caibaojian.com/vue-design/art/5vue-merge.html
+// 总结
+// 对于 el、propsData 选项使用默认的合并策略 defaultStrat。
+// 对于 data 选项，使用 mergeDataOrFn 函数进行处理，最终结果是 data 选项将变成一个函数，且该函数的执行结果为真正的数据对象。
+// 对于 生命周期钩子 选项，将合并成数组，使得父子选项中的钩子函数都能够被执行
+// 对于 directives、filters 以及 components 等资源选项，父子选项将以原型链的形式被处理，正是因为这样我们才能够在任何地方都使用内置组件、指令等。
+// 对于 watch 选项的合并处理，类似于生命周期钩子，如果父子选项都有相同的观测字段，将被合并为数组，这样观察者都将被执行。
+// 对于 props、methods、inject、computed 选项，父选项始终可用，但是子选项会覆盖同名的父选项字段。
+// 对于 provide 选项，其合并策略使用与 data 选项相同的 mergeDataOrFn 函数。
+// 最后，以上没有提及到的选项都将使默认选项 defaultStrat。
+// 最最后，默认合并策略函数 defaultStrat 的策略是：只要子选项不是 undefined 就使用子选项，否则使用父选项。

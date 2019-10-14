@@ -34,8 +34,8 @@ export function initMixin (Vue: Class<Component>) {
       initInternalComponent(vm, options)
     } else {
       vm.$options = mergeOptions( // 策略对象合并参数 添加$options属性，用于Vue实例初始化
-        resolveConstructorOptions(vm.constructor), // Vue.options
-        options || {},
+        resolveConstructorOptions(vm.constructor), // vm.constructor === Vue.options
+        options || {}, // 传入的数据
         vm
       )
     }
@@ -64,7 +64,7 @@ export function initMixin (Vue: Class<Component>) {
     // )
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
-      initProxy(vm)
+      initProxy(vm) // 添加_renderProxy属性 是设置渲染函数的作用域代理，提供更好的提示信息
     } else {
       vm._renderProxy = vm
     }
@@ -73,9 +73,10 @@ export function initMixin (Vue: Class<Component>) {
     initLifecycle(vm) // 添加属性
     initEvents(vm)
     initRender(vm)
+
     callHook(vm, 'beforeCreate')
     initInjections(vm) // resolve injections before data/props
-    initState(vm) // 添加data
+    initState(vm) // 添加data rops、methods、data、computed 以及 watch
     initProvide(vm) // resolve provide after data/props
     callHook(vm, 'created')
 

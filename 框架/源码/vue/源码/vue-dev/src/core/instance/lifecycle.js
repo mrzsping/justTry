@@ -18,7 +18,7 @@ import {
   invokeWithErrorHandling
 } from '../util/index'
 
-export let activeInstance: any = null
+export let activeInstance: any = null // 当前实例下的子组件的父实例
 export let isUpdatingChildComponent: boolean = false
 
 export function setActiveInstance(vm: Component) {
@@ -34,8 +34,8 @@ export function initLifecycle (vm: Component) {
 
   // locate first non-abstract parent
   let parent = options.parent
-  if (parent && !options.abstract) {
-    while (parent.$options.abstract && parent.$parent) {
+  if (parent && !options.abstract) { // 如果当前实例有父组件，且当前实例不是抽象的 抽象组件：不渲染真实DOM 不出现在父子关系路径上
+    while (parent.$options.abstract && parent.$parent) { // 查找第一个非抽象的父组件 沿着父实例链逐层向上寻找到第一个不抽象的实例
       parent = parent.$parent
     }
     parent.$children.push(vm)
@@ -345,7 +345,7 @@ export function callHook (vm: Component, hook: string) {
   const info = `${hook} hook`
   if (handlers) {
     for (let i = 0, j = handlers.length; i < j; i++) {
-      invokeWithErrorHandling(handlers[i], vm, null, vm, info)
+      invokeWithErrorHandling(handlers[i], vm, null, vm, info) // 执行钩子函数
     }
   }
   if (vm._hasHookEvent) {

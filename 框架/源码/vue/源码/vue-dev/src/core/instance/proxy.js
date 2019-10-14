@@ -35,11 +35,11 @@ if (process.env.NODE_ENV !== 'production') {
   }
 
   const hasProxy =
-    typeof Proxy !== 'undefined' && isNative(Proxy)
+    typeof Proxy !== 'undefined' && isNative(Proxy) // Proxy 定义基本操作的自定义行为
 
   if (hasProxy) {
     const isBuiltInModifier = makeMap('stop,prevent,self,ctrl,shift,alt,meta,exact')
-    config.keyCodes = new Proxy(config.keyCodes, {
+    config.keyCodes = new Proxy(config.keyCodes, { // 防止内置修饰符被覆盖
       set (target, key, value) {
         if (isBuiltInModifier(key)) {
           warn(`Avoid overwriting built-in modifier in config.keyCodes: .${key}`)
@@ -76,10 +76,10 @@ if (process.env.NODE_ENV !== 'production') {
   }
 
   initProxy = function initProxy (vm) {
-    if (hasProxy) {
+    if (hasProxy) { // 是否支持proxy
       // determine which proxy handler to use
       const options = vm.$options
-      const handlers = options.render && options.render._withStripped
+      const handlers = options.render && options.render._withStripped // 手动设置
         ? getHandler
         : hasHandler
       vm._renderProxy = new Proxy(vm, handlers)
