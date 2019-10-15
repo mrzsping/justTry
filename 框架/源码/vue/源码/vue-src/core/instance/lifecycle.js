@@ -64,7 +64,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
     // based on the rendering backend used.
     /*基于后端渲染Vue.prototype.__patch__被用来作为一个入口*/
     if (!prevVnode) {
-      // initial render
+      // initial render 重写 $el
       vm.$el = vm.__patch__(
         vm.$el, vnode, hydrating, false /* removeOnly */,
         vm.$options._parentElm,
@@ -151,7 +151,7 @@ export function mountComponent (
   el: ?Element,
   hydrating?: boolean
 ): Component {
-  vm.$el = el
+  vm.$el = el // 如果存在template 则是template 元素引用
   if (!vm.$options.render) {
     /*render函数不存在的时候创建一个空的VNode节点*/
     vm.$options.render = createEmptyVNode
@@ -180,14 +180,14 @@ export function mountComponent (
   let updateComponent
   /* istanbul ignore if */
   if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-    updateComponent = () => {
+    updateComponent = () => { // 传递给watcher 虚拟DOM渲染成真正DOM
       const name = vm._name
       const id = vm._uid
       const startTag = `vue-perf-start:${id}`
       const endTag = `vue-perf-end:${id}`
 
       mark(startTag)
-      const vnode = vm._render()
+      const vnode = vm._render() // 触发get
       mark(endTag)
       measure(`${name} render`, startTag, endTag)
 

@@ -9,7 +9,7 @@ import { query } from './util/index'
 import { shouldDecodeNewlines } from './util/compat'
 import { compileToFunctions } from './compiler/index'
 
-/*根据id获取templete，即获取id对应的DOM，然后访问其innerHTML*/
+/*根据id获取templete，即获取id对应的DOM，然后访问其innerHTML 存储起来 提升性能*/
 const idToTemplate = cached(id => {
   const el = query(id)
   return el && el.innerHTML
@@ -69,7 +69,7 @@ Vue.prototype.$mount = function (
     if (template) {
       /* istanbul ignore if */
       if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-        mark('compile')
+        mark('compile') // 显示性能
       }
 
       /*将template编译成render函数，这里会有render以及staticRenderFns两个返回，这是vue的编译时优化，static静态不需要在VNode更新时进行patch，优化性能*/

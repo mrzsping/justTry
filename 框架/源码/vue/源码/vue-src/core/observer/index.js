@@ -55,10 +55,10 @@ export class Observer {
           如果是数组，将修改后可以截获响应的数组方法替换掉该数组的原型中的原生方法，达到监听数组数据变化响应的效果。
           这里如果当前浏览器支持__proto__属性，则直接覆盖当前数组对象原型上的原生数组方法，如果不支持该属性，则直接覆盖数组对象的原型。
       */
-      const augment = hasProto ?
+      const augment = hasProto ? // 是否支持__proto__
         protoAugment /*直接覆盖原型的方法来修改目标对象*/ :
         copyAugment /*定义（覆盖）目标对象或数组的某一个方法*/
-      augment(value, arrayMethods, arrayKeys)
+      augment(value, arrayMethods, arrayKeys) // arrayKeys 拦截的数组方法名
 
       /*如果是数组则需要遍历数组的每一个成员进行observe*/
       this.observeArray(value)
@@ -141,17 +141,17 @@ export function observe(value: any, asRootData: ? boolean): Observer | void {
   } else if (
     /*
       这里的判断是为了确保value是单纯的对象，而不是函数或者是Regexp等情况。
-      而且该对象在shouldConvert的时候才会进行Observer。这是一个标识位，避免重复对value进行Observer
+      而且该对象在shouldConvert=true的时候才会进行Observer。这是一个标识位，避免重复对value进行Observer
     */
     observerState.shouldConvert &&
     !isServerRendering() &&
     (Array.isArray(value) || isPlainObject(value)) &&
-    Object.isExtensible(value) &&
+    Object.isExtensible(value) && // 不可扩展 Object.preventExtensions()、Object.freeze() 以及 Object.seal()
     !value._isVue
   ) {
     ob = new Observer(value)
   }
-  if (asRootData && ob) {
+  if (asRootData && ob) { // 根对象
     /*如果是根数据则计数，后面Observer中的observe的asRootData非true*/
     ob.vmCount++
   }
@@ -196,7 +196,7 @@ export function defineReactive(
           /*子对象进行依赖收集，其实就是将同一个watcher观察者实例放进了两个depend中，一个是正在本身闭包中的depend，另一个是子元素的depend*/
           childOb.dep.depend()
         }
-        if (Array.isArray(value)) {
+        if (Array.isArray(value)) { // 数组元素为对象时 触发响应
           /*是数组则需要对每一个成员都进行依赖收集，如果数组的成员还是数组，则递归。*/
           dependArray(value)
         }
@@ -207,12 +207,12 @@ export function defineReactive(
       /*通过getter方法获取当前值，与新值进行比较，一致则不需要执行下面的操作*/
       const value = getter ? getter.call(obj) : val
       /* eslint-disable no-self-compare */
-      if (newVal === value || (newVal !== newVal && value !== value)) {
+      if (newVal === value || (newVal !== newVal && value !== value)) { // NaN
         return
       }
       /* eslint-enable no-self-compare */
       if (process.env.NODE_ENV !== 'production' && customSetter) {
-        customSetter()
+        customSetter() // 打印辅助是信息
       }
       if (setter) {
         /*如果原本对象拥有setter方法则执行setter*/
@@ -242,7 +242,7 @@ export function set(target: Array < any > | Object, key: any, val: any): any {
     return val
   }
   /*如果是一个对象，并且已经存在了这个key则直接返回*/
-  if (hasOwn(target, key)) {
+  if (key in target && !(key in Object.prototype)) {
     target[key] = val
     return val
   }
@@ -252,7 +252,7 @@ export function set(target: Array < any > | Object, key: any, val: any): any {
     _isVue 一个防止vm实例自身被观察的标志位 ，_isVue为true则代表vm实例，也就是this
     vmCount判断是否为根节点，存在则代表是data的根节点，Vue 不允许在已经创建的实例上动态添加新的根级响应式属性(root-level reactive property)
   */
-  if (target._isVue || (ob && ob.vmCount)) {
+  if (target._isVue || (ob && ob.vmCount)) { // 根对象添加属性无法响应
     /*  
       Vue 不允许在已经创建的实例上动态添加新的根级响应式属性(root-level reactive property)。
       https://cn.vuejs.org/v2/guide/reactivity.html#变化检测问题
@@ -263,7 +263,7 @@ export function set(target: Array < any > | Object, key: any, val: any): any {
     )
     return val
   }
-  if (!ob) {
+  if (!ob) { // target 非响应
     target[key] = val
     return val
   }
@@ -309,7 +309,7 @@ function dependArray(value: Array < any > ) {
     /*通过对象上的观察者进行依赖收集*/
     e && e.__ob__ && e.__ob__.dep.depend()
     if (Array.isArray(e)) {
-      /*当数组成员还是数组的时候地柜执行该方法继续深层依赖收集，直到是对象为止。*/
+      /*当数组成员还是数组的时候递归执行该方法继续深层依赖收集，直到是对象为止。*/
       dependArray(e)
     }
   }

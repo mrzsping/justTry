@@ -40,7 +40,7 @@ export const arrayMethods = Object.create(arrayProto)
 
     /*数组新插入的元素需要重新进行observe才能响应式*/
     const ob = this.__ob__
-    let inserted
+    let inserted // 新增加的元素
     switch (method) {
       case 'push':
         inserted = args
