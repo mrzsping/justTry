@@ -214,7 +214,7 @@ export default class Watcher {
         // when the value is the same, because the value may
         // have mutated.
         /*
-            即便值相同，拥有Deep属性的观察者以及在对象／数组上的观察者应该被触发更新，因为它们的值可能发生改变。
+          即便值相同，拥有Deep属性的观察者以及在对象／数组上的观察者应该被触发更新，因为它们的值可能发生改变。
         */
         isObject(value) ||
         this.deep
