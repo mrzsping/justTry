@@ -25,18 +25,18 @@ export function validateProp (
   vm?: Component
 ): any {
   const prop = propOptions[key]
-  const absent = !hasOwn(propsData, key)
+  const absent = !hasOwn(propsData, key) // 是否传递值
   let value = propsData[key]
   // boolean casting
-  const booleanIndex = getTypeIndex(Boolean, prop.type)
-  if (booleanIndex > -1) {
+  const booleanIndex = getTypeIndex(Boolean, prop.type) // 第一个参数所指定的类型构造函数是否存在于第二个参数所指定的类型构造函数数组中 的位置
+  if (booleanIndex > -1) { // 处理prpos为boolean时的方法
     if (absent && !hasOwn(prop, 'default')) {
       value = false
     } else if (value === '' || value === hyphenate(key)) {
       // only cast empty string / same name to boolean if
       // boolean has higher priority
       const stringIndex = getTypeIndex(String, prop.type)
-      if (stringIndex < 0 || booleanIndex < stringIndex) {
+      if (stringIndex < 0 || booleanIndex < stringIndex) { // 传递 Boolean  和 String 比较
         value = true
       }
     }
@@ -56,7 +56,7 @@ export function validateProp (
     // skip validation for weex recycle-list child component props
     !(__WEEX__ && isObject(value) && ('@binding' in value))
   ) {
-    assertProp(prop, key, value, vm, absent)
+    assertProp(prop, key, value, vm, absent) // 校验
   }
   return value
 }
@@ -71,7 +71,7 @@ function getPropDefaultValue (vm: ?Component, prop: PropOptions, key: string): a
   }
   const def = prop.default
   // warn against non-factory defaults for Object & Array
-  if (process.env.NODE_ENV !== 'production' && isObject(def)) {
+  if (process.env.NODE_ENV !== 'production' && isObject(def)) { // 对象则需要函数返回 防止对个组件共享实例
     warn(
       'Invalid default value for prop "' + key + '": ' +
       'Props with type Object/Array must use a factory function ' +
@@ -82,8 +82,12 @@ function getPropDefaultValue (vm: ?Component, prop: PropOptions, key: string): a
   // the raw prop value was also undefined from previous render,
   // return previous default value to avoid unnecessary watcher trigger
   if (vm && vm.$options.propsData &&
-    vm.$options.propsData[key] === undefined &&
+    vm.$options.propsData[key] === undefined && // 组件更新时准备的 上一次组件更新或创建时的数据
     vm._props[key] !== undefined
+
+    // 1、当前组件处于更新状态，且没有传递该 prop 数据给组件
+    // 2、上一次更新或创建时外界也没有向组件传递该 prop 数据
+    // 3、上一次组件更新或创建时该 prop 拥有一个不为 undefined 的默认值
   ) {
     return vm._props[key]
   }
@@ -104,7 +108,7 @@ function assertProp (
   vm: ?Component,
   absent: boolean
 ) {
-  if (prop.required && absent) {
+  if (prop.required && absent) { // 校验required
     warn(
       'Missing required prop: "' + name + '"',
       vm
@@ -121,7 +125,7 @@ function assertProp (
     if (!Array.isArray(type)) {
       type = [type]
     }
-    for (let i = 0; i < type.length && !valid; i++) {
+    for (let i = 0; i < type.length && !valid; i++) { // valid 为真 则停止
       const assertedType = assertType(value, type[i])
       expectedTypes.push(assertedType.expectedType || '')
       valid = assertedType.valid
@@ -136,7 +140,7 @@ function assertProp (
     return
   }
   const validator = prop.validator
-  if (validator) {
+  if (validator) { // props 自带校验
     if (!validator(value)) {
       warn(
         'Invalid prop: custom validator check failed for prop "' + name + '".',
@@ -154,11 +158,11 @@ function assertType (value: any, type: Function): {
 } {
   let valid
   const expectedType = getType(type)
-  if (simpleCheckRE.test(expectedType)) {
+  if (simpleCheckRE.test(expectedType)) { // 可以通过 typeof 判断
     const t = typeof value
     valid = t === expectedType.toLowerCase()
     // for primitive wrapper objects
-    if (!valid && t === 'object') {
+    if (!valid && t === 'object') { // 基本包装类型
       valid = value instanceof type
     }
   } else if (expectedType === 'Object') {
@@ -166,7 +170,7 @@ function assertType (value: any, type: Function): {
   } else if (expectedType === 'Array') {
     valid = Array.isArray(value)
   } else {
-    valid = value instanceof type
+    valid = value instanceof type // 自定义类型
   }
   return {
     valid,

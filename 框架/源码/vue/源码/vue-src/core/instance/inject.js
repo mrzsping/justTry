@@ -14,7 +14,7 @@ export function initProvide (vm: Component) {
 }
 
 export function initInjections (vm: Component) {
-  const result = resolveInject(vm.$options.inject, vm)
+  const result = resolveInject(vm.$options.inject, vm) // 返回父组件中已有的provided
   if (result) {
     Object.keys(result).forEach(key => {
       /* istanbul ignore else */
@@ -43,7 +43,7 @@ export function resolveInject (inject: any, vm: Component): ?Object {
     const result = Object.create(null)
     const keys = isArray
       ? inject
-      : hasSymbol
+      : hasSymbol // 支持symbol
         ? Reflect.ownKeys(inject)
         : Object.keys(inject)
 

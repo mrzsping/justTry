@@ -115,7 +115,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
   if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
     ob = value.__ob__
   } else if (
-    shouldObserve &&
+    shouldObserve && // shouldObserve开关
     !isServerRendering() &&
     (Array.isArray(value) || isPlainObject(value)) &&
     Object.isExtensible(value) &&
@@ -153,7 +153,7 @@ export function defineReactive (
     val = obj[key]
   }
 
-  let childOb = !shallow && observe(val)
+  let childOb = !shallow && observe(val) // 在定义 props 数据时，不将 prop 值转换为响应式数据
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,

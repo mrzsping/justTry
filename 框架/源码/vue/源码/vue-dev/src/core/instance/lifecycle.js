@@ -277,7 +277,7 @@ export function updateChildComponent (
     }
     toggleObserving(true)
     // keep a copy of raw propsData
-    vm.$options.propsData = propsData
+    vm.$options.propsData = propsData // 组件更新 更改数据
   }
 
   // update listeners
