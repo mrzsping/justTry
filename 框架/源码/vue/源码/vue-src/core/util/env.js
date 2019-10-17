@@ -106,6 +106,7 @@ export const nextTick = (function () {
     当前 task 结束就可以得到最新的 UI 了。反之如果新建一个 task 来做数据更新，那么渲染就会进行两次。
     参考：https://www.zhihu.com/question/55364497/answer/144215284
   */
+ // 每次事件循环只会从 (macro)task 中读取一个任务并执行，而在同一次事件循环内会将 microtask 队列中所有的任务全部执行完毕
   if (typeof Promise !== 'undefined' && isNative(Promise)) {
     /*使用Promise*/
     var p = Promise.resolve()

@@ -8,7 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
 </head>
 <body>
-  <div id="app">{{name}}{{obj}}</div>
+  <div id="app">{{this.name}}{{obj}}</div>
   <img src="./响应式原理.png" alt="" width="400">
   <p>1.使用 Object.defineProperty 将初始化的属性 转化为 setter getter</p>
   <p>2.getter setter 不可见，但是 watcher 实例在 getter 中 把属性当做依赖收集起来</p>

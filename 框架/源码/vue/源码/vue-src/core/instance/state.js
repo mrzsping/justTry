@@ -26,8 +26,8 @@ import {
 const sharedPropertyDefinition = {
   enumerable: true,
   configurable: true,
-  get: noop,
-  set: noop
+  get: noop, // createComputedGetter(key)
+  set: noop // userDef.set noop
 }
 
 /*使用Object.defineProperty 通过proxy函数将_data（或者_props等）上面的数据代理到vm上，这样就可以用app.text代替app._data.text了。*/
@@ -130,7 +130,7 @@ function initData (vm: Component) {
   /*得到data数据 是否是组件 data为对象或者对象*/
   let data = vm.$options.data
   data = vm._data = typeof data === 'function'
-    ? getData(data, vm)
+    ? getData(data, vm) // 调用 data 方法
     : data || {}
 
   /*对对象类型进行严格检查，只有当对象是纯javascript对象的时候返回true*/
@@ -166,7 +166,7 @@ function initData (vm: Component) {
     }
   }
   // observe data
-  /*从这里开始我们要observe了，开始对数据进行绑定，这里有尤大大的注释asRootData，这步作为根数据，下面会进行递归observe进行对深层对象的绑定。*/
+  /*从这里开始我们要observe了，开始对数据进行绑定，响应式开始。*/
   observe(data, true /* asRootData */)
 }
 
@@ -229,11 +229,11 @@ function initComputed (vm: Component, computed: Object) {
 
 /*定义计算属性*/
 export function defineComputed (target: any, key: string, userDef: Object | Function) {
-  if (typeof userDef === 'function') {
+  if (typeof userDef === 'function') { // 并没有指定 set 拦截器函数
     /*创建计算属性的getter*/
     sharedPropertyDefinition.get = createComputedGetter(key)
     /*
-      当userDef是一个function的时候是不需要setter的，所以这边给它设置成了空函数。
+      当userDef是一个function的时候是不需要setter的，所以这边给它设置成了空函数
       因为计算属性默认是一个function，只设置getter。
       当需要设置setter的时候，会将计算属性设置成一个对象。参考：https://cn.vuejs.org/v2/guide/computed.html#计算-setter
     */

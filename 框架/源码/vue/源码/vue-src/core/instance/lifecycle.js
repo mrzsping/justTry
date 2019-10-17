@@ -180,19 +180,19 @@ export function mountComponent (
   let updateComponent
   /* istanbul ignore if */
   if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-    updateComponent = () => { // 传递给watcher 虚拟DOM渲染成真正DOM
+    updateComponent = () => {
       const name = vm._name
       const id = vm._uid
       const startTag = `vue-perf-start:${id}`
       const endTag = `vue-perf-end:${id}`
 
       mark(startTag)
-      const vnode = vm._render() // 触发get
+      const vnode = vm._render() // 触发get 返回生成的虚拟节点
       mark(endTag)
       measure(`${name} render`, startTag, endTag)
 
       mark(startTag)
-      vm._update(vnode, hydrating)
+      vm._update(vnode, hydrating) // 虚拟DOM渲染成真正的DOM 
       mark(endTag)
       measure(`${name} patch`, startTag, endTag)
     }

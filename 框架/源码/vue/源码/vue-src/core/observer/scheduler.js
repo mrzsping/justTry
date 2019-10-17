@@ -164,7 +164,7 @@ export function queueWatcher (watcher: Watcher) {
   /*检验id是否存在，已经存在则直接跳过，不存在则标记哈希表has，用于下次检验*/
   if (has[id] == null) {
     has[id] = true
-    if (!flushing) {
+    if (!flushing) { // 为true时正在执行更新
       /*如果没有flush掉，直接push到队列中即可*/
       queue.push(watcher)
     } else {
