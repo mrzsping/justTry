@@ -15,8 +15,8 @@ import { unicodeRegExp } from 'core/util/lang'
 
 // Regular Expressions for parsing tags and attributes
 const attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/
-const dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/
-const ncname = `[a-zA-Z_][\\-\\.0-9_a-zA-Z${unicodeRegExp.source}]*`
+const dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/ // 属性
+const ncname = `[a-zA-Z_][\\-\\.0-9_a-zA-Z${unicodeRegExp.source}]*` // 不包含冒号(:)的 XML 名称
 const qnameCapture = `((?:${ncname}\\:)?${ncname})`
 const startTagOpen = new RegExp(`^<${qnameCapture}`)
 const startTagClose = /^\s*(\/?)>/
@@ -30,7 +30,7 @@ const conditionalComment = /^<!\[/
 export const isPlainTextElement = makeMap('script,style,textarea', true)
 const reCache = {}
 
-const decodingMap = {
+const decodingMap = { // html转码
   '&lt;': '<',
   '&gt;': '>',
   '&quot;': '"',
@@ -42,14 +42,14 @@ const decodingMap = {
 const encodedAttr = /&(?:lt|gt|quot|amp|#39);/g
 const encodedAttrWithNewLines = /&(?:lt|gt|quot|amp|#39|#10|#9);/g
 
-// #5992
+// #5992 <pre> 标签和 <textarea> 会忽略其内容的第一个换行符
 const isIgnoreNewlineTag = makeMap('pre,textarea', true)
 const shouldIgnoreFirstNewline = (tag, html) => tag && isIgnoreNewlineTag(tag) && html[0] === '\n'
 
 function decodeAttr (value, shouldDecodeNewlines) {
   const re = shouldDecodeNewlines ? encodedAttrWithNewLines : encodedAttr
   return value.replace(re, match => decodingMap[match])
-}
+} // 解码 html 实体
 
 export function parseHTML (html, options) {
   const stack = []
@@ -58,9 +58,9 @@ export function parseHTML (html, options) {
   const canBeLeftOpenTag = options.canBeLeftOpenTag || no
   let index = 0
   let last, lastTag
-  while (html) {
+  while (html) { // html为空 parse完毕
     last = html
-    // Make sure we're not in a plaintext content element like script/style
+    // Make sure we're not in a plaintext content element like script/style 确保内容不是在纯文本标签里
     if (!lastTag || !isPlainTextElement(lastTag)) {
       let textEnd = html.indexOf('<')
       if (textEnd === 0) {
@@ -143,7 +143,7 @@ export function parseHTML (html, options) {
       if (options.chars && text) {
         options.chars(text, index - text.length, index)
       }
-    } else {
+    } else { // 内容在纯文本里
       let endTagLength = 0
       const stackedTag = lastTag.toLowerCase()
       const reStackedTag = reCache[stackedTag] || (reCache[stackedTag] = new RegExp('([\\s\\S]*?)(</' + stackedTag + '[^>]*>)', 'i'))
@@ -167,7 +167,7 @@ export function parseHTML (html, options) {
       parseEndTag(stackedTag, index - endTagLength, index)
     }
 
-    if (html === last) {
+    if (html === last) { // 将整个字符串作为文本对待
       options.chars && options.chars(html)
       if (process.env.NODE_ENV !== 'production' && !stack.length && options.warn) {
         options.warn(`Mal-formatted tag at end of template: "${html}"`, { start: index + html.length })
@@ -184,6 +184,7 @@ export function parseHTML (html, options) {
     html = html.substring(n)
   }
 
+  // parse 开始标签
   function parseStartTag () {
     const start = html.match(startTagOpen)
     if (start) {
@@ -208,7 +209,7 @@ export function parseHTML (html, options) {
       }
     }
   }
-
+  // 处理 parseStartTag 结果
   function handleStartTag (match) {
     const tagName = match.tagName
     const unarySlash = match.unarySlash
@@ -251,7 +252,7 @@ export function parseHTML (html, options) {
       options.start(tagName, attrs, unary, match.start, match.end)
     }
   }
-
+  // parse 结束标签
   function parseEndTag (tagName, start, end) {
     let pos, lowerCasedTagName
     if (start == null) start = index

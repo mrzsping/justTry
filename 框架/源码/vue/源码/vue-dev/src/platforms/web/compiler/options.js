@@ -17,10 +17,10 @@ export const baseOptions: CompilerOptions = {
   modules,
   directives,
   isPreTag,
-  isUnaryTag,
+  isUnaryTag, // 是否是一元标签
   mustUseProp,
-  canBeLeftOpenTag,
-  isReservedTag,
-  getTagNamespace,
-  staticKeys: genStaticKeys(modules)
+  canBeLeftOpenTag, // 不是一元标签 自动补齐
+  isReservedTag, // 是否是保留标签
+  getTagNamespace, // 获取元素(标签)的命名空间
+  staticKeys: genStaticKeys(modules) // 根据编译器选项的 modules 选项生成一个静态键字符串
 }

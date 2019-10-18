@@ -6,7 +6,7 @@ import { createCompileToFunctionFn } from './to-function'
 
 export function createCompilerCreator (baseCompile: Function): Function {
   return function createCompiler (baseOptions: CompilerOptions) {
-    function compile (
+    function compile ( // 返回compiled
       template: string,
       options?: CompilerOptions
     ): CompiledResult {
@@ -14,7 +14,7 @@ export function createCompilerCreator (baseCompile: Function): Function {
       const errors = []
       const tips = []
 
-      let warn = (msg, range, tip) => {
+      let warn = (msg, range, tip) => { // 收集错误或提示
         (tip ? tips : errors).push(msg)
       }
 
@@ -64,7 +64,7 @@ export function createCompilerCreator (baseCompile: Function): Function {
       }
       compiled.errors = errors
       compiled.tips = tips
-      return compiled
+      return compiled // 包含了模板编译后的抽象语法树(AST)
     }
 
     return {
@@ -73,3 +73,7 @@ export function createCompilerCreator (baseCompile: Function): Function {
     }
   }
 }
+// 作用
+// 1、生成最终编译器选项 finalOptions
+// 2、对错误的收集
+// 3、调用 baseCompile 编译模板

@@ -42,17 +42,17 @@ const doctype = /^<!DOCTYPE [^>]+>/i
 const comment = /^<!--/
 const conditionalComment = /^<!\[/
 
-let IS_REGEX_CAPTURING_BROKEN = false
+let IS_REGEX_CAPTURING_BROKEN = false // firefox bug 当捕获组匹配不到值时那么捕获组对应变量的值应该是 undefined 而不是空字符串
 'x'.replace(/x(.)?/g, function (m, g) {
   IS_REGEX_CAPTURING_BROKEN = g === ''
 })
 
 // Special Elements (can contain anything)
 /*返回一个函数用以检测传入的key值是否为script、style或者是textarea*/
-export const isPlainTextElement = makeMap('script,style,textarea', true)
+export const isPlainTextElement = makeMap('script,style,textarea', true) // 检测是否为纯文本标签
 const reCache = {}
 
-/*转义表*/
+/*转义表 对html进行转码*/
 const decodingMap = {
   '&lt;': '<',
   '&gt;': '>',
@@ -70,17 +70,18 @@ function decodeAttr (value, shouldDecodeNewlines) {
 
 /*解析HTML*/
 export function parseHTML (html, options) {
-  const stack = []
+  const stack = [] // 保存非一元标签
   const expectHTML = options.expectHTML
-  const isUnaryTag = options.isUnaryTag || no
-  const canBeLeftOpenTag = options.canBeLeftOpenTag || no
-  let index = 0
-  let last, lastTag
+  const isUnaryTag = options.isUnaryTag || no // 检测是否是一元标签
+  const canBeLeftOpenTag = options.canBeLeftOpenTag || no // 是否是可以省略闭合标签的非一元标签
+  let index = 0 // 当前字符流的读入位置
+  let last, lastTag // last:剩余还未 parse 的 html 字符串
+  //lastTag:则始终存储着位于 stack 栈顶的元素
   while (html) {
     last = html
     // Make sure we're not in a plaintext content element like script/style
     /*保证lastTag不是纯文本标签，比如script、style以及textarea*/
-    if (!lastTag || !isPlainTextElement(lastTag)) {
+    if (!lastTag || !isPlainTextElement(lastTag)) { // 非纯文本标签
       let textEnd = html.indexOf('<')
       if (textEnd === 0) {
         // Comment:
@@ -90,12 +91,11 @@ export function parseHTML (html, options) {
 
           if (commentEnd >= 0) {
             advance(commentEnd + 3)
-            continue
+            continue // 由于产生新的字符串 跳过循环 开启下一次
           }
         }
-
         // http://en.wikipedia.org/wiki/Conditional_comment#Downlevel-revealed_conditional_comment
-        if (conditionalComment.test(html)) {
+        if (conditionalComment.test(html)) { // 有可能是条件注释节点
           const conditionalEnd = html.indexOf(']>')
 
           if (conditionalEnd >= 0) {
@@ -128,7 +128,6 @@ export function parseHTML (html, options) {
           continue
         }
       }
-
       let text, rest, next
       if (textEnd >= 0) {
         rest = html.slice(textEnd)
@@ -147,7 +146,6 @@ export function parseHTML (html, options) {
         text = html.substring(0, textEnd)
         advance(textEnd)
       }
-
       if (textEnd < 0) {
         text = html
         html = ''
@@ -190,7 +188,7 @@ export function parseHTML (html, options) {
   /*清楚多余的标签*/
   parseEndTag()
 
-  /*为计数index加上n，同时，使html到n个字符以后到位置作为起始位*/
+  /*为计数index加上n，同时，使html到n个字符以后到位置作为起始位 剔除一些字符串*/
   function advance (n) {
     index += n
     html = html.substring(n)
@@ -198,7 +196,7 @@ export function parseHTML (html, options) {
 
   function parseStartTag () {
     const start = html.match(startTagOpen)
-    if (start) {
+    if (start) { // 标签开始
       const match = {
         tagName: start[1],
         attrs: [],
@@ -206,7 +204,7 @@ export function parseHTML (html, options) {
       }
       advance(start[0].length)
       let end, attr
-      while (!(end = html.match(startTagClose)) && (attr = html.match(attribute))) {
+      while (!(end = html.match(startTagClose)) && (attr = html.match(attribute))) { // 没有匹配到开始标签的结束部分，并且匹配到了开始标签中的属性
         advance(attr[0].length)
         match.attrs.push(attr)
       }
@@ -220,8 +218,8 @@ export function parseHTML (html, options) {
   }
 
   function handleStartTag (match) {
-    const tagName = match.tagName
-    const unarySlash = match.unarySlash
+    const tagName = match.tagName // 开始标签的标签名
+    const unarySlash = match.unarySlash // / 或者 undefined
 
     if (expectHTML) {
       if (lastTag === 'p' && isNonPhrasingTag(tagName)) {
@@ -237,7 +235,7 @@ export function parseHTML (html, options) {
     const l = match.attrs.length
     const attrs = new Array(l)
     for (let i = 0; i < l; i++) {
-      const args = match.attrs[i]
+      const args = match.attrs[i] // 每个属性的解析结果
       // hackish work around FF bug https://bugzilla.mozilla.org/show_bug.cgi?id=369778
       if (IS_REGEX_CAPTURING_BROKEN && args[0].indexOf('""') === -1) {
         if (args[3] === '') { delete args[3] }
@@ -254,7 +252,7 @@ export function parseHTML (html, options) {
       }
     }
 
-    if (!unary) {
+    if (!unary) { // 非一元标签 push进stack
       stack.push({ tag: tagName, lowerCasedTag: tagName.toLowerCase(), attrs: attrs })
       lastTag = tagName
     }
@@ -264,7 +262,7 @@ export function parseHTML (html, options) {
     }
   }
 
-  function parseEndTag (tagName, start, end) {
+  function parseEndTag (tagName, start, end) { // 非一元标签 缺少结束标签时处理 处理stack栈中剩余未被处理的标签
     let pos, lowerCasedTagName
     if (start == null) start = index
     if (end == null) end = index
@@ -290,7 +288,7 @@ export function parseHTML (html, options) {
       for (let i = stack.length - 1; i >= pos; i--) {
         if (process.env.NODE_ENV !== 'production' &&
             (i > pos || !tagName) &&
-            options.warn) {
+            options.warn) { // 缺少闭合标签
           options.warn(
             `tag <${stack[i].tag}> has no matching end tag.`
           )

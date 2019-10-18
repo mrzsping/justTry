@@ -64,12 +64,12 @@ Vue.prototype.$mount = function (
         mark('compile')
       }
 
-      const { render, staticRenderFns } = compileToFunctions(template, {
+      const { render, staticRenderFns } = compileToFunctions(template, { // 字符串编译成渲染字符串
         outputSourceRange: process.env.NODE_ENV !== 'production',
-        shouldDecodeNewlines,
-        shouldDecodeNewlinesForHref,
-        delimiters: options.delimiters,
-        comments: options.comments
+        shouldDecodeNewlines, // 浏览器兼容
+        shouldDecodeNewlinesForHref, // 浏览器兼容
+        delimiters: options.delimiters, // 完整版使用
+        comments: options.comments // 完整版使用
       }, this)
       options.render = render
       options.staticRenderFns = staticRenderFns
