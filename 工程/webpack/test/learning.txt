@@ -1,0 +1,16 @@
+1.
+npx webpack     // 不设置mode的情况下 打包出来的文件自动压缩
+
+npx webpack --mode development  // 设置mode为开发模式，打包后的文件不被压缩
+
+2.
+建立 webpack.config.js
+
+3.
+使用 html-webpack-plugin
+
+4.
+安装 style-loader css-loader
+
+5.
+extract-text-webpack-plugin@next
