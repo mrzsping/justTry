@@ -6,11 +6,20 @@ npx webpack --mode development  // 设置mode为开发模式，打包后的文�
 2.
 建立 webpack.config.js
 
-3.
-使用 html-webpack-plugin
+3.处理html
+npm i html-webpack-plugin -D
 
-4.
-安装 style-loader css-loader
+4.处理css
+npm i style-loader css-loader -D
 
-5.
-extract-text-webpack-plugin@next
+5.分离css
+npm i extract-text-webpack-plugin@next -D
+
+6.处理背景图片
+npm i file-loader url-loader -D
+
+7.处理引入图片
+npm i html-withimg-loader -D
+
+8.css兼容
+npm i postcss-loader autoprefixer -D

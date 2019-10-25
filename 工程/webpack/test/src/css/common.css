@@ -1,0 +1,11 @@
+p{
+  font-size: 17px;
+}
+.image{
+  width: 100px;
+  height: 100px;
+  background: url('../img/goods.png');
+}
+p{
+  transform: translate(10px, 10px);
+}

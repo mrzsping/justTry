@@ -1,0 +1,12 @@
+p{
+  font-size: 17px;
+}
+.image{
+  width: 100px;
+  height: 100px;
+  background: url(../images/ea42e32084364c35945ffa18f21aae58.png);
+}
+p{
+  -webkit-transform: translate(10px, 10px);
+          transform: translate(10px, 10px);
+}
