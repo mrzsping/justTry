@@ -2,6 +2,8 @@ const path = require('path')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 let ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 let common = new ExtractTextWebpackPlugin('./css/common.css')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const webpack = require('webpack')
 module.exports = {
   entry: {
     index: './src/index.js'
@@ -39,10 +41,18 @@ module.exports = {
       {
         test: /\.(eot|ttf|woff|svg)$/,
         use: 'file-loader'
+      },
+      {
+        test:/\.js$/,
+        use: 'babel-loader',
+        include: /src/,          // 只转化src目录下的js
+        exclude: /node_modules/  // 排除掉node_modules，优化打包速度
       }
     ]
   },
   plugins: [
+    // new CleanWebpackPlugin({outputPath: 'dist'}), 热更新
+    new webpack.HotModuleReplacementPlugin(),
     new htmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
@@ -58,7 +68,19 @@ module.exports = {
     common
   ],
   devServer: {
-
+    contentBase: './dist',
+    host: 'localhost',      // 默认是localhost
+    port: 8082,             // 端口
+    open: true,             // 自动打开浏览器
+    hot: true               // 开启热更新
   },
-  mode: 'development'
+  mode: 'development',
+  // resolve: {
+  //   // 别名
+  //   alias: {
+  //       $: './src/jquery.js'
+  //   },
+  //   // 省略后缀
+  //   extensions: ['.js', '.json', '.css']
+  // }
 }

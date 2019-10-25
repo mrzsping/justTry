@@ -23,3 +23,9 @@ npm i html-withimg-loader -D
 
 8.css兼容
 npm i postcss-loader autoprefixer -D
+
+9.es6转义
+npm i babel-core babel-loader babel-preset-env babel-preset-stage-0 -D
+
+10.清空
+npm i clean-webpack-plugin -D
