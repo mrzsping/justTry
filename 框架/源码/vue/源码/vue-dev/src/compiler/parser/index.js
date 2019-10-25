@@ -21,16 +21,16 @@ import {
   getAndRemoveAttrByRegex
 } from '../helpers'
 
-export const onRE = /^@|^v-on:/
-export const dirRE = process.env.VBIND_PROP_SHORTHAND
+export const onRE = /^@|^v-on:/ // 事件
+export const dirRE = process.env.VBIND_PROP_SHORTHAND // 指令
   ? /^v-|^@|^:|^\.|^#/
   : /^v-|^@|^:|^#/
-export const forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/
+export const forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/ // 匹配for遍历对象
 export const forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/
-const stripParensRE = /^\(|\)$/g
+const stripParensRE = /^\(|\)$/g // 匹配 ()
 const dynamicArgRE = /^\[.*\]$/
 
-const argRE = /:(.*)$/
+const argRE = /:(.*)$/ // 匹配：后的参数
 export const bindRE = /^:|^\.|^v-bind:/
 const propBindRE = /^\./
 const modifierRE = /\.[^.\]]+(?=[^\]]*$)/g
@@ -48,6 +48,7 @@ export const emptySlotScopeToken = `_empty_`
 
 // configurable state
 export let warn: any
+// 平台化选项变量
 let delimiters
 let transforms
 let preTransforms
@@ -57,7 +58,7 @@ let platformMustUseProp
 let platformGetTagNamespace
 let maybeComponent
 
-export function createASTElement (
+export function createASTElement ( // 元素的描述对象
   tag: string,
   attrs: Array<ASTAttr>,
   parent: ASTElement | void
