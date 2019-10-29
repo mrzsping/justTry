@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>首页白屏及优化</h1>
+
+  <p>原因：单页面应用的 html 是靠 js 生成，因为首屏需要加载很大的js文件(app.js vendor.js)，所以当网速差的时候会产生一定程度的白屏。处理：1.优化 webpack 减少模块打包体积，code-split 按需加载；2.服务端渲染，在服务端事先拼装好首页所需的 html；3.首页加 loading 或 骨架屏 （仅仅是优化体验）；4.gzip压缩；5.开启缓存；6.web worker；7.CDN</p>
+
+  <a href="https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/234">https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/234</a>
+</body>
+</html>
