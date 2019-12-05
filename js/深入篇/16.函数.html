@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h2>1.函数</h2>
+
+  <p>1.为什么能够理解函数是如此的重要</p>
+  <i>根基</i>
+
+  <p>2.为什么函数是基本类型对象(first-class objects)</p>
+  <i></i>
+
+  <p>3.函数如何被浏览器调用</p>
+  <i>直接调用</i>
+
+  <p>4.函数的声明(Delaring functions)</p>
+  <i>直接调用、对象方法、构造器、apply/call</i>
+
+  <p>5.函数被调用的秘密</p>
+
+  <p>6.函数上下文(The context within a function)</p>
+  <script>
+    // 函数参数
+    let a = function(){
+      console.log(arguments, this)
+
+      // arguments linke-array 含有length
+      let arr = [];
+      console.log(arr)
+
+      // this 指向执行上下文 
+    }
+
+  // 直接调用
+    a()
+
+  let num = 1;
+  let obj = {
+    num: 3,
+    b: function(){
+      return (function(){
+        console.log(this, this.num)
+      })()
+    }
+  }
+
+  obj.b()
+
+  // 构造器调用 使用 new 方法构造新对象  作为方法执行上下文
+  // 隐式 return this
+  function Person(name){
+    // this.name = name;
+    // this.get = function(){
+    //   console.log(this.name)
+    // }
+    this.get = function(){
+      return this
+    }
+  }
+  // let person = new Person('xiaoming');
+  //
+
+  let person = new Person();
+  console.log(person === person.get());
+
+  // apply call
+  </script>
+</body>
+</html>
