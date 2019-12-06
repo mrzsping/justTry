@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>5.子组件为何不可以修改父组件传递的 Prop</h1>
+
+  <p>所有的 prop 都使得其父子 prop 之间形成了一个单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。这样会防止从子组件意外改变父级组件的状态，从而导致你的应用的数据流向难以理解，父组件下面有可能有多个子组件，如果随意改动子组件里面的props，导致数据源混乱，不利于检测变化</p>
+
+  <a href="https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/60">https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/60</a>
+</body>
+</html>
