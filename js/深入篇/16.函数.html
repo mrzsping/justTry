@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <!-- <script src="./16/1.js"></script> -->
+  <script src="./16/2.js"></script>
 </head>
 <body>
   <h2>1.函数</h2>
@@ -24,51 +26,30 @@
   <p>5.函数被调用的秘密</p>
 
   <p>6.函数上下文(The context within a function)</p>
-  <script>
-    // 函数参数
-    let a = function(){
-      console.log(arguments, this)
 
-      // arguments linke-array 含有length
-      let arr = [];
-      console.log(arr)
+  <h1>2.函数特性</h1>
 
-      // this 指向执行上下文 
-    }
+  <p>1.为什么匿名函数如此重要</p>
 
-  // 直接调用
-    a()
+  <p>2.函数中的递归</p>
+  <i>判断对称</i>
 
-  let num = 1;
-  let obj = {
-    num: 3,
-    b: function(){
-      return (function(){
-        console.log(this, this.num)
-      })()
-    }
-  }
+  <p>3.函数可以被引用后再调用</p>
+  <i></i>
 
-  obj.b()
+  <p>4.如何为函数缓存索引</p>
+  <i></i>
 
-  // 构造器调用 使用 new 方法构造新对象  作为方法执行上下文
-  // 隐式 return this
-  function Person(name){
-    // this.name = name;
-    // this.get = function(){
-    //   console.log(this.name)
-    // }
-    this.get = function(){
-      return this
-    }
-  }
-  // let person = new Person('xiaoming');
-  //
+  <p>5.利用函数的能力来实现记忆</p>
+  <i></i>
 
-  let person = new Person();
-  console.log(person === person.get());
+  <p>6.利用函数上下文</p>
+  <i></i>
 
-  // apply call
-  </script>
+  <p>7.处理参数长度</p>
+  <i></i>
+
+  <p>8.判断一个对象是否为函数</p>
+  <i></i>
 </body>
 </html>
