@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>1.页面导入样式时，使用link和@import有什么区别</h1>
+  <p>link是html的标签，@import是引入css的规则
+    limk会和页面一起同时加载，@import在页面加载完成后才加载
+    link没有兼容问题，@import在ie5下不兼容
+    link引入的样式可以直接进行dom修改，@import引入的样式不能直接通过DOM修改</p>
+
+  <h1>2.圣杯布局和双飞翼布局的理解和区别，并用代码实现</h1>
+  <p>两侧宽度固定，中间宽度自适应的三栏布局</p>
+  
+  <h1>3.用递归算法实现，数组长度为5且元素的随机数在2-32间不重复的值</h1>
+  <script>
+      let arr = [];
+    function num(){
+      let random = Math.ceil(Math.random() * 31) + 1;
+      if (arr.indexOf(random) === 0){
+        random = Math.ceil(Math.random() * 31) + 1;
+        num(arr);
+      } else {
+        if (arr.length < 5) {
+          arr.push(random);
+          num(arr);
+        }else{
+          return arr
+        }
+      }
+    }
+    num()
+    console.log(arr)
+  </script>
+</body>
+</html>
