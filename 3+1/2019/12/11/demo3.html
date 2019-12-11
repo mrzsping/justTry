@@ -8,12 +8,20 @@
 </head>
 <body>
   <h1>HTML5的文件离线储存怎么使用，工作原理是什么</h1>
-  <p></p>
+  <p>localStorage/sessionStorage/cookie</p>
 
   <h1>CSS选择器有哪些？哪些属性可以继承？</h1>
-  <p></p>
+  <p>id/元素/class/伪类/属性</p>
 
   <h1>写一个方法把下划线命名转成大驼峰命名</h1>
   <p></p>
+  <script>
+    function change(str){
+      let arr = str.split('_');
+      arr.map((f) => {
+        return f = f.charAt(0).toUpCase();
+      })
+    }
+  </script>
 </body>
 </html>

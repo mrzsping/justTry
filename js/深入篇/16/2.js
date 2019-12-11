@@ -49,5 +49,15 @@ console.log(isRember(5))
 
 // array 对象
 
+let arrObj = {
+  length: 0,
+  add: function(item){
+    Array.prototype.push.call(this, item)
+  },
+  find: function(id){
+    return this[id]
+  }
+}
+
 
 
