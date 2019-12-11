@@ -18,3 +18,36 @@ let objNew = {
 }
 obj = {}
 console.log(objNew.name(2))
+
+// 函数记忆
+
+var store = {
+	nextId: 1,
+	cache: {},
+	add: function(fn){
+		if(!fn.id){
+			fn.id = store.nextId++;
+			store.cache[fn.id] = fn;  // retutn ?
+		}
+	}
+}
+let fn = function () {
+	console.log(this)
+}
+store.add(fn);
+console.log(store.cache)
+
+//存储上一次运算结果
+
+function isRember(value){
+	if (!isRember.cache) isRember.cache = {};
+	if (!isRember.cache[value]){
+		return isRember.cache[value] = value
+	}
+}
+console.log(isRember(5))
+
+// array 对象
+
+
+
