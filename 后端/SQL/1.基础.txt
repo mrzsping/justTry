@@ -1,0 +1,23 @@
+1. 获取所有: SELECT * FROM table_name;
+
+2. 条件获取: SELECT column_name, column_name FROM table_name;
+
+3. 返回唯一: SELECT DISTINCT: SELECT DISTINCT  column_name, column_name FROM table_name;
+
+4. 使用比较符获取: SELECT column_name, column_name FROM table_name WHERE column_name operator value;(operator: = > < <> >= <= IN BETWEEN LIKE)
+
+5. 逻辑'与'获取: SELECT column_name FROM table_name WHERE column_name operator value AND column_name operator value;
+
+6. 逻辑'或'获取: SELECT column_name FROM table_name WHERE column_name operator value OR column_name operator value;
+
+7. '与'结合'或': SELECT column_name FROM table_name WHERE column_name operator value AND (column_name operator value OR column_name operator value);
+
+8. 排序: SELECT column_name FROM table_name WHERE column_name operator value ORDER BY column_name, column_name ASC;
+
+9. 插入新纪录: INSERT INTO table_name VALUES (value1, value2);
+
+10. 限定列插入新纪录: INSERT INTO table_name (column_name, column_name) table_name VALUES (value1, value2);
+
+11. 更新: UPDATE table_name SET column_name=value WHERE some_column = some_value;
+
+12. 删除: DELETE FROM table_name WHERE some_column=some_value;
