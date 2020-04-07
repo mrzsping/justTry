@@ -1,0 +1,6 @@
+.img{
+  width: 100px;
+  height: 100px;
+  background-image: url('../image/goods.png');
+  transform: translateX(10px)
+}
